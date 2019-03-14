@@ -55,7 +55,7 @@ void insertPlayer(game arr[BARIS][KOLOM],int baris, int kolom){ //memasukkan pla
     arr[baris][kolom].player=1;
 }
 
-void deleteBot(game arr[BARIS][KOLOM], int baris, int kolom){
+void deleteBot(game arr[BARIS][KOLOM], int baris, int kolom){ //menghapus bot dalam matriks game
     arr[baris][kolom].bot=0;
 }
 
@@ -63,7 +63,7 @@ void deletePlayer(game arr[BARIS][KOLOM],int baris, int kolom){ //menghapus play
     arr[baris][kolom].player=0;
 }
 
-void level1(game arr[BARIS][KOLOM],int* barisPlayer, int* kolomPlayer){
+void level1(game arr[BARIS][KOLOM],int* barisPlayer, int* kolomPlayer){ //generate matriks game level 1
     for(int i=0;i<BARIS;i++){ //generate matriks komposit
         for(int j=0;j<KOLOM;j++){
             arr[i][j].player=0; //subvariabel player diisi dengan nilai 0 semua
@@ -93,7 +93,7 @@ void level1(game arr[BARIS][KOLOM],int* barisPlayer, int* kolomPlayer){
     insertBot(arr,BARIS-2,KOLOM-2);
 }
 
-void generateStage(game arr[BARIS][KOLOM], int level, int* barisPlayer, int* kolomPlayer){
+void generateStage(game arr[BARIS][KOLOM], int level, int* barisPlayer, int* kolomPlayer){ //
     switch(level){
     case 1 :
         level1(arr, barisPlayer, kolomPlayer);
@@ -129,7 +129,7 @@ void drawStage(game arr[BARIS][KOLOM]){ // menggambar seluruh matriks game
     }
 }
 
-void drawStageBaris(game arr[BARIS][KOLOM], int baris){
+void drawStageBaris(game arr[BARIS][KOLOM], int baris){ //menggambar matriks yang ada di paramaeter baris
 
     for(int j = 0; j < KOLOM; j++){
         //penggambaran stage
@@ -157,7 +157,7 @@ void drawStageBaris(game arr[BARIS][KOLOM], int baris){
     }
 }
 
-void drawStageKolom(game arr[BARIS][KOLOM], int kolom){
+void drawStageKolom(game arr[BARIS][KOLOM], int kolom){ //menggambar matriks yangada di parameter kolom
 
     for(int i = 0; i < BARIS; i++){
         //penggambaran stage
@@ -185,7 +185,7 @@ void drawStageKolom(game arr[BARIS][KOLOM], int kolom){
     }
 }
 
-coord getPlayerCoord(game arr[BARIS][KOLOM]){
+coord getPlayerCoord(game arr[BARIS][KOLOM]){ //mengembalikan posisi player dalam game
     coord player;
     for(int i = 0; i < BARIS; i++){
         for(int j = 0; j < KOLOM; j++){
@@ -245,19 +245,31 @@ int main(){
 
         insertPlayer(arr,barisPlayer,kolomPlayer);
 
-        if(movement == 'a' || movement == 'd'){
-            setviewport(0,barisPlayer*MATRIX_ELEMENT_SIZE, 800,(barisPlayer+1)*MATRIX_ELEMENT_SIZE,0);
+        if(movement == 'a' ){
+            setviewport(kolomPlayer*MATRIX_ELEMENT_SIZE, barisPlayer*MATRIX_ELEMENT_SIZE,(kolomPlayer+2)*MATRIX_ELEMENT_SIZE, (barisPlayer+1)*MATRIX_ELEMENT_SIZE,0);
             clearviewport();
             setviewport(0,0, 800,600,1);
             drawStageBaris(arr, barisPlayer);
         }
-
-        if(movement == 'w' || movement == 's'){
-            setviewport(kolomPlayer*MATRIX_ELEMENT_SIZE,0, (kolomPlayer+1)*MATRIX_ELEMENT_SIZE,600,0);
+        if(movement == 'd'){
+            setviewport((kolomPlayer-1)*MATRIX_ELEMENT_SIZE, barisPlayer*MATRIX_ELEMENT_SIZE, (kolomPlayer+1)*MATRIX_ELEMENT_SIZE, (barisPlayer+1)*MATRIX_ELEMENT_SIZE,0);
+            clearviewport();
+            setviewport(0,0, 800,600,1);
+            drawStageBaris(arr, barisPlayer);
+        }
+        if(movement == 'w'){
+            setviewport(kolomPlayer*MATRIX_ELEMENT_SIZE, barisPlayer*MATRIX_ELEMENT_SIZE, (kolomPlayer+1)*MATRIX_ELEMENT_SIZE, (barisPlayer+2)*MATRIX_ELEMENT_SIZE,0);
             clearviewport();
             setviewport(0,0, 800,600,1);
             drawStageKolom(arr, kolomPlayer);
         }
+        if(movement == 's'){
+            setviewport(kolomPlayer*MATRIX_ELEMENT_SIZE, (barisPlayer-1)*MATRIX_ELEMENT_SIZE, (kolomPlayer+1)*MATRIX_ELEMENT_SIZE, (barisPlayer+1)*MATRIX_ELEMENT_SIZE ,0);
+            clearviewport();
+            setviewport(0,0, 800,600,1);
+            drawStageKolom(arr, kolomPlayer);
+        }
+
         movement = NULL;
         page = 1-page;
 
