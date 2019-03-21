@@ -409,7 +409,7 @@ bool isStanding(game arr[BARIS][KOLOM], int baris, int kolom){
 }
 
 bool isClimbing(game arr[BARIS][KOLOM], int baris, int kolom){
-    if((arr[baris][kolom].stage == 2)){
+    if((arr[baris][kolom].stage == 2)||(arr[baris+1][kolom].stage == 2)){
         return true;
     }else{
         return false;
