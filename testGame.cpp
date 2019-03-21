@@ -52,14 +52,15 @@ int main(){
         tampil_skor(score);
 
         //User input movement
-        if(!isFalling(arr,barisPlayer,kolomPlayer) || isSliding(arr, barisPlayer, kolomPlayer)){
+        if(isFalling(arr,barisPlayer,kolomPlayer) && !isSliding(arr, barisPlayer, kolomPlayer)){
+            movement = 'S';
+            delay(250);
+
+        }else{
             if(kbhit()){
                 movement=toupper(getch());
                 prosesInput(&movement);
             }
-        }else{
-            movement = 'S';
-            delay(250);
         }
 
         //memproses movement yang diinput user
