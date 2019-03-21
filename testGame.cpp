@@ -430,6 +430,14 @@ bool isFalling(game arr[BARIS][KOLOM], int baris, int kolom){
     return false;}
 }
 
+bool isNabrak(game arr[BARIS][KOLOM], int baris, int kolom, int arah){// arah = -1 kalau ke kiri dan arah = 1 kalau ke kanan
+    if((arr[baris][kolom+arah].stage == 1)){
+        return true;
+    }else{
+        return false;
+    }
+}
+
 bool done(game arr[BARIS][KOLOM], int baris, int kolom)
 {
 	if (arr[baris][kolom].stage == 5)
@@ -449,20 +457,20 @@ void playerMovement(char movement, game arr[BARIS][KOLOM], int* barisPlayer, int
                     }
                     break;
             case 'S' :
-                if((*barisPlayer < BARIS-3) &&(isClimbing(arr, *barisPlayer, *kolomPlayer)==true)|| (isStanding(arr, *barisPlayer, *kolomPlayer)==false)||(isSliding(arr, *barisPlayer, *kolomPlayer)==true)){
+                if((*barisPlayer < BARIS) &&(isClimbing(arr, *barisPlayer, *kolomPlayer)==true)|| (isStanding(arr, *barisPlayer, *kolomPlayer)==false)||(isSliding(arr, *barisPlayer, *kolomPlayer)==true)|| isClimbing(arr, *barisPlayer+1, *kolomPlayer)){
                     deletePlayer(arr,*barisPlayer,*kolomPlayer);
                     (*barisPlayer)++;
                     }
                     break;
 
             case 'D' :
-                if((*kolomPlayer < KOLOM-2) && (isStanding(arr, *barisPlayer, *kolomPlayer)==true)||(isSliding(arr, *barisPlayer, *kolomPlayer)==true)){
+                if((*kolomPlayer < KOLOM) && !isNabrak(arr, *barisPlayer, *kolomPlayer, 1) && (isStanding(arr, *barisPlayer, *kolomPlayer)==true)||(isSliding(arr, *barisPlayer, *kolomPlayer)==true)){
                     deletePlayer(arr,*barisPlayer,*kolomPlayer);
                     (*kolomPlayer)++;
                     }
                     break;
             case 'A' :
-                if((*kolomPlayer > 1) && (isStanding(arr, *barisPlayer, *kolomPlayer)==true)||(isSliding(arr, *barisPlayer, *kolomPlayer)==true)){
+                if((*kolomPlayer > 0) && !isNabrak(arr, *barisPlayer, *kolomPlayer, -1) && (isStanding(arr, *barisPlayer, *kolomPlayer)==true)||(isSliding(arr, *barisPlayer, *kolomPlayer)==true)){
                     deletePlayer(arr,*barisPlayer,*kolomPlayer);
                     (*kolomPlayer)--;
                     }
@@ -479,11 +487,66 @@ bool lagiNgambilKoin(game arr[BARIS][KOLOM], int baris, int kolom ){
     }
 }
 
+void drawPlayerMovement(char movement, game arr[BARIS][KOLOM], int barisPlayer, int kolomPlayer){ //menggambar player setelah posisinya diubah
+    switch(movement){
+    case 'A' :
+            setviewport((kolomPlayer*MATRIX_ELEMENT_SIZE), (barisPlayer*MATRIX_ELEMENT_SIZE),((kolomPlayer+3)*MATRIX_ELEMENT_SIZE), ((barisPlayer+1)*MATRIX_ELEMENT_SIZE),1);
+            clearviewport();
+            setviewport(((kolomPlayer+1)*MATRIX_ELEMENT_SIZE), ((barisPlayer-1)*MATRIX_ELEMENT_SIZE),((kolomPlayer+2)*MATRIX_ELEMENT_SIZE), ((barisPlayer+2)*MATRIX_ELEMENT_SIZE),1);
+            clearviewport();
+            setviewport(0,0, 800,600,1);
+            draw2right(arr,kolomPlayer,barisPlayer);
+            draw2down(arr,kolomPlayer+1,barisPlayer-1);
+            break;
+    case 'D' :
+            setviewport(((kolomPlayer-2)*MATRIX_ELEMENT_SIZE), (barisPlayer*MATRIX_ELEMENT_SIZE),((kolomPlayer+1)*MATRIX_ELEMENT_SIZE), ((barisPlayer+1)*MATRIX_ELEMENT_SIZE),1);
+            clearviewport();
+            setviewport(((kolomPlayer-1)*MATRIX_ELEMENT_SIZE), ((barisPlayer-1)*MATRIX_ELEMENT_SIZE),((kolomPlayer)*MATRIX_ELEMENT_SIZE), ((barisPlayer+2)*MATRIX_ELEMENT_SIZE),1);
+            clearviewport();
+            setviewport(0,0, 800,600,1);
+            draw2left(arr,kolomPlayer,barisPlayer);
+            draw2down(arr,kolomPlayer-1,barisPlayer-1);
+            break;
+    case 'W' :
+            setviewport((kolomPlayer*MATRIX_ELEMENT_SIZE), (barisPlayer*MATRIX_ELEMENT_SIZE),((kolomPlayer+1)*MATRIX_ELEMENT_SIZE), ((barisPlayer+3)*MATRIX_ELEMENT_SIZE),1);
+            clearviewport();
+            setviewport(((kolomPlayer-1)*MATRIX_ELEMENT_SIZE), ((barisPlayer+1)*MATRIX_ELEMENT_SIZE),((kolomPlayer+2)*MATRIX_ELEMENT_SIZE), ((barisPlayer+2)*MATRIX_ELEMENT_SIZE),1);
+            clearviewport();
+            setviewport(0,0, 800,600,1);
+            draw2down(arr,kolomPlayer,barisPlayer);
+            draw2right(arr,kolomPlayer-1,barisPlayer+1);
+            break;
+    case 'S' :
+            setviewport((kolomPlayer*MATRIX_ELEMENT_SIZE), ((barisPlayer-2)*MATRIX_ELEMENT_SIZE),((kolomPlayer+1)*MATRIX_ELEMENT_SIZE), ((barisPlayer+1)*MATRIX_ELEMENT_SIZE),1);
+            clearviewport();
+            setviewport(((kolomPlayer-1)*MATRIX_ELEMENT_SIZE), ((barisPlayer-1)*MATRIX_ELEMENT_SIZE),((kolomPlayer+2)*MATRIX_ELEMENT_SIZE), ((barisPlayer)*MATRIX_ELEMENT_SIZE),1);
+            clearviewport();
+            setviewport(0,0, 800,600,1);
+            draw2up(arr,kolomPlayer,barisPlayer);
+            draw2right(arr, kolomPlayer-1,barisPlayer-1);
+            break;
+    }
+
+}
+
+
+
+bool isGerak(game arr[BARIS][KOLOM], int baris, int kolom, int barisBef, int kolomBef){
+    if((arr[baris][kolom].player == arr[barisBef][kolomBef].player)){
+        return false;
+    }else{
+        return true;
+    }
+}
+
+
+
 int main(){
     initwindow(800, 650, " ", 0, 0, true, true);
     char movement;
     int page = 0;
     game arr[BARIS][KOLOM];
+    int barisPlayerBef, kolomPlayerBef;
     int barisPlayer, kolomPlayer; //posisi player di matriks
     int score = 0;
 
@@ -509,6 +572,9 @@ int main(){
         setactivepage(page);
         setvisualpage(1-page);
 
+        barisPlayerBef = barisPlayer;
+        kolomPlayerBef = kolomPlayer;
+
         if(lagiNgambilKoin(arr,barisPlayer,kolomPlayer)){
             arr[barisPlayer][kolomPlayer].stage = 0;
             hitung_skor(&score);
@@ -526,19 +592,26 @@ int main(){
         drawPlayerMovement(movement, arr, barisPlayer, kolomPlayer);
 
 
-        if(movement == 'W' || movement == 'S' || movement == 'A' || movement == 'D'){
+
+        if(isGerak(arr, barisPlayer, kolomPlayer, barisPlayerBef, kolomPlayerBef)){
             page = 1-page;
         }
+
         movement = NULL;
-        
+
         if(done(arr,barisPlayer,kolomPlayer))
 		{
+		    setactivepage(4);
+            clearviewport();
+            outtextxy(800/2,600/2-50, "Game Over");
+            setvisualpage(4);
+            getch();
 			break;
 		}
 
     }
 
-    getch();
+
     closegraph();
     return 0;
 }
