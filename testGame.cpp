@@ -400,77 +400,64 @@ void draw2left(game arr[BARIS][KOLOM], int kolom, int baris){ //menggambar matri
     }
 }
 
+bool isStanding(game arr[BARIS][KOLOM], int baris, int kolom){
+    if((arr[baris+1][kolom].stage == 1) || (arr[baris+1][kolom].stage == 2)){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+bool isClimbing(game arr[BARIS][KOLOM], int baris, int kolom){
+    if((arr[baris][kolom].stage == 2)){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+bool isSliding(game arr[BARIS][KOLOM], int baris, int kolom){
+    if(arr[baris][kolom].stage == 3){
+        return true;
+    }else{
+        return false;
+    }
+}
+bool isFalling(game arr[BARIS][KOLOM], int baris, int kolom){
+    if(arr[baris+1][kolom].stage == 0){
+        return true;
+    }else{
+    return false;}
+}
 void playerMovement(char movement, game arr[BARIS][KOLOM], int* barisPlayer, int* kolomPlayer){ //memindahkan posisi player dalam matriks sesuai movement yang dipilih oleh user
     switch(movement){
             case 'W' :
-                if(*barisPlayer > 0){
+                if((*barisPlayer > 0)&&(isClimbing(arr, *barisPlayer, *kolomPlayer)==true)|| (isStanding(arr, *barisPlayer, *kolomPlayer)==false)){
                     deletePlayer(arr,*barisPlayer,*kolomPlayer);
                     (*barisPlayer)--;
                     }
                     break;
             case 'S' :
-                if(*barisPlayer < BARIS-1){
+                if((*barisPlayer < BARIS-3) &&(isClimbing(arr, *barisPlayer, *kolomPlayer)==true)|| (isStanding(arr, *barisPlayer, *kolomPlayer)==false)||(isSliding(arr, *barisPlayer, *kolomPlayer)==true)){
                     deletePlayer(arr,*barisPlayer,*kolomPlayer);
                     (*barisPlayer)++;
                     }
                     break;
 
             case 'D' :
-                if(*kolomPlayer < KOLOM-1){
+                if((*kolomPlayer < KOLOM-2) && (isStanding(arr, *barisPlayer, *kolomPlayer)==true)||(isSliding(arr, *barisPlayer, *kolomPlayer)==true)){
                     deletePlayer(arr,*barisPlayer,*kolomPlayer);
                     (*kolomPlayer)++;
                     }
                     break;
             case 'A' :
-                if(*kolomPlayer > 0){
+                if((*kolomPlayer > 1) && (isStanding(arr, *barisPlayer, *kolomPlayer)==true)||(isSliding(arr, *barisPlayer, *kolomPlayer)==true)){
                     deletePlayer(arr,*barisPlayer,*kolomPlayer);
                     (*kolomPlayer)--;
                     }
                     break;
         }
         insertPlayer(arr,*barisPlayer,*kolomPlayer);
-}
-
-void drawPlayerMovement(char movement, game arr[BARIS][KOLOM], int barisPlayer, int kolomPlayer){ //menggambar player setelah posisinya diubah
-    switch(movement){
-    case 'A' :
-            setviewport((kolomPlayer*MATRIX_ELEMENT_SIZE), (barisPlayer*MATRIX_ELEMENT_SIZE),((kolomPlayer+3)*MATRIX_ELEMENT_SIZE), ((barisPlayer+1)*MATRIX_ELEMENT_SIZE),1);
-            clearviewport();
-            setviewport(((kolomPlayer+1)*MATRIX_ELEMENT_SIZE), ((barisPlayer-1)*MATRIX_ELEMENT_SIZE),((kolomPlayer+2)*MATRIX_ELEMENT_SIZE), ((barisPlayer+2)*MATRIX_ELEMENT_SIZE),1);
-            clearviewport();
-            setviewport(0,0, 800,600,1);
-            draw2right(arr,kolomPlayer,barisPlayer);
-            draw2down(arr,kolomPlayer+1,barisPlayer-1);
-            break;
-    case 'D' :
-            setviewport(((kolomPlayer-2)*MATRIX_ELEMENT_SIZE), (barisPlayer*MATRIX_ELEMENT_SIZE),((kolomPlayer+1)*MATRIX_ELEMENT_SIZE), ((barisPlayer+1)*MATRIX_ELEMENT_SIZE),1);
-            clearviewport();
-            setviewport(((kolomPlayer-1)*MATRIX_ELEMENT_SIZE), ((barisPlayer-1)*MATRIX_ELEMENT_SIZE),((kolomPlayer)*MATRIX_ELEMENT_SIZE), ((barisPlayer+2)*MATRIX_ELEMENT_SIZE),1);
-            clearviewport();
-            setviewport(0,0, 800,600,1);
-            draw2left(arr,kolomPlayer,barisPlayer);
-            draw2down(arr,kolomPlayer-1,barisPlayer-1);
-            break;
-    case 'W' :
-            setviewport((kolomPlayer*MATRIX_ELEMENT_SIZE), (barisPlayer*MATRIX_ELEMENT_SIZE),((kolomPlayer+1)*MATRIX_ELEMENT_SIZE), ((barisPlayer+3)*MATRIX_ELEMENT_SIZE),1);
-            clearviewport();
-            setviewport(((kolomPlayer-1)*MATRIX_ELEMENT_SIZE), ((barisPlayer+1)*MATRIX_ELEMENT_SIZE),((kolomPlayer+2)*MATRIX_ELEMENT_SIZE), ((barisPlayer+2)*MATRIX_ELEMENT_SIZE),1);
-            clearviewport();
-            setviewport(0,0, 800,600,1);
-            draw2down(arr,kolomPlayer,barisPlayer);
-            draw2right(arr,kolomPlayer-1,barisPlayer+1);
-            break;
-    case 'S' :
-            setviewport((kolomPlayer*MATRIX_ELEMENT_SIZE), ((barisPlayer-2)*MATRIX_ELEMENT_SIZE),((kolomPlayer+1)*MATRIX_ELEMENT_SIZE), ((barisPlayer+1)*MATRIX_ELEMENT_SIZE),1);
-            clearviewport();
-            setviewport(((kolomPlayer-1)*MATRIX_ELEMENT_SIZE), ((barisPlayer-1)*MATRIX_ELEMENT_SIZE),((kolomPlayer+2)*MATRIX_ELEMENT_SIZE), ((barisPlayer)*MATRIX_ELEMENT_SIZE),1);
-            clearviewport();
-            setviewport(0,0, 800,600,1);
-            draw2up(arr,kolomPlayer,barisPlayer);
-            draw2right(arr, kolomPlayer-1,barisPlayer-1);
-            break;
-    }
-
 }
 
 bool lagiNgambilKoin(game arr[BARIS][KOLOM], int baris, int kolom ){
@@ -518,7 +505,12 @@ int main(){
 
         tampil_skor(score);
 
-        movement = toupper(getch());
+       if(!isFalling(arr,barisPlayer,kolomPlayer) || isSliding(arr, barisPlayer, kolomPlayer)){
+            movement=toupper(getch());
+        }else{
+            movement = 'S';
+            delay(250);
+        }
         playerMovement(movement, arr, &barisPlayer, &kolomPlayer);
         drawPlayerMovement(movement, arr, barisPlayer, kolomPlayer);
 
