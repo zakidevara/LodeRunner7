@@ -36,26 +36,26 @@ bool isFalling(game arr[BARIS][KOLOM], int baris, int kolom){
 void playerMovement(char movement, game arr[BARIS][KOLOM], int* barisPlayer, int* kolomPlayer){ //memindahkan posisi player dalam matriks sesuai movement yang dipilih oleh user
     switch(movement){
             case 'W' :
-                if((*barisPlayer > 0)&&(isClimbing(arr, *barisPlayer, *kolomPlayer)==true)|| (isStanding(arr, *barisPlayer, *kolomPlayer)==false)){
+                if((*barisPlayer > 0) && (isClimbing(arr, *barisPlayer, *kolomPlayer)==true)){
                     deletePlayer(arr,*barisPlayer,*kolomPlayer);
                     (*barisPlayer)--;
                     }
                     break;
             case 'S' :
-                if((*barisPlayer < BARIS) &&(isClimbing(arr, *barisPlayer, *kolomPlayer)==true)|| (isStanding(arr, *barisPlayer, *kolomPlayer)==false)||(isSliding(arr, *barisPlayer, *kolomPlayer)==true)|| isClimbing(arr, *barisPlayer+1, *kolomPlayer)){
+                if((*barisPlayer < BARIS-1) &&(isClimbing(arr, *barisPlayer, *kolomPlayer)==true)||((isSliding(arr, *barisPlayer, *kolomPlayer)==true) && !isStanding(arr, *barisPlayer, *kolomPlayer))|| isClimbing(arr, *barisPlayer+1, *kolomPlayer) || isFalling(arr, *barisPlayer, *kolomPlayer)){
                     deletePlayer(arr,*barisPlayer,*kolomPlayer);
                     (*barisPlayer)++;
                     }
                     break;
 
             case 'D' :
-                if((*kolomPlayer < KOLOM) && !isNabrak(arr, *barisPlayer, *kolomPlayer, 1) && (isStanding(arr, *barisPlayer, *kolomPlayer)==true)||(isSliding(arr, *barisPlayer, *kolomPlayer)==true)){
+                if((*kolomPlayer < KOLOM-1) && !isNabrak(arr, *barisPlayer, *kolomPlayer, 1) && (isStanding(arr, *barisPlayer, *kolomPlayer)==true)||(isSliding(arr, *barisPlayer, *kolomPlayer)==true) || isClimbing(arr, *barisPlayer, *kolomPlayer)){
                     deletePlayer(arr,*barisPlayer,*kolomPlayer);
                     (*kolomPlayer)++;
                     }
                     break;
             case 'A' :
-                if((*kolomPlayer > 0) && !isNabrak(arr, *barisPlayer, *kolomPlayer, -1) && (isStanding(arr, *barisPlayer, *kolomPlayer)==true)||(isSliding(arr, *barisPlayer, *kolomPlayer)==true)){
+                if((*kolomPlayer > 0) && !isNabrak(arr, *barisPlayer, *kolomPlayer, -1) && (isStanding(arr, *barisPlayer, *kolomPlayer)==true)||(isSliding(arr, *barisPlayer, *kolomPlayer)==true) || isClimbing(arr, *barisPlayer, *kolomPlayer)){
                     deletePlayer(arr,*barisPlayer,*kolomPlayer);
                     (*kolomPlayer)--;
                     }
@@ -63,4 +63,3 @@ void playerMovement(char movement, game arr[BARIS][KOLOM], int* barisPlayer, int
         }
         insertPlayer(arr,*barisPlayer,*kolomPlayer);
 }
-
