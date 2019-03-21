@@ -429,6 +429,17 @@ bool isFalling(game arr[BARIS][KOLOM], int baris, int kolom){
     }else{
     return false;}
 }
+
+bool done(game arr[BARIS][KOLOM], int baris, int kolom)
+{
+	if (arr[baris][kolom].stage == 5)
+	{
+		return true;
+	}else{
+		return false;
+	}
+}
+
 void playerMovement(char movement, game arr[BARIS][KOLOM], int* barisPlayer, int* kolomPlayer){ //memindahkan posisi player dalam matriks sesuai movement yang dipilih oleh user
     switch(movement){
             case 'W' :
@@ -519,7 +530,11 @@ int main(){
             page = 1-page;
         }
         movement = NULL;
-
+        
+        if(done(arr,barisPlayer,kolomPlayer))
+		{
+			break;
+		}
 
     }
 
