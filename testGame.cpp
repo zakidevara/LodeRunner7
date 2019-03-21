@@ -457,20 +457,20 @@ void playerMovement(char movement, game arr[BARIS][KOLOM], int* barisPlayer, int
                     }
                     break;
             case 'S' :
-                if((*barisPlayer < BARIS) &&(isClimbing(arr, *barisPlayer, *kolomPlayer)==true)|| (isStanding(arr, *barisPlayer, *kolomPlayer)==false)||(isSliding(arr, *barisPlayer, *kolomPlayer)==true)|| isClimbing(arr, *barisPlayer+1, *kolomPlayer)){
+                if((*barisPlayer < BARIS-2) && (isStanding(arr, *barisPlayer, *kolomPlayer)==false)||(isClimbing(arr, *barisPlayer, *kolomPlayer)==true)||(isSliding(arr, *barisPlayer, *kolomPlayer)==true)){
                     deletePlayer(arr,*barisPlayer,*kolomPlayer);
                     (*barisPlayer)++;
                     }
                     break;
 
             case 'D' :
-                if((*kolomPlayer < KOLOM) && !isNabrak(arr, *barisPlayer, *kolomPlayer, 1) && (isStanding(arr, *barisPlayer, *kolomPlayer)==true)||(isSliding(arr, *barisPlayer, *kolomPlayer)==true)){
+                if((*kolomPlayer < KOLOM-2) && (isStanding(arr, *barisPlayer, *kolomPlayer)==true)||(isSliding(arr, *barisPlayer, *kolomPlayer)==true)){
                     deletePlayer(arr,*barisPlayer,*kolomPlayer);
                     (*kolomPlayer)++;
                     }
                     break;
             case 'A' :
-                if((*kolomPlayer > 0) && !isNabrak(arr, *barisPlayer, *kolomPlayer, -1) && (isStanding(arr, *barisPlayer, *kolomPlayer)==true)||(isSliding(arr, *barisPlayer, *kolomPlayer)==true)){
+                if((*kolomPlayer > 1) && (isStanding(arr, *barisPlayer, *kolomPlayer)==true)||(isSliding(arr, *barisPlayer, *kolomPlayer)==true)){
                     deletePlayer(arr,*barisPlayer,*kolomPlayer);
                     (*kolomPlayer)--;
                     }
