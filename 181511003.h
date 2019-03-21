@@ -4,7 +4,7 @@
 
 // DEKLARASI MODUL
 bool isStanding(game arr[BARIS][KOLOM], int baris, int kolom){
-    if((arr[baris+1][kolom].stage == 1) || (arr[baris+1][kolom].stage == 2)){
+    if((arr[baris+1][kolom].stage == 1) || ((arr[baris+1][kolom].stage == 2)&&(arr[baris+1][kolom+1].stage == 1)||(arr[baris+1][kolom-1].stage == 1))){
         return true;
     }else{
         return false;
