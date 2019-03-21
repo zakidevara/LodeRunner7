@@ -4,7 +4,7 @@
 
 // DEKLARASI MODUL
 bool isStanding(game arr[BARIS][KOLOM], int baris, int kolom){
-    if((arr[baris+1][kolom].stage == 1) || ((arr[baris+1][kolom].stage == 2)&&(arr[baris+1][kolom+1].stage == 1)||(arr[baris+1][kolom-1].stage == 1))){
+    if((arr[baris+1][kolom].stage == 1) || (arr[baris+1][kolom].stage == 2)){
         return true;
     }else{
         return false;
@@ -42,14 +42,14 @@ void playerMovement(char movement, game arr[BARIS][KOLOM], int* barisPlayer, int
                     }
                     break;
             case 'S' :
-                if((*barisPlayer < BARIS-1) &&(isClimbing(arr, *barisPlayer, *kolomPlayer)==true)||((isSliding(arr, *barisPlayer, *kolomPlayer)==true) && !isStanding(arr, *barisPlayer, *kolomPlayer))|| isClimbing(arr, *barisPlayer+1, *kolomPlayer) || isFalling(arr, *barisPlayer, *kolomPlayer)){
+                if((*barisPlayer < BARIS-2) && ((isClimbing(arr, *barisPlayer, *kolomPlayer)==true) && isStanding(arr, *barisPlayer, *kolomPlayer))||((isSliding(arr, *barisPlayer, *kolomPlayer)==true) && !isStanding(arr, *barisPlayer, *kolomPlayer))|| isClimbing(arr, *barisPlayer+1, *kolomPlayer) || isFalling(arr, *barisPlayer, *kolomPlayer)){
                     deletePlayer(arr,*barisPlayer,*kolomPlayer);
                     (*barisPlayer)++;
                     }
                     break;
 
             case 'D' :
-                if((*kolomPlayer < KOLOM-1) && !isNabrak(arr, *barisPlayer, *kolomPlayer, 1) && (isStanding(arr, *barisPlayer, *kolomPlayer)==true)||(isSliding(arr, *barisPlayer, *kolomPlayer)==true) || isClimbing(arr, *barisPlayer, *kolomPlayer)){
+                if((*kolomPlayer < KOLOM-2) && !isNabrak(arr, *barisPlayer, *kolomPlayer, 1) && (isStanding(arr, *barisPlayer, *kolomPlayer)==true)||(isSliding(arr, *barisPlayer, *kolomPlayer)==true) || isClimbing(arr, *barisPlayer, *kolomPlayer)){
                     deletePlayer(arr,*barisPlayer,*kolomPlayer);
                     (*kolomPlayer)++;
                     }
