@@ -16,6 +16,8 @@ typedef struct{
     int bot;
 }game;
 
+void menutama();
+
 void hitung_skor(int* skor);
 
 void tampil_skor(int skor);
