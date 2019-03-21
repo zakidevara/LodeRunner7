@@ -18,6 +18,23 @@ typedef struct{
     int bot;
 }game;
 
+void hitung_skor(int* skor)
+{
+    *skor=*skor+1;
+}
+
+void tampil_skor(int skor)
+{
+    char skoor[6];
+
+    setviewport(800-50,600, 800, 650,1);
+    clearviewport();
+    setviewport(0,0, 800,650,1);
+    sprintf(skoor,"%d", skor);
+    outtextxy(800-50,600,skoor);
+    outtextxy(800-130,600,"SCORE:");
+}
+
 void drawRope(int x1,int y1,int x2, int y2){ //menggambar tangga
     readimagefile("images/slide.gif",x1, y1, x2-1, y2-1);
 }
@@ -125,6 +142,15 @@ void level1(game arr[BARIS][KOLOM],int* barisPlayer, int* kolomPlayer){ //genera
     arr[BARIS-17][13].stage = 1;
     arr[BARIS-17][14].stage = 1;
     arr[BARIS-17][15].stage = 1;
+    arr[BARIS-18][14].stage = 4;
+    arr[BARIS-18][13].stage = 4;
+    arr[BARIS-18][12].stage = 4;
+    arr[BARIS-18][11].stage = 4;
+    arr[BARIS-18][10].stage = 4;
+    arr[BARIS-18][9].stage = 4;
+    arr[BARIS-18][8].stage = 4;
+    arr[BARIS-18][7].stage = 4;
+    arr[BARIS-18][6].stage = 4;
     arr[BARIS-18][15].stage = 5;
 
 
@@ -447,12 +473,21 @@ void drawPlayerMovement(char movement, game arr[BARIS][KOLOM], int barisPlayer, 
 
 }
 
+bool lagiNgambilKoin(game arr[BARIS][KOLOM], int baris, int kolom ){
+    if(arr[baris][kolom].stage == 4){
+        return true;
+    }else{
+        return false;
+    }
+}
+
 int main(){
     initwindow(800, 650, " ", 0, 0, true, true);
     char movement;
     int page = 0;
     game arr[BARIS][KOLOM];
     int barisPlayer, kolomPlayer; //posisi player di matriks
+    int score = 0;
 
 
     generateStage(arr, 1, &barisPlayer, &kolomPlayer);
@@ -468,15 +503,25 @@ int main(){
 
     setactivepage(0);
     drawStage(arr);
+    tampil_skor(score);
     setactivepage(1);
     drawStage(arr);
+    tampil_skor(score);
     while(true){
         setactivepage(page);
         setvisualpage(1-page);
 
+        if(lagiNgambilKoin(arr,barisPlayer,kolomPlayer)){
+            arr[barisPlayer][kolomPlayer].stage = 0;
+            hitung_skor(&score);
+        }
+
+        tampil_skor(score);
+
         movement = toupper(getch());
         playerMovement(movement, arr, &barisPlayer, &kolomPlayer);
         drawPlayerMovement(movement, arr, barisPlayer, kolomPlayer);
+
 
         if(movement == 'W' || movement == 'S' || movement == 'A' || movement == 'D'){
             page = 1-page;
