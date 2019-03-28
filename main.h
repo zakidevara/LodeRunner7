@@ -87,3 +87,7 @@ bool isGerak(game arr[BARIS][KOLOM], int baris, int kolom, int barisBef, int kol
 void loading();
 
 void prosesInput(char *movement);
+
+void permainan();
+
+void menutama();
