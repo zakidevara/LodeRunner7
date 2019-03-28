@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <graphics.h>
 #include <conio.h>
+#include <ctime>
 #include "main.h"
 #include "181511057.h"
 #include "181511003.h"
@@ -24,6 +25,8 @@ int main(){
     int playerXBfr, playerYBfr;
     int score = 0;
     int urutan = 0;
+    clock_t wktmulai,wktselesai;
+    double wkttotal;
 
     //Memasukkan nilai ke semua elemen matriks
     generateStage(arr, 1, &barisPlayer, &kolomPlayer);
@@ -46,6 +49,10 @@ int main(){
     tampil_skor(score);
 
     //mulai permainan
+
+    //Simpan Waktu Awal
+    waktu_Awal(&wktmulai);
+
     while(true){
         setactivepage(page);
         setvisualpage(1-page);
@@ -98,12 +105,15 @@ int main(){
         //cek apabila player sudah ada di pintu exit
         if(done(arr,barisPlayer,kolomPlayer))
 		{
+		    waktu_Akhir(&wktselesai);
+		    wkttotal = hitung_Waktu(wktmulai, wktselesai);
 		    setactivepage(2);
-            clearviewport();
-            outtextxy(800/2,600/2-50, "Game Over");
-            setvisualpage(2);
-            getch();
-			break;
+            	    clearviewport();
+            	    outtextxy(800/2,600/2-50, "Game Over");
+           	    tampil_Waktu(wkttotal);
+           	    setvisualpage(2);
+           	    getch();
+				break;
 		}
 
     }
