@@ -75,7 +75,7 @@ void permainan(){
             movement = 'S';
             delay(100);
         }else{
-            if(kbhit()){
+            while(kbhit()){
                 movement=toupper(getch());
                 prosesInput(&movement);
             }
