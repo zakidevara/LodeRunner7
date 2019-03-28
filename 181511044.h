@@ -20,25 +20,26 @@ void tampil_skor(int skor)
     outtextxy(800-130,600,"SCORE:");
 }
 
-void waktu_Awal()
+void waktu_Awal(clock_t* wktAwal)
 {
-    double wktAwal;
 
-    wktAwal = clock();
+
+    *wktAwal = clock();
 }
 
-void waktu_Akhir()
+void waktu_Akhir(clock_t* wktAkhir)
 {
-    double wktAkhir;
 
-    wktAkhir = clock();
+
+   * wktAkhir = clock();
 }
 
-void hitung_Waktu(double wktAwal, double wktAkhir)
+double hitung_Waktu(clock_t wktAwal, clock_t wktAkhir)
 {
     double durasi;
 
-    durasi = wktAkhir - wktAwal;
+    durasi = ( wktAkhir - wktAwal ) / (double) CLOCKS_PER_SEC;;
+    return durasi;
 }
 
 void tampil_Waktu(double durasi)
