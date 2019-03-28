@@ -11,7 +11,7 @@
 #include "181511004.h"
 
 
-int main(){
+void permainan(){
     initwindow(800, 650, " ", 0, 0, true, true);
 
     //VARIABEL LOKAL
@@ -60,7 +60,7 @@ int main(){
         //masukkan nilai untuk mengecek bergerak atau tidak
         playerXBfr = playerX;
         playerYBfr = playerY;
-        
+
         wktskrng = clock();
         //proses jika player mengambil koin
         if(lagiNgambilKoin(arr,barisPlayer,kolomPlayer)){
@@ -83,10 +83,10 @@ int main(){
 
         //memproses movement yang diinput user
         playerMovement(movement, arr, &barisPlayer, &kolomPlayer, &playerX, &playerY, &wktnembak, &baristembak, &kolomtembak);
-		
+
 		drslubang = hitung_Waktu(wktnembak, wktskrng);
 		if(drslubang > 4){
-			arr[baristembak][kolomtembak].stage=1;	
+			arr[baristembak][kolomtembak].stage=1;
 		}
         //update posisi player dalam matriks
         deletePlayer(arr, barisPlayer, kolomPlayer);
@@ -120,8 +120,72 @@ int main(){
 		}
 
     }
+    closegraph(-1);
+}
 
 
-    closegraph();
-    return 0;
+int main()
+{
+    initwindow(800, 650, " ", 0, 0, false, true);
+
+    int mousex,mousey;
+    char pil;
+
+
+    while(!ismouseclick(WM_LBUTTONDOWN)){
+    settextstyle(SCRIPT_FONT,HORIZ_DIR,3);
+    outtextxy(10,10,"click to choose!!");
+    settextstyle(SANS_SERIF_FONT,HORIZ_DIR,6);
+    outtextxy(210,200,"LODE RUNNER");
+    // play
+    settextstyle(COMPLEX_FONT,HORIZ_DIR,5);
+    outtextxy(220,280,"P");
+    outtextxy(220,320,"L");
+    outtextxy(220,360,"A");
+    outtextxy(220,400,"Y");
+    //high score
+    outtextxy(270,280,"H");
+    outtextxy(270,320,"I");
+    outtextxy(270,360," ");
+    outtextxy(270,400,"S");
+    outtextxy(270,440,"C");
+    outtextxy(270,480,"O");
+    outtextxy(270,520,"R");
+    outtextxy(270,560,"E");
+    // exit
+    outtextxy(565,300,"E");
+    outtextxy(565,340,"X");
+    outtextxy(565,380,"I");
+    outtextxy(565,420,"T");
+
+
+    }
+    while(1){
+    getmouseclick(WM_LBUTTONDOWN, mousex, mousey);
+    //menu play
+    if ((mousex > 217) && (mousex < 248)&& (mousey > 298) && (mousey < 463)){
+        setactivepage(0);
+        cleardevice();
+        setactivepage(1);
+        cleardevice();
+        permainan();
+        delay(1000);
+        getch();
+        closegraph(-1);
+        break;
+    //menu credit
+        //}else if ((mousex > 515) && (mousex < 695)&& (mousey > 460) && (mousey < 510)){
+          //  exit(1);
+    //menu exit
+                }else if ((mousex > 562) && (mousex < 594)&& (mousey > 298) && (mousey < 463)){
+                    cleardevice();
+                    settextstyle(SANS_SERIF_FONT,HORIZ_DIR,6);
+                    outtextxy(250,200,"Good Bye");
+                    delay(1000);
+                    exit(1);
+                }
+    }
+    printf("mouse: %d, mousey: %d", mousex, mousey);
+    getch();
+
 }
