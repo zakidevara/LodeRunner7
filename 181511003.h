@@ -83,7 +83,7 @@ void playerMovement(char movement, game arr[BARIS][KOLOM], int* barisPlayer, int
 				break;
 			case 'N' :
 				if(arr[*barisPlayer+1][*kolomPlayer-1].stage == 1){
-					*baristembak = *barisPlayer-1;
+					*baristembak = *barisPlayer+1;
             		*kolomtembak = *kolomPlayer-1;
             		arr[*barisPlayer+1][*kolomPlayer-1].stage = 0;
             		*wktnembak = clock();
