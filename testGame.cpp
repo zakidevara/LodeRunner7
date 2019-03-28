@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <graphics.h>
 #include <conio.h>
@@ -25,8 +24,9 @@ int main(){
     int playerXBfr, playerYBfr;
     int score = 0;
     int urutan = 0;
-    clock_t wktmulai,wktselesai;
-    double wkttotal;
+    int baristembak, kolomtembak;
+    clock_t wktmulai,wktselesai, wktnembak, wktskrng;
+    double wkttotal, drslubang;
 
     //Memasukkan nilai ke semua elemen matriks
     generateStage(arr, 1, &barisPlayer, &kolomPlayer);
@@ -60,9 +60,8 @@ int main(){
         //masukkan nilai untuk mengecek bergerak atau tidak
         playerXBfr = playerX;
         playerYBfr = playerY;
-
-
-
+        
+        wktskrng = clock();
         //proses jika player mengambil koin
         if(lagiNgambilKoin(arr,barisPlayer,kolomPlayer)){
             arr[barisPlayer][kolomPlayer].stage = 0;
@@ -83,8 +82,12 @@ int main(){
         }
 
         //memproses movement yang diinput user
-        playerMovement(movement, arr, &barisPlayer, &kolomPlayer, &playerX, &playerY);
-
+        playerMovement(movement, arr, &barisPlayer, &kolomPlayer, &playerX, &playerY, &wktnembak, &baristembak, &kolomtembak);
+		
+		drslubang = hitung_Waktu(wktnembak, wktskrng);
+		if(drslubang > 4){
+			arr[baristembak][kolomtembak].stage=1;	
+		}
         //update posisi player dalam matriks
         deletePlayer(arr, barisPlayer, kolomPlayer);
         kolomPlayer = (playerX+(MATRIX_ELEMENT_SIZE/2))/MATRIX_ELEMENT_SIZE;
@@ -108,8 +111,8 @@ int main(){
 		    waktu_Akhir(&wktselesai);
 		    wkttotal = hitung_Waktu(wktmulai, wktselesai);
 		    setactivepage(2);
-            	    clearviewport();
-            	    outtextxy(800/2,600/2-50, "Game Over");
+            	clearviewport();
+            	outtextxy(800/2,600/2-50, "Game Over");
            	    tampil_Waktu(wkttotal);
            	    setvisualpage(2);
            	    getch();
