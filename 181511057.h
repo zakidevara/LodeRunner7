@@ -339,13 +339,13 @@ void drawPlayerMovement(char movement, game arr[BARIS][KOLOM], int barisPlayer, 
     		setviewport(((kolomPlayer+1)*MATRIX_ELEMENT_SIZE), ((barisPlayer+1)*MATRIX_ELEMENT_SIZE),((kolomPlayer+2)*MATRIX_ELEMENT_SIZE), ((barisPlayer+2)*MATRIX_ELEMENT_SIZE),1);
             clearviewport();
             setviewport(0,0, 800,600,1);
-            draw2up(arr,kolomPlayer+1,barisPlayer+1);
+            drawUp(arr,kolomPlayer+1,barisPlayer+1,3);
             break;
     case 'N' :
     		setviewport(((kolomPlayer-1)*MATRIX_ELEMENT_SIZE), ((barisPlayer+1)*MATRIX_ELEMENT_SIZE),((kolomPlayer)*MATRIX_ELEMENT_SIZE), ((barisPlayer+2)*MATRIX_ELEMENT_SIZE),1);
             clearviewport();
             setviewport(0,0, 800,600,1);
-            draw2up(arr,kolomPlayer-1,barisPlayer+1);
+            drawUp(arr,kolomPlayer-1,barisPlayer+1,3);
             break;
     /*default:
             setviewport(((kolomPlayer-1)*MATRIX_ELEMENT_SIZE), ((barisPlayer)*MATRIX_ELEMENT_SIZE),((kolomPlayer+2)*MATRIX_ELEMENT_SIZE), ((barisPlayer+1)*MATRIX_ELEMENT_SIZE),1);
@@ -382,7 +382,7 @@ bool isGerak(game arr[BARIS][KOLOM], int X, int Y, int XBfr, int YBfr){
 
 void prosesInput(char* movement){
 //memproses input yang dimasukkan oleh user
-    if ((*movement != 'A') && (*movement != 'S') && (*movement != 'D') && (*movement != 'W')){
+    if ((*movement != 'A') && (*movement != 'S') && (*movement != 'D') && (*movement != 'W') && (*movement != 'M') && (*movement != 'N')){
         *movement = NULL;
     }
 }
