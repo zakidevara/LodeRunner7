@@ -74,10 +74,10 @@ void playerMovement(char movement, game arr[BARIS][KOLOM], int* barisPlayer, int
             case 'M' :
             	if(arr[*barisPlayer+1][*kolomPlayer+1].stage == 1){
             		arr[*barisPlayer+1][*kolomPlayer+1].stage = 0;
-				}
+				}break;
 			case 'N' :
 				if(arr[*barisPlayer+1][*kolomPlayer-1].stage == 1){
             		arr[*barisPlayer+1][*kolomPlayer-1].stage = 0;
-				}
+				}break;
         }
 }
