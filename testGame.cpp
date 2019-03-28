@@ -1,14 +1,3 @@
-#include <stdio.h>
-#include <graphics.h>
-#include <conio.h>
-#include "main.h"
-#include "181511057.h"
-#include "181511003.h"
-#include "181511044.h"
-#include "181511037.h"
-#include "181511028.h"
-#include "181511004.h"
-
 
 #include <stdio.h>
 #include <graphics.h>
