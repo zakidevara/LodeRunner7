@@ -16,8 +16,6 @@ typedef struct{
     int bot;
 }game;
 
-void menutama();
-
 void hitung_skor(int* skor);
 
 void tampil_skor(int skor);
@@ -30,7 +28,9 @@ void drawExit(int x1,int y1,int x2, int y2);
 
 void drawLadder(int x1,int y1,int x2, int y2);
 
-void drawPlayer(int x1,int y1,int x2, int y2);
+void drawPlayerRight(int x1,int y1,int x2, int y2);
+
+void drawPlayerLeft(int x1,int y1,int x2, int y2);
 
 void drawBot(int x1,int y1,int x2, int y2);
 
@@ -56,13 +56,13 @@ void drawStageBaris(game arr[BARIS][KOLOM], int baris);
 
 void drawStageKolom(game arr[BARIS][KOLOM], int kolom);
 
-void draw2down(game arr[BARIS][KOLOM], int kolom, int baris);
+void drawDown(game arr[BARIS][KOLOM], int kolom, int baris, int n);
 
-void draw2up(game arr[BARIS][KOLOM], int kolom, int baris);
+void drawUp(game arr[BARIS][KOLOM], int kolom, int baris, int n);
 
-void draw2right(game arr[BARIS][KOLOM], int kolom, int baris);
+void drawRight(game arr[BARIS][KOLOM], int kolom, int baris, int n);
 
-void draw2left(game arr[BARIS][KOLOM], int kolom, int baris);
+void drawLeft(game arr[BARIS][KOLOM], int kolom, int baris, int n);
 
 bool isStanding(game arr[BARIS][KOLOM], int baris, int kolom);
 
