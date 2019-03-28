@@ -335,6 +335,18 @@ void drawPlayerMovement(char movement, game arr[BARIS][KOLOM], int barisPlayer, 
             drawRight(arr, kolomPlayer-1,barisPlayer,3);
             playerRunningRight(X,Y,X+MATRIX_ELEMENT_SIZE,Y+MATRIX_ELEMENT_SIZE, urutan);
             break;
+    case 'M' :
+    		setviewport(((kolomPlayer+1)*MATRIX_ELEMENT_SIZE), ((barisPlayer+1)*MATRIX_ELEMENT_SIZE),((kolomPlayer+2)*MATRIX_ELEMENT_SIZE), ((barisPlayer+2)*MATRIX_ELEMENT_SIZE),1);
+            clearviewport();
+            setviewport(0,0, 800,600,1);
+            draw2up(arr,kolomPlayer+1,barisPlayer+1);
+            break;
+    case 'N' :
+    		setviewport(((kolomPlayer-1)*MATRIX_ELEMENT_SIZE), ((barisPlayer+1)*MATRIX_ELEMENT_SIZE),((kolomPlayer)*MATRIX_ELEMENT_SIZE), ((barisPlayer+2)*MATRIX_ELEMENT_SIZE),1);
+            clearviewport();
+            setviewport(0,0, 800,600,1);
+            draw2up(arr,kolomPlayer-1,barisPlayer+1);
+            break;
     /*default:
             setviewport(((kolomPlayer-1)*MATRIX_ELEMENT_SIZE), ((barisPlayer)*MATRIX_ELEMENT_SIZE),((kolomPlayer+2)*MATRIX_ELEMENT_SIZE), ((barisPlayer+1)*MATRIX_ELEMENT_SIZE),1);
             clearviewport();
