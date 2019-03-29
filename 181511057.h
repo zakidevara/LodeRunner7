@@ -119,6 +119,53 @@ void botRunningLeft(int x1,int y1,int x2, int y2, int* urutan){
 
 }
 
+void playerClimbRopeLeft(int x1,int y1,int x2, int y2, int* urutan){
+    switch(*urutan){
+    case 0:
+        readimagefile("images/player/Player_ClimbRope_Left0.gif", x1, y1, x2-1, y2-1);break;
+    case 1:
+        readimagefile("images/player/Player_ClimbRope_Left1.gif", x1, y1, x2-1, y2-1);break;
+    default:
+        readimagefile("images/player/Player_ClimbRope_Left0.gif", x1, y1, x2-1, y2-1);
+    }
+    (*urutan)++;
+    if(*urutan > 1){
+        *urutan = 0;
+    }
+
+}
+
+void playerClimbRopeRight(int x1,int y1,int x2, int y2, int* urutan){
+    switch(*urutan){
+    case 0:
+        readimagefile("images/player/Player_ClimbRope_Right0.gif", x1, y1, x2-1, y2-1);break;
+    case 1:
+        readimagefile("images/player/Player_ClimbRope_Right1.gif", x1, y1, x2-1, y2-1);break;
+    default:
+        readimagefile("images/player/Player_ClimbRope_Right0.gif", x1, y1, x2-1, y2-1);
+    }
+    (*urutan)++;
+    if(*urutan > 1){
+        *urutan = 0;
+    }
+}
+
+void playerClimbLadder(int x1,int y1,int x2, int y2, int* urutan){
+    switch(*urutan){
+    case 0:
+        readimagefile("images/player/Player_ClimbLadder0.gif", x1, y1, x2-1, y2-1);break;
+    case 1:
+        readimagefile("images/player/Player_ClimbLadder1.gif", x1, y1, x2-1, y2-1);break;
+    default:
+        readimagefile("images/player/Player_ClimbLadder0.gif", x1, y1, x2-1, y2-1);
+    }
+    (*urutan)++;
+    if(*urutan > 1){
+        *urutan = 0;
+    }
+}
+
+
 void drawBot(int x1,int y1,int x2, int y2){
 // menggambar bot
     readimagefile("images/Bot/Bot_Left0.gif",x1, y1, x2-1, y2-1);
@@ -223,7 +270,6 @@ void level1(game arr[BARIS][KOLOM],int* barisPlayer, int* kolomPlayer){
     arr[BARIS-18][6].stage = 4;
     arr[BARIS-18][15].stage = 5;
 
-
     *barisPlayer = BARIS-2; *kolomPlayer = KOLOM/2;
     insertPlayer(arr,*barisPlayer, *kolomPlayer);
     insertBot(arr,BARIS-2,KOLOM-2);
@@ -240,7 +286,6 @@ void generateStage(game arr[BARIS][KOLOM], int level, int* barisPlayer, int* kol
 
 void drawStage(game arr[BARIS][KOLOM]){
 // menggambar seluruh matriks game
-
     for(int i=0; i<BARIS; i++){
         for(int j=0; j<KOLOM; j++){
             //penggambaran stage
@@ -300,7 +345,12 @@ void drawPlayerMovement(char movement, game arr[BARIS][KOLOM], int barisPlayer, 
             drawRight(arr,kolomPlayer-1,barisPlayer,4);
             drawRight(arr,kolomPlayer,barisPlayer-1,2);
             drawRight(arr,kolomPlayer,barisPlayer+1,2);
-            playerRunningLeft(X,Y,X+MATRIX_ELEMENT_SIZE,Y+MATRIX_ELEMENT_SIZE, urutan);
+            if(isStanding(arr, barisPlayer, kolomPlayer)){
+                playerRunningLeft(X,Y,X+MATRIX_ELEMENT_SIZE,Y+MATRIX_ELEMENT_SIZE, urutan);
+            }else if(isSliding(arr, barisPlayer, kolomPlayer)){
+                playerClimbRopeLeft(X,Y,X+MATRIX_ELEMENT_SIZE,Y+MATRIX_ELEMENT_SIZE, urutan);
+            }
+
             break;
     case 'D' :
             setviewport(((kolomPlayer-2)*MATRIX_ELEMENT_SIZE), (barisPlayer*MATRIX_ELEMENT_SIZE),((kolomPlayer+2)*MATRIX_ELEMENT_SIZE), ((barisPlayer+1)*MATRIX_ELEMENT_SIZE),1);
@@ -311,7 +361,11 @@ void drawPlayerMovement(char movement, game arr[BARIS][KOLOM], int barisPlayer, 
             drawLeft(arr,kolomPlayer+1,barisPlayer,4);
             drawLeft(arr,kolomPlayer,barisPlayer-1,2);
             drawLeft(arr,kolomPlayer,barisPlayer+1,2);
-            playerRunningRight(X,Y,X+MATRIX_ELEMENT_SIZE,Y+MATRIX_ELEMENT_SIZE, urutan);
+            if(isStanding(arr, barisPlayer, kolomPlayer)){
+                playerRunningRight(X,Y,X+MATRIX_ELEMENT_SIZE,Y+MATRIX_ELEMENT_SIZE, urutan);
+            }else if(isSliding(arr, barisPlayer, kolomPlayer)){
+                playerClimbRopeRight(X,Y,X+MATRIX_ELEMENT_SIZE,Y+MATRIX_ELEMENT_SIZE, urutan);
+            }
             break;
     case 'W' :
             setviewport((kolomPlayer*MATRIX_ELEMENT_SIZE), ((barisPlayer)*MATRIX_ELEMENT_SIZE),((kolomPlayer+1)*MATRIX_ELEMENT_SIZE), ((barisPlayer+3)*MATRIX_ELEMENT_SIZE),1);
@@ -322,7 +376,7 @@ void drawPlayerMovement(char movement, game arr[BARIS][KOLOM], int barisPlayer, 
             drawDown(arr,kolomPlayer,barisPlayer,3);
             drawRight(arr,kolomPlayer-1,barisPlayer+1,3);
             drawRight(arr,kolomPlayer-1,barisPlayer,3);
-            playerRunningRight(X,Y,X+MATRIX_ELEMENT_SIZE,Y+MATRIX_ELEMENT_SIZE, urutan);
+            playerClimbLadder(X,Y,X+MATRIX_ELEMENT_SIZE,Y+MATRIX_ELEMENT_SIZE, urutan);
             break;
     case 'S' :
             setviewport((kolomPlayer*MATRIX_ELEMENT_SIZE), ((barisPlayer-2)*MATRIX_ELEMENT_SIZE),((kolomPlayer+1)*MATRIX_ELEMENT_SIZE), ((barisPlayer+2)*MATRIX_ELEMENT_SIZE),1);
@@ -333,7 +387,11 @@ void drawPlayerMovement(char movement, game arr[BARIS][KOLOM], int barisPlayer, 
             drawUp(arr,kolomPlayer,barisPlayer+1,4);
             drawRight(arr, kolomPlayer-1,barisPlayer-1,3);
             drawRight(arr, kolomPlayer-1,barisPlayer,3);
-            playerRunningRight(X,Y,X+MATRIX_ELEMENT_SIZE,Y+MATRIX_ELEMENT_SIZE, urutan);
+            if(isFalling(arr, barisPlayer, kolomPlayer)){
+                playerRunningRight(X,Y,X+MATRIX_ELEMENT_SIZE,Y+MATRIX_ELEMENT_SIZE, urutan);
+            }else{
+                playerClimbLadder(X,Y,X+MATRIX_ELEMENT_SIZE,Y+MATRIX_ELEMENT_SIZE, urutan);
+            }
             break;
     case 'M' :
     		setviewport(((kolomPlayer+1)*MATRIX_ELEMENT_SIZE), ((barisPlayer+1)*MATRIX_ELEMENT_SIZE),((kolomPlayer+2)*MATRIX_ELEMENT_SIZE), ((barisPlayer+2)*MATRIX_ELEMENT_SIZE),1);
