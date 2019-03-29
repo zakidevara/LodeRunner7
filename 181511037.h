@@ -136,29 +136,27 @@ void menutama()
 
     }
     while(1){
-    getmouseclick(WM_LBUTTONDOWN, mousex, mousey);
-    //menu play
-    if ((mousex > 217) && (mousex < 248)&& (mousey > 298) && (mousey < 463)){
-        setactivepage(0);
-        cleardevice();
-        setactivepage(1);
-        cleardevice();
-        permainan();
-        delay(1000);
-        getch();
-        closegraph(-1);
-        break;
-    //menu credit
+        getmouseclick(WM_LBUTTONDOWN, mousex, mousey);
+        //menu play
+        if ((mousex > 217) && (mousex < 248)&& (mousey > 298) && (mousey < 463)){
+            setactivepage(0);
+            cleardevice();
+            setactivepage(1);
+            cleardevice();
+            permainan();
+            break;
+        //menu credit
         //}else if ((mousex > 515) && (mousex < 695)&& (mousey > 460) && (mousey < 510)){
-          //  exit(1);
-    //menu exit
-                }else if ((mousex > 562) && (mousex < 594)&& (mousey > 298) && (mousey < 463)){
-                    cleardevice();
-                    settextstyle(SANS_SERIF_FONT,HORIZ_DIR,6);
-                    outtextxy(250,200,"Good Bye");
-                    delay(1000);
-                    exit(1);
-                }
+        //  exit(1);
+        //menu exit
+        }else if ((mousex > 562) && (mousex < 594)&& (mousey > 298) && (mousey < 463)){
+            cleardevice();
+            settextstyle(SANS_SERIF_FONT,HORIZ_DIR,6);
+            outtextxy(250,200,"Good Bye");
+            delay(1000);
+            closegraph();
+            exit(1);
+        }
     }
     printf("mouse: %d, mousey: %d", mousex, mousey);
     getch();
