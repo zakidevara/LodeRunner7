@@ -16,7 +16,6 @@ void permainan(){
 
     //VARIABEL LOKAL
     char movement;
-    int page = 0;
     game arr[BARIS][KOLOM];
     int barisPlayerBef, kolomPlayerBef;
     int barisPlayer, kolomPlayer; //posisi player di matriks
@@ -53,9 +52,10 @@ void permainan(){
     //Simpan Waktu Awal
     waktu_Awal(&wktmulai);
 
+    setactivepage(0);
+    setvisualpage(1);
+
     while(true){
-        setactivepage(page);
-        setvisualpage(1-page);
 
         //masukkan nilai untuk mengecek bergerak atau tidak
         playerXBfr = playerX;
@@ -82,7 +82,7 @@ void permainan(){
         }
 
         //memproses movement yang diinput user
-        playerMovement(movement, arr, &barisPlayer, &kolomPlayer, &playerX, &playerY, &wktnembak, &baristembak, &kolomtembak);
+        playerMovement(&movement, arr, &barisPlayer, &kolomPlayer, &playerX, &playerY, &wktnembak, &baristembak, &kolomtembak);
 
 		drslubang = hitung_Waktu(wktnembak, wktskrng);
 		if(drslubang > 4){
@@ -94,16 +94,21 @@ void permainan(){
         barisPlayer = (playerY)/MATRIX_ELEMENT_SIZE;
         insertPlayer(arr, barisPlayer, kolomPlayer);
 
+        //penggambaran ulang di layar
         drawPlayerMovement(movement, arr, barisPlayer, kolomPlayer, playerX, playerY, &urutan);
 
-        //jika tidak bergerak maka page tidak akan berubah
-        if(isGerak(arr, playerX, playerY, playerXBfr, playerYBfr) || lagiNgambilKoin(arr,barisPlayer,kolomPlayer)){
-            page = 1-page;
+        if(isLagiBom(movement)){
+            swapbuffers();
+            drawPlayerMovement(movement, arr, barisPlayer, kolomPlayer, playerX, playerY, &urutan);
+        }
+
+        //jika ada pergerakan maka page akan berubah
+        if(isGerak(arr, playerX, playerY, playerXBfr, playerYBfr) || lagiNgambilKoin(arr,barisPlayer,kolomPlayer) || (movement != NULL)){
+            swapbuffers();
         }
 
         //reset nilai movement
         movement = NULL;
-        FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
 
         //cek apabila player sudah ada di pintu exit
         if(done(arr,barisPlayer,kolomPlayer))
@@ -111,21 +116,21 @@ void permainan(){
 		    waktu_Akhir(&wktselesai);
 		    wkttotal = hitung_Waktu(wktmulai, wktselesai);
 		    setactivepage(2);
-            	clearviewport();
-            	outtextxy(800/2,600/2-50, "Game Over");
-           	    tampil_Waktu(wkttotal);
-           	    setvisualpage(2);
-           	    getch();
-				break;
+            clearviewport();
+            outtextxy(800/2,600/2-50, "Game Over");
+            tampil_Waktu(wkttotal);
+            setvisualpage(2);
+            getch();
+            break;
 		}
 
     }
-    closegraph(-1);
 }
 
 
 int main()
 {
+
     menutama();
 
 }
