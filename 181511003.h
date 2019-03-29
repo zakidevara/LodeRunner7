@@ -34,14 +34,17 @@ bool isFalling(game arr[BARIS][KOLOM], int baris, int kolom){
     }
 }
 
-void playerMovement(char movement, game arr[BARIS][KOLOM], int* barisPlayer, int* kolomPlayer, int *X, int* Y, clock_t* wktnembak, int*baristembak, int*kolomtembak){ //memindahkan posisi player dalam matriks sesuai movement yang dipilih oleh user
-    
-	switch(movement){
+void playerMovement(char *movement, game arr[BARIS][KOLOM], int* barisPlayer, int* kolomPlayer, int *X, int* Y, clock_t* wktnembak, int*baristembak, int*kolomtembak){ //memindahkan posisi player dalam matriks sesuai movement yang dipilih oleh user
+    int BarisAtasPlayer=(*Y-5)/MATRIX_ELEMENT_SIZE;
+	switch(*movement){
             case 'W' :
-            if((*Y-5 >= 0) && (isClimbing(arr, *barisPlayer, *kolomPlayer)) || ((arr[*barisPlayer+1][*kolomPlayer].stage == 2))){
+
+            if((*Y-5 >= 0) && (isClimbing(arr, *barisPlayer, *kolomPlayer) || !isFalling(arr,BarisAtasPlayer,*kolomPlayer))){
                 *X = (*kolomPlayer)*MATRIX_ELEMENT_SIZE;
                 *Y= *Y - 5;
-			}         
+			}else{
+                *movement=NULL;
+			}
             break;
 
             case 'S' :
@@ -49,12 +52,12 @@ void playerMovement(char movement, game arr[BARIS][KOLOM], int* barisPlayer, int
                 if(isSliding(arr,*barisPlayer,*kolomPlayer)){
                     *Y = *Y + 25;
                 }else{
-
                     *X = (*kolomPlayer)*MATRIX_ELEMENT_SIZE;
-
                     *Y = *Y + 5;
                 }
-            }
+            }else{
+                *movement=NULL;
+			}
             break;
 
             case 'D' :
@@ -63,7 +66,9 @@ void playerMovement(char movement, game arr[BARIS][KOLOM], int* barisPlayer, int
                     *Y = (*barisPlayer)*MATRIX_ELEMENT_SIZE;
                 }
                 *X = *X + 5;
-            }
+            }else{
+                *movement=NULL;
+			}
             break;
             case 'A' :
             if((*X-5 >=0) && !isNabrak(arr, *X, *Y, -1) && ((isStanding(arr, *barisPlayer, *kolomPlayer)==true)||(isSliding(arr, *barisPlayer, *kolomPlayer)==true) || isClimbing(arr, *barisPlayer, *kolomPlayer))){
@@ -71,23 +76,29 @@ void playerMovement(char movement, game arr[BARIS][KOLOM], int* barisPlayer, int
                     *Y = (*barisPlayer)*MATRIX_ELEMENT_SIZE;
                 }
                 *X = *X - 5;
-            }
+            }else{
+                *movement=NULL;
+			}
             break;
             case 'M' :
             	if(arr[*barisPlayer+1][*kolomPlayer+1].stage == 1){
             		*baristembak = *barisPlayer+1;
             		*kolomtembak = *kolomPlayer+1;
-					arr[*barisPlayer+1][*kolomPlayer+1].stage = 0;
+					arr[*barisPlayer+1][*kolomPlayer+1].stage = 6;
             		*wktnembak = clock();
-            	}
+            	}else{
+                    *movement=NULL;
+                }
 				break;
 			case 'N' :
 				if(arr[*barisPlayer+1][*kolomPlayer-1].stage == 1){
 					*baristembak = *barisPlayer+1;
             		*kolomtembak = *kolomPlayer-1;
-            		arr[*barisPlayer+1][*kolomPlayer-1].stage = 0;
+            		arr[*barisPlayer+1][*kolomPlayer-1].stage = 6;
             		*wktnembak = clock();
-				} 
+				}else{
+                    *movement=NULL;
+                }
 				break;
         }
 }
