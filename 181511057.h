@@ -165,6 +165,50 @@ void playerClimbLadder(int x1,int y1,int x2, int y2, int* urutan){
     }
 }
 
+void bombLeft(int x1,int y1,int x2, int y2){
+    int urutan=0;
+    while(urutan<=2){
+        switch(urutan){
+        case 0:
+            readimagefile("images/bomb/Bomb_Left0.gif", x1, y1, x2-1, y2-1);break;
+        case 1:
+            readimagefile("images/bomb/Bomb_Left1.gif", x1, y1, x2-1, y2-1);break;
+        case 2:
+            readimagefile("images/bomb/Bomb_Left2.gif", x1, y1, x2-1, y2-1);break;
+
+        }
+        swapbuffers();
+        delay(25);
+        setviewport(x1, y1, x2-1, y2-1,1);
+        clearviewport();
+        setviewport(0,0,800,600,1);
+        (urutan)++;
+    }
+}
+
+
+void bombRight(int x1,int y1,int x2, int y2){
+    int urutan=0;
+    while(urutan<=2){
+        switch(urutan){
+        case 0:
+            readimagefile("images/bomb/Bomb_Right0.gif", x1, y1, x2-1, y2-1);break;
+        case 1:
+            readimagefile("images/bomb/Bomb_Right1.gif", x1, y1, x2-1, y2-1);break;
+        case 2:
+            readimagefile("images/bomb/Bomb_Right2.gif", x1, y1, x2-1, y2-1);break;
+
+        }
+        swapbuffers();
+        delay(25);
+        setviewport(x1, y1, x2-1, y2-1,1);
+        clearviewport();
+        setviewport(0,0,800,600,1);
+        (urutan)++;
+    }
+
+}
+
 
 void drawBot(int x1,int y1,int x2, int y2){
 // menggambar bot
@@ -339,54 +383,55 @@ void drawPlayerMovement(char movement, game arr[BARIS][KOLOM], int barisPlayer, 
     case 'A' :
             setviewport(((kolomPlayer-1)*MATRIX_ELEMENT_SIZE), (barisPlayer*MATRIX_ELEMENT_SIZE),((kolomPlayer+3)*MATRIX_ELEMENT_SIZE), ((barisPlayer+1)*MATRIX_ELEMENT_SIZE),1);
             clearviewport();
-            setviewport(((kolomPlayer)*MATRIX_ELEMENT_SIZE), ((barisPlayer-1)*MATRIX_ELEMENT_SIZE),((kolomPlayer+2)*MATRIX_ELEMENT_SIZE), ((barisPlayer+2)*MATRIX_ELEMENT_SIZE),1);
+            setviewport(((kolomPlayer-1)*MATRIX_ELEMENT_SIZE), ((barisPlayer-1)*MATRIX_ELEMENT_SIZE),((kolomPlayer+2)*MATRIX_ELEMENT_SIZE), ((barisPlayer+2)*MATRIX_ELEMENT_SIZE),1);
             clearviewport();
             setviewport(0,0, 800,600,1);
             drawRight(arr,kolomPlayer-1,barisPlayer,4);
-            drawRight(arr,kolomPlayer,barisPlayer-1,2);
-            drawRight(arr,kolomPlayer,barisPlayer+1,2);
-            if(isStanding(arr, barisPlayer, kolomPlayer)){
-                playerRunningLeft(X,Y,X+MATRIX_ELEMENT_SIZE,Y+MATRIX_ELEMENT_SIZE, urutan);
-            }else if(isSliding(arr, barisPlayer, kolomPlayer)){
+            drawRight(arr,kolomPlayer-1,barisPlayer-1,3);
+            drawRight(arr,kolomPlayer-1,barisPlayer+1,3);
+            if(isSliding(arr, barisPlayer, kolomPlayer)){
                 playerClimbRopeLeft(X,Y,X+MATRIX_ELEMENT_SIZE,Y+MATRIX_ELEMENT_SIZE, urutan);
+            }else{
+                playerRunningLeft(X,Y,X+MATRIX_ELEMENT_SIZE,Y+MATRIX_ELEMENT_SIZE, urutan);
             }
 
             break;
     case 'D' :
             setviewport(((kolomPlayer-2)*MATRIX_ELEMENT_SIZE), (barisPlayer*MATRIX_ELEMENT_SIZE),((kolomPlayer+2)*MATRIX_ELEMENT_SIZE), ((barisPlayer+1)*MATRIX_ELEMENT_SIZE),1);
             clearviewport();
-            setviewport(((kolomPlayer-1)*MATRIX_ELEMENT_SIZE), ((barisPlayer-1)*MATRIX_ELEMENT_SIZE),((kolomPlayer+1)*MATRIX_ELEMENT_SIZE), ((barisPlayer+2)*MATRIX_ELEMENT_SIZE),1);
+            setviewport(((kolomPlayer-1)*MATRIX_ELEMENT_SIZE), ((barisPlayer-1)*MATRIX_ELEMENT_SIZE),((kolomPlayer+2)*MATRIX_ELEMENT_SIZE), ((barisPlayer+2)*MATRIX_ELEMENT_SIZE),1);
             clearviewport();
             setviewport(0,0, 800,600,1);
             drawLeft(arr,kolomPlayer+1,barisPlayer,4);
-            drawLeft(arr,kolomPlayer,barisPlayer-1,2);
-            drawLeft(arr,kolomPlayer,barisPlayer+1,2);
-            if(isStanding(arr, barisPlayer, kolomPlayer)){
-                playerRunningRight(X,Y,X+MATRIX_ELEMENT_SIZE,Y+MATRIX_ELEMENT_SIZE, urutan);
-            }else if(isSliding(arr, barisPlayer, kolomPlayer)){
+            drawLeft(arr,kolomPlayer+1,barisPlayer-1,3);
+            drawLeft(arr,kolomPlayer+1,barisPlayer+1,3);
+            if(isSliding(arr, barisPlayer, kolomPlayer)){
                 playerClimbRopeRight(X,Y,X+MATRIX_ELEMENT_SIZE,Y+MATRIX_ELEMENT_SIZE, urutan);
+            }else{
+                playerRunningRight(X,Y,X+MATRIX_ELEMENT_SIZE,Y+MATRIX_ELEMENT_SIZE, urutan);
             }
             break;
     case 'W' :
-            setviewport((kolomPlayer*MATRIX_ELEMENT_SIZE), ((barisPlayer)*MATRIX_ELEMENT_SIZE),((kolomPlayer+1)*MATRIX_ELEMENT_SIZE), ((barisPlayer+3)*MATRIX_ELEMENT_SIZE),1);
+            setviewport((kolomPlayer*MATRIX_ELEMENT_SIZE), ((barisPlayer-1)*MATRIX_ELEMENT_SIZE),((kolomPlayer+1)*MATRIX_ELEMENT_SIZE), ((barisPlayer+3)*MATRIX_ELEMENT_SIZE),1);
             clearviewport();
-            setviewport(((kolomPlayer-1)*MATRIX_ELEMENT_SIZE), ((barisPlayer)*MATRIX_ELEMENT_SIZE),((kolomPlayer+2)*MATRIX_ELEMENT_SIZE), ((barisPlayer+2)*MATRIX_ELEMENT_SIZE),1);
+            setviewport(((kolomPlayer-1)*MATRIX_ELEMENT_SIZE), ((barisPlayer-1)*MATRIX_ELEMENT_SIZE),((kolomPlayer+2)*MATRIX_ELEMENT_SIZE), ((barisPlayer+2)*MATRIX_ELEMENT_SIZE),1);
             clearviewport();
             setviewport(0,0, 800,600,1);
-            drawDown(arr,kolomPlayer,barisPlayer,3);
-            drawRight(arr,kolomPlayer-1,barisPlayer+1,3);
-            drawRight(arr,kolomPlayer-1,barisPlayer,3);
+            drawDown(arr,kolomPlayer,barisPlayer-1,4);
+            drawDown(arr,kolomPlayer+1,barisPlayer-1,3);
+            drawDown(arr,kolomPlayer-1,barisPlayer-1,3);
             playerClimbLadder(X,Y,X+MATRIX_ELEMENT_SIZE,Y+MATRIX_ELEMENT_SIZE, urutan);
+
             break;
     case 'S' :
             setviewport((kolomPlayer*MATRIX_ELEMENT_SIZE), ((barisPlayer-2)*MATRIX_ELEMENT_SIZE),((kolomPlayer+1)*MATRIX_ELEMENT_SIZE), ((barisPlayer+2)*MATRIX_ELEMENT_SIZE),1);
             clearviewport();
-            setviewport(((kolomPlayer-1)*MATRIX_ELEMENT_SIZE), ((barisPlayer-1)*MATRIX_ELEMENT_SIZE),((kolomPlayer+2)*MATRIX_ELEMENT_SIZE), ((barisPlayer+1)*MATRIX_ELEMENT_SIZE),1);
+            setviewport(((kolomPlayer-1)*MATRIX_ELEMENT_SIZE), ((barisPlayer-1)*MATRIX_ELEMENT_SIZE),((kolomPlayer+2)*MATRIX_ELEMENT_SIZE), ((barisPlayer+2)*MATRIX_ELEMENT_SIZE),1);
             clearviewport();
             setviewport(0,0, 800,600,1);
             drawUp(arr,kolomPlayer,barisPlayer+1,4);
-            drawRight(arr, kolomPlayer-1,barisPlayer-1,3);
-            drawRight(arr, kolomPlayer-1,barisPlayer,3);
+            drawUp(arr,kolomPlayer+1,barisPlayer+1,3);
+            drawUp(arr,kolomPlayer-1,barisPlayer+1,3);
             if(isFalling(arr, barisPlayer, kolomPlayer)){
                 playerRunningRight(X,Y,X+MATRIX_ELEMENT_SIZE,Y+MATRIX_ELEMENT_SIZE, urutan);
             }else{
@@ -397,13 +442,15 @@ void drawPlayerMovement(char movement, game arr[BARIS][KOLOM], int barisPlayer, 
     		setviewport(((kolomPlayer+1)*MATRIX_ELEMENT_SIZE), ((barisPlayer+1)*MATRIX_ELEMENT_SIZE),((kolomPlayer+2)*MATRIX_ELEMENT_SIZE), ((barisPlayer+2)*MATRIX_ELEMENT_SIZE),1);
             clearviewport();
             setviewport(0,0, 800,600,1);
-            drawUp(arr,kolomPlayer+1,barisPlayer+1,3);
+            drawUp(arr,kolomPlayer+1,barisPlayer+1,2);
+            bombRight((kolomPlayer+1)*MATRIX_ELEMENT_SIZE, barisPlayer*MATRIX_ELEMENT_SIZE, (kolomPlayer+2)*MATRIX_ELEMENT_SIZE, barisPlayer*MATRIX_ELEMENT_SIZE);
             break;
     case 'N' :
     		setviewport(((kolomPlayer-1)*MATRIX_ELEMENT_SIZE), ((barisPlayer+1)*MATRIX_ELEMENT_SIZE),((kolomPlayer)*MATRIX_ELEMENT_SIZE), ((barisPlayer+2)*MATRIX_ELEMENT_SIZE),1);
             clearviewport();
             setviewport(0,0, 800,600,1);
-            drawUp(arr,kolomPlayer-1,barisPlayer+1,3);
+            drawUp(arr,kolomPlayer-1,barisPlayer+1,2);
+            bombRight((kolomPlayer+1)*MATRIX_ELEMENT_SIZE, barisPlayer*MATRIX_ELEMENT_SIZE, (kolomPlayer+2)*MATRIX_ELEMENT_SIZE, barisPlayer*MATRIX_ELEMENT_SIZE);
             break;
     /*default:
             setviewport(((kolomPlayer-1)*MATRIX_ELEMENT_SIZE), ((barisPlayer)*MATRIX_ELEMENT_SIZE),((kolomPlayer+2)*MATRIX_ELEMENT_SIZE), ((barisPlayer+1)*MATRIX_ELEMENT_SIZE),1);
@@ -442,5 +489,13 @@ void prosesInput(char* movement){
 //memproses input yang dimasukkan oleh user
     if ((*movement != 'A') && (*movement != 'S') && (*movement != 'D') && (*movement != 'W') && (*movement != 'M') && (*movement != 'N')){
         *movement = NULL;
+    }
+}
+
+bool isLagiBom(int movement){
+    if((movement=='M')||(movement=='N')){
+        return true;
+    }else{
+        return false;
     }
 }
