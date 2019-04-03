@@ -1,59 +1,22 @@
-#include <stdio.h>
-#include <graphics.h>
-#include <conio.h>
-#include <ctime>
+#ifndef FUAD044_H
+#define FUAD044_H
 
-void hitung_skor(int* skor)
-{
-    *skor=*skor+1;
-}
-
-void tampil_skor(int skor)
-{
-    char skoor[6];
-
-    setviewport(800-50,600, 800, 650,1);
-    clearviewport();
-    setviewport(0,0, 800,650,1);
-    sprintf(skoor,"%d", skor);
-    outtextxy(800-50,600,skoor);
-    outtextxy(800-130,600,"SCORE:");
-}
-
-void waktu_Awal(clock_t* wktAwal)
-{
+#include "main.h"
 
 
-    *wktAwal = clock();
-}
 
-void waktu_Akhir(clock_t* wktAkhir)
-{
+void hitung_skor(int* skor);
 
+void tampil_skor(int skor);
 
-   * wktAkhir = clock();
-}
+void waktu_Awal(clock_t* wktAwal);
 
-double hitung_Waktu(clock_t wktAwal, clock_t wktAkhir)
-{
-    double durasi;
+void waktu_Akhir(clock_t* wktAkhir);
 
-    durasi = ( wktAkhir - wktAwal ) / (double) CLOCKS_PER_SEC;;
-    return durasi;
-}
+double hitung_Waktu(clock_t wktAwal, clock_t wktAkhir);
 
-void tampil_Waktu(double durasi)
-{
-    char tamWaktu[6];
+void tampil_Waktu(double durasi);
 
-    sprintf(tamWaktu,"%lf", durasi);
-    outtextxy(800-200,600-100,tamWaktu);
-}
+bool lagiNgambilKoin(int arr[BARIS][KOLOM], int baris, int kolom );
 
-bool lagiNgambilKoin(game arr[BARIS][KOLOM], int baris, int kolom ){
-    if(arr[baris][kolom].stage == 4){
-        return true;
-    }else{
-        return false;
-    }
-}
+#endif // 1815110044_H

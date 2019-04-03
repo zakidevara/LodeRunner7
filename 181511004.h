@@ -1,16 +1,8 @@
-#include <stdio.h>
-#include <graphics.h>
-#include <conio.h>
+#ifndef AGUS004_H
+#define AGUS004_H
 
-// DEKLARASI MODUL
-bool done(game arr[BARIS][KOLOM], int baris, int kolom)
-{
-	if (arr[baris][kolom].stage == 5)
-	{
-		return true;
-	}else{
-		return false;
-	}
-}
+#include "main.h"
 
 
+bool done(int arr[BARIS][KOLOM], int baris, int kolom);
+#endif // 181511004_H
