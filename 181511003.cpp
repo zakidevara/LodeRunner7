@@ -32,7 +32,8 @@ bool isFalling(int arr[BARIS][KOLOM], int baris, int kolom){
     }
 }
 
-void playerMovement(char *movement, int arr[BARIS][KOLOM], int* barisPlayer, int* kolomPlayer, int *X, int* Y, clock_t* wktnembak, int*baristembak, int*kolomtembak, int*urutanBom){ //memindahkan posisi player dalam matriks sesuai movement yang dipilih oleh user
+void playerMovement(char *movement, int arr[BARIS][KOLOM], int* barisPlayer, int* kolomPlayer, int *X, int* Y, arrayQueue* P,int*urutanBom){ //memindahkan posisi player dalam matriks sesuai movement yang dipilih oleh user
+    lubang Z;
     int BarisAtasPlayer=(*Y-5)/MATRIX_ELEMENT_SIZE;
 	switch(*movement){
             case 'W' :
@@ -82,28 +83,26 @@ void playerMovement(char *movement, int arr[BARIS][KOLOM], int* barisPlayer, int
 			}
             break;
             case 'M' :
-            	if(arr[*barisPlayer+1][*kolomPlayer+1] == 1){
+            	if((arr[*barisPlayer+1][*kolomPlayer+1] == 1) && (arr[*barisPlayer][*kolomPlayer+1] == 0)){
             		(*urutanBom)++;
 
             		if(*urutanBom>=2){
-                        *baristembak = *barisPlayer+1;
-                        *kolomtembak = *kolomPlayer+1;
                         arr[*barisPlayer+1][*kolomPlayer+1] = 7;
-                        *wktnembak = clock();
+                        assign_Lubang(&Z,*barisPlayer+1, *kolomPlayer+1, clock());
+                        enqueue(P, Z);
                     }
             	}else{
                     *movement=NULL;
                 }
 				break;
 			case 'N' :
-				if(arr[*barisPlayer+1][*kolomPlayer-1] == 1){
+				if((arr[*barisPlayer+1][*kolomPlayer-1] == 1) && (arr[*barisPlayer][*kolomPlayer-1] == 0)){
                     (*urutanBom)++;
 
                     if(*urutanBom>=2){
-                        *baristembak = *barisPlayer+1;
-                        *kolomtembak = *kolomPlayer-1;
                         arr[*barisPlayer+1][*kolomPlayer-1] = 7;
-                        *wktnembak = clock();
+                        assign_Lubang(&Z,*barisPlayer+1, *kolomPlayer-1, clock());
+                        enqueue(P, Z);
                     }
 
 				}else{

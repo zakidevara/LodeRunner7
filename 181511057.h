@@ -9,7 +9,7 @@
 #include "181511028.h"
 #include "181511037.h"
 #include "181511003.h"
-
+#include "181511044.h"
 
 
 void drawPlayerLeft(int x1,int y1,int x2, int y2);
@@ -57,4 +57,17 @@ void prosesInput(char* movement);
 bool isLagiBom(int movement);
 
 void drawBotArray(koordinat bot[], int nBot);
+
+void assign_Lubang(lubang* Z, int baris, int kolom, clock_t waktuAwal);
+
+void free_Lubang(lubang* Z);
+
+void inisiasi_queue(arrayQueue* P);
+
+void enqueue(arrayQueue* P, lubang Z);
+
+lubang dequeue(arrayQueue* P);
+
+void isi_kembali_lubang(int arr[BARIS][KOLOM], arrayQueue* P, clock_t wkt_sekarang);
+
 #endif

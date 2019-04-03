@@ -445,7 +445,20 @@ void drawPlayerMovement(char movement, int arr[BARIS][KOLOM], int barisPlayer, i
             drawRight(arr,kolomPlayer-1,barisPlayer+1,3);
             PlayerBombRight(X,Y,X+MATRIX_ELEMENT_SIZE,Y+MATRIX_ELEMENT_SIZE);
             bombRight((kolomPlayer+1)*MATRIX_ELEMENT_SIZE, barisPlayer*MATRIX_ELEMENT_SIZE, (kolomPlayer+2)*MATRIX_ELEMENT_SIZE, (barisPlayer+1)*MATRIX_ELEMENT_SIZE, urutanBom);
-            delay(10);
+            delay(15);
+            if(urutanBom >= 2){
+                setviewport((kolomPlayer+1)*MATRIX_ELEMENT_SIZE, barisPlayer*MATRIX_ELEMENT_SIZE, (kolomPlayer+2)*MATRIX_ELEMENT_SIZE, (barisPlayer+2)*MATRIX_ELEMENT_SIZE,1);
+                clearviewport();
+                setviewport(0,0, 800,600,1);
+                drawUp(arr, kolomPlayer-1, barisPlayer+1, 2);
+                PlayerBombRight(X,Y,X+MATRIX_ELEMENT_SIZE,Y+MATRIX_ELEMENT_SIZE);
+                swapbuffers();
+                setviewport((kolomPlayer+1)*MATRIX_ELEMENT_SIZE, barisPlayer*MATRIX_ELEMENT_SIZE, (kolomPlayer+2)*MATRIX_ELEMENT_SIZE, (barisPlayer+2)*MATRIX_ELEMENT_SIZE,1);
+                clearviewport();
+                setviewport(0,0, 800,600,1);
+                drawUp(arr, kolomPlayer+1, barisPlayer+1, 2);
+                PlayerBombRight(X,Y,X+MATRIX_ELEMENT_SIZE,Y+MATRIX_ELEMENT_SIZE);
+            }
             break;
     case 'N' :
     		setviewport(((kolomPlayer-1)*MATRIX_ELEMENT_SIZE), ((barisPlayer-1)*MATRIX_ELEMENT_SIZE),((kolomPlayer+2)*MATRIX_ELEMENT_SIZE), ((barisPlayer+2)*MATRIX_ELEMENT_SIZE),1);
@@ -458,7 +471,23 @@ void drawPlayerMovement(char movement, int arr[BARIS][KOLOM], int barisPlayer, i
             drawRight(arr,kolomPlayer-1,barisPlayer+1,3);
             PlayerBombLeft(X,Y,X+MATRIX_ELEMENT_SIZE,Y+MATRIX_ELEMENT_SIZE);
             bombLeft((kolomPlayer-1)*MATRIX_ELEMENT_SIZE, barisPlayer*MATRIX_ELEMENT_SIZE, (kolomPlayer)*MATRIX_ELEMENT_SIZE, (barisPlayer+1)*MATRIX_ELEMENT_SIZE, urutanBom);
-            delay(10);
+            delay(15);
+            if(urutanBom >= 2){
+
+                setviewport((kolomPlayer-1)*MATRIX_ELEMENT_SIZE, barisPlayer*MATRIX_ELEMENT_SIZE, kolomPlayer*MATRIX_ELEMENT_SIZE, (barisPlayer+2)*MATRIX_ELEMENT_SIZE,1);
+                clearviewport();
+                setviewport(0,0, 800,600,1);
+                drawUp(arr, kolomPlayer-1, barisPlayer+1, 2);
+                PlayerBombLeft(X,Y,X+MATRIX_ELEMENT_SIZE,Y+MATRIX_ELEMENT_SIZE);
+                swapbuffers();
+                setviewport((kolomPlayer-1)*MATRIX_ELEMENT_SIZE, barisPlayer*MATRIX_ELEMENT_SIZE, kolomPlayer*MATRIX_ELEMENT_SIZE, (barisPlayer+2)*MATRIX_ELEMENT_SIZE,1);
+                clearviewport();
+                setviewport(0,0, 800,600,1);
+                drawUp(arr, kolomPlayer-1, barisPlayer+1, 2);
+                PlayerBombLeft(X,Y,X+MATRIX_ELEMENT_SIZE,Y+MATRIX_ELEMENT_SIZE);
+            }
+
+
             break;
     /*default:
             setviewport(((kolomPlayer-1)*MATRIX_ELEMENT_SIZE), ((barisPlayer)*MATRIX_ELEMENT_SIZE),((kolomPlayer+2)*MATRIX_ELEMENT_SIZE), ((barisPlayer+1)*MATRIX_ELEMENT_SIZE),1);
@@ -506,4 +535,64 @@ bool isLagiBom(int movement){
     }else{
         return false;
     }
+}
+
+
+void inisiasi_queue(arrayQueue* P){
+    (*P).MaxSize = 20;
+    (*P).Count = 0;
+    (*P).Front = 0;
+    (*P).Back = 0;
+}
+
+void enqueue(arrayQueue* P, lubang Z){
+    if((*P).Count < (*P).MaxSize ){
+        (*P).dt_lubang[(*P).Back] = Z;
+        (*P).Back = ((*P).Back)+1;
+        if((*P).Back >= (*P).MaxSize){
+            (*P).Back = 0;
+        }
+        ((*P).Count)++;
+    }
+}
+
+lubang dequeue(arrayQueue* P){
+    lubang temp;
+    if((*P).Count != 0 ){
+        temp = (*P).dt_lubang[(*P).Front];
+        free_Lubang(&((*P).dt_lubang[(*P).Front]));
+        (*P).Front = ((*P).Front)+1;
+        if((*P).Front >= (*P).MaxSize){
+            (*P).Front = 0;
+        }
+        ((*P).Count)--;
+    }
+    return temp;
+}
+
+void assign_Lubang(lubang* Z,int baris, int kolom, clock_t waktuAwal){
+    (*Z).pos.baris = baris;
+    (*Z).pos.kolom = kolom;
+    (*Z).start = waktuAwal;
+}
+
+
+void isi_kembali_lubang(int arr[BARIS][KOLOM], arrayQueue* P, clock_t wkt_sekarang){
+    lubang Z;
+    double durasi = hitung_Waktu(((*P).dt_lubang[(*P).Front].start), wkt_sekarang);
+    while( (durasi > 7) && ((*P).Count > 0)){
+        Z = dequeue(P);
+        arr[Z.pos.baris][Z.pos.kolom] = 1;
+        drawUp(arr,Z.pos.kolom,Z.pos.baris,2);
+        swapbuffers();
+        drawUp(arr,Z.pos.kolom,Z.pos.baris,2);
+        swapbuffers();
+        durasi = hitung_Waktu(((*P).dt_lubang[(*P).Front].start), wkt_sekarang);
+    }
+}
+
+void free_Lubang(lubang* Z){
+    (*Z).pos.baris = NULL;
+    (*Z).pos.kolom = NULL;
+    (*Z).start = NULL;
 }

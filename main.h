@@ -20,6 +20,25 @@ typedef struct{
     int Y;
 }koordinat;
 
+typedef struct{
+    int baris;
+    int kolom;
+}posisiMatriks;
+
+typedef struct{
+    posisiMatriks pos;
+    clock_t start;
+}lubang;
+
+typedef struct{
+    lubang dt_lubang[20];
+    int Count;
+    int MaxSize;
+    int Front;
+    int Back;
+}arrayQueue;
+
+void tampilan_exit(double wkttotal);
 void permainan();
 
 #endif // main_H
