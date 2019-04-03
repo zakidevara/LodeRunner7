@@ -32,7 +32,20 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="181511003.cpp" />
+		<Unit filename="181511003.h" />
+		<Unit filename="181511004.cpp" />
+		<Unit filename="181511004.h" />
+		<Unit filename="181511028.cpp" />
+		<Unit filename="181511028.h" />
+		<Unit filename="181511037.cpp" />
+		<Unit filename="181511037.h" />
+		<Unit filename="181511044.cpp" />
+		<Unit filename="181511044.h" />
+		<Unit filename="181511057.cpp" />
+		<Unit filename="181511057.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="main.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
