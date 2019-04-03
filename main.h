@@ -15,6 +15,11 @@
 #define BARIS 600/MATRIX_ELEMENT_SIZE
 #define KOLOM 800/MATRIX_ELEMENT_SIZE
 
+typedef struct{
+    int X;
+    int Y;
+}koordinat;
+
 void permainan();
 
 #endif // main_H

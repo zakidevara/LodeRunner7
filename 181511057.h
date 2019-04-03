@@ -1,6 +1,7 @@
 /* File         : 181511057.h               */
 /* Nama Pembuat : Muhammad Zaki Devara      */
 /* NIM          : 181511057                 */
+
 #ifndef ZAKI057_H
 #define ZAKI057_H
 
@@ -33,12 +34,12 @@ void PlayerBombLeft(int x1,int y1,int x2, int y2);
 
 void drawBot(int x1,int y1,int x2, int y2);
 
-void level1(int arr[BARIS][KOLOM],int* XPlayer, int* YPlayer);
+void level1(int arr[BARIS][KOLOM],koordinat* player, koordinat bot[], int* nBot);
 // generate matriks int level 1
 
-void generateStage(int arr[BARIS][KOLOM], int level, int* XPlayer, int* YPlayer);
+void generateStage(int arr[BARIS][KOLOM], int level, koordinat* player, koordinat bot[], int* nBot);
 
-void drawStage(int arr[BARIS][KOLOM], int XPlayer, int YPlayer);
+void drawStage(int arr[BARIS][KOLOM], koordinat player, koordinat bot[], int nBot);
 
 bool isNabrak(int arr[BARIS][KOLOM], int X, int Y, int arah);
 // Pengecekan sisi kiri dan kanan player, jika ada tembok return true dan jika tidak ada return false
@@ -49,10 +50,11 @@ void drawPlayerMovement(char movement, int arr[BARIS][KOLOM], int barisPlayer, i
 
 void loading();
 
-bool isGerak(int arr[BARIS][KOLOM], int X, int Y, int XBfr, int YBfr);
+bool isGerak(int arr[BARIS][KOLOM], koordinat after, koordinat bfr);
 
 void prosesInput(char* movement);
 
 bool isLagiBom(int movement);
 
-#endif // 181511057_H
+void drawBotArray(koordinat bot[], int nBot);
+#endif

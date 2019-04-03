@@ -206,7 +206,13 @@ void drawBot(int x1,int y1,int x2, int y2){
     readimagefile("images/Bot/Bot_Left0.gif",x1, y1, x2-1, y2-1);
 }
 
-void level1(int arr[BARIS][KOLOM],int* XPlayer, int* YPlayer){
+void drawBotArray(koordinat bot[], int nBot){
+    for(int i = 0; i < nBot; i++){
+        drawBot(bot[i].X, bot[i].Y, bot[i].X + MATRIX_ELEMENT_SIZE, bot[i].Y + MATRIX_ELEMENT_SIZE );
+    }
+}
+
+void level1(int arr[BARIS][KOLOM],koordinat* player, koordinat bot[], int* nBot){
 // generate matriks int level 1
     for(int i=0;i<BARIS;i++){ //generate matriks komposit
         for(int j=0;j<KOLOM;j++){
@@ -290,21 +296,35 @@ void level1(int arr[BARIS][KOLOM],int* XPlayer, int* YPlayer){
     arr[BARIS-18][6] = 4;
     arr[BARIS-18][15] = 5;
 
-    *XPlayer = (KOLOM/2)*MATRIX_ELEMENT_SIZE;
-    *YPlayer = (BARIS-2)*MATRIX_ELEMENT_SIZE;
+    //set posisi player
+    (*player).X = (KOLOM/2)*MATRIX_ELEMENT_SIZE;
+    (*player).Y = (BARIS-3)*MATRIX_ELEMENT_SIZE;
+
+    //set posisi bot 1
+    bot[0].X = 15*MATRIX_ELEMENT_SIZE;
+    bot[0].Y = (BARIS-10)*MATRIX_ELEMENT_SIZE;
+
+    //set posisi bot 2
+    bot[1].X = 2*MATRIX_ELEMENT_SIZE;
+    bot[1].Y = (BARIS-2)*MATRIX_ELEMENT_SIZE;
+
+    //set posisi bot 3
+    bot[2].X = (KOLOM-3)*MATRIX_ELEMENT_SIZE;
+    bot[2].Y = (BARIS-2)*MATRIX_ELEMENT_SIZE;
+
+    *nBot = 3;
 }
 
-void generateStage(int arr[BARIS][KOLOM], int level, int* XPlayer, int* YPlayer){
+void generateStage(int arr[BARIS][KOLOM], int level, koordinat* player, koordinat bot[], int* nBot){
 //Pemilihan level yang akan di generate
     switch(level){
     case 1 :
-        level1(arr,XPlayer,YPlayer);
+        level1(arr,player, bot, nBot);
 
     }
 }
 
-void drawStage(int arr[BARIS][KOLOM], int XPlayer, int YPlayer){
-    int urutan = 0;
+void drawStage(int arr[BARIS][KOLOM], koordinat player, koordinat bot[], int nBot){
 // menggambar seluruh matriks int
     for(int i=0; i<BARIS; i++){
         for(int j=0; j<KOLOM; j++){
@@ -323,10 +343,15 @@ void drawStage(int arr[BARIS][KOLOM], int XPlayer, int YPlayer){
                 drawBedRock(MATRIX_ELEMENT_SIZE*j, MATRIX_ELEMENT_SIZE*i, MATRIX_ELEMENT_SIZE*(j+1), MATRIX_ELEMENT_SIZE*(i+1));
             }
 
-            //penggambaran player
-            drawPlayerRight(XPlayer, YPlayer, XPlayer+MATRIX_ELEMENT_SIZE, YPlayer+MATRIX_ELEMENT_SIZE);
+
         }
     }
+
+    //penggambaran bot
+    drawBotArray(bot, nBot);
+
+    //penggambaran player
+    drawPlayerRight(player.X, player.Y, (player.X) + MATRIX_ELEMENT_SIZE, (player.Y) + MATRIX_ELEMENT_SIZE);
 }
 
 bool isNabrak(int arr[BARIS][KOLOM], int X, int Y, int arah){
@@ -459,9 +484,9 @@ void loading(){
     setvisualpage(3);
 }
 
-bool isGerak(int arr[BARIS][KOLOM], int X, int Y, int XBfr, int YBfr){
+bool isGerak(int arr[BARIS][KOLOM], koordinat after, koordinat bfr){
 // mengecek apakah ada perubahan posisi player, jika ada return true, jika tidak return false
-    if((X == XBfr) && (Y == YBfr)){
+    if((after.X == bfr.X) && (after.Y == bfr.Y)){
         return false;
     }else{
         return true;

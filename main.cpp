@@ -14,23 +14,25 @@ void permainan(){
     char movement;                          // input movement player
     int arr[BARIS][KOLOM];                  // matriks map
     int barisPlayer, kolomPlayer;           // posisi player di matriks
-    int playerX, playerY;                   // posisi player di koordinat layar
-    int playerXBfr, playerYBfr;             // posisi player di koordinat layar sebelum input movement
+    koordinat player;                       // posisi player di koordinat layar
+    koordinat playerBfr;                    // posisi player di koordinat layar sebelum input movement
     int score = 0;                          // Score total
     int urutan = 0;                         // urutan untuk animasi pergerakan player
     int urutanBom = -1;                     // urutan untuk animasi melempar bom
     int baristembak, kolomtembak;           // mencatat baris dan kolom yang dibom oleh player
     clock_t wktmulai,wktselesai;            // mencatat waktu mulai dan waktu selesai dalam satu stage
-    clock_t wktnembak = 0, wktskrng;  // mencatat waktu saat melempar bom dan waktu sekarang
+    clock_t wktnembak = 0, wktskrng;        // mencatat waktu saat melempar bom dan waktu sekarang
     double wkttotal;                        // mencatat durasi penyelesaian stage
     double drslubang;                       // mencatat durasi dari melempar bom sampai saat ini
+    koordinat bot[5];                       // posisi bot di koordinat layar
+    int jmlBot;                             // jumlah bot dalam stage
 
     //Memasukkan nilai ke semua elemen matriks
-    generateStage(arr, 1, &playerX, &playerY);
+    generateStage(arr, 1, &player, bot, &jmlBot);
 
     //inisiasi posisi player dalam matriks
-    kolomPlayer = (playerX+(MATRIX_ELEMENT_SIZE/2))/MATRIX_ELEMENT_SIZE;
-    barisPlayer = (playerY)/MATRIX_ELEMENT_SIZE;
+    kolomPlayer = (player.X+(MATRIX_ELEMENT_SIZE/2))/MATRIX_ELEMENT_SIZE;
+    barisPlayer = (player.Y)/MATRIX_ELEMENT_SIZE;
 
 
     //menampilkan layar loading
@@ -38,10 +40,10 @@ void permainan(){
 
     //inisiasi page double buffering
     setactivepage(0);
-    drawStage(arr, playerX, playerY);
+    drawStage(arr, player, bot, jmlBot);
     tampil_skor(score);
     setactivepage(1);
-    drawStage(arr, playerX, playerY);
+    drawStage(arr, player, bot, jmlBot);
     tampil_skor(score);
     setactivepage(0);
     setvisualpage(1);
@@ -53,8 +55,8 @@ void permainan(){
 
     while(true){
         //masukkan nilai untuk mengecek player bergerak atau tidak
-        playerXBfr = playerX;
-        playerYBfr = playerY;
+        playerBfr.X = player.X;
+        playerBfr.Y = player.Y;
 
 
         //proses jika player mengambil koin
@@ -79,7 +81,7 @@ void permainan(){
 
 
         //memproses movement yang diinput user
-        playerMovement(&movement, arr, &barisPlayer, &kolomPlayer, &playerX, &playerY, &wktnembak, &baristembak, &kolomtembak, &urutanBom);
+        playerMovement(&movement, arr, &barisPlayer, &kolomPlayer, &player.X, &player.Y, &wktnembak, &baristembak, &kolomtembak, &urutanBom);
 
         //menghitung durasi setelah melempar bom
         wktskrng = clock();
@@ -95,11 +97,14 @@ void permainan(){
 		}
 
         //update posisi player dalam matriks
-        kolomPlayer = (playerX+(MATRIX_ELEMENT_SIZE/2))/MATRIX_ELEMENT_SIZE;
-        barisPlayer = (playerY)/MATRIX_ELEMENT_SIZE;
+        kolomPlayer = (player.X+(MATRIX_ELEMENT_SIZE/2))/MATRIX_ELEMENT_SIZE;
+        barisPlayer = (player.Y)/MATRIX_ELEMENT_SIZE;
 
         //penggambaran ulang di layar
-        drawPlayerMovement(movement, arr, barisPlayer, kolomPlayer, playerX, playerY, &urutan, urutanBom);
+        drawPlayerMovement(movement, arr, barisPlayer, kolomPlayer, player.X, player.Y, &urutan, urutanBom);
+
+        //penggambaran bot
+        drawBotArray(bot, jmlBot);
 
         //reset animasi melempar bom jika player melakukan movement lain
         if(!isLagiBom(movement)){
@@ -107,7 +112,7 @@ void permainan(){
         }
 
         //jika ada pergerakan maka swap buffer
-        if(isLagiBom(movement)||isGerak(arr, playerX, playerY, playerXBfr, playerYBfr) || lagiNgambilKoin(arr,barisPlayer,kolomPlayer) || (movement != NULL)|| (urutanBom != -1)){
+        if(isLagiBom(movement)||isGerak(arr, player, playerBfr) || lagiNgambilKoin(arr,barisPlayer,kolomPlayer) || (movement != NULL)|| (urutanBom != -1)){
             swapbuffers();
         }
 
