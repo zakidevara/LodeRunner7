@@ -35,6 +35,7 @@ bool isFalling(int arr[BARIS][KOLOM], int baris, int kolom){
 void playerMovement(char *movement, int arr[BARIS][KOLOM], int* barisPlayer, int* kolomPlayer, int *X, int* Y, arrayQueue* P,int*urutanBom){ //memindahkan posisi player dalam matriks sesuai movement yang dipilih oleh user
     lubang Z;
     int BarisAtasPlayer=(*Y-5)/MATRIX_ELEMENT_SIZE;
+	int urutan =0; 
 	switch(*movement){
             case 'W' :
             *urutanBom=-1;
@@ -50,7 +51,15 @@ void playerMovement(char *movement, int arr[BARIS][KOLOM], int* barisPlayer, int
             *urutanBom=-1;
             if((*Y+5 < WINDOWS_HEIGHT-MATRIX_ELEMENT_SIZE)  && ((isClimbing(arr, *barisPlayer, *kolomPlayer) && !isStanding(arr, *barisPlayer, *kolomPlayer))|| (isSliding(arr, *barisPlayer, *kolomPlayer) && !isStanding(arr, *barisPlayer, *kolomPlayer)) || isClimbing(arr, *barisPlayer+1, *kolomPlayer) || isFalling(arr, *barisPlayer, *kolomPlayer))){
                 if(isSliding(arr,*barisPlayer,*kolomPlayer)){
-                    *Y = *Y + 25;
+                    *Y = *Y + (MATRIX_ELEMENT_SIZE/2);
+                    while(isFalling(arr,*barisPlayer,*kolomPlayer)){
+                        *kolomPlayer = (*X+(MATRIX_ELEMENT_SIZE/2))/MATRIX_ELEMENT_SIZE;
+                        *barisPlayer = (*Y)/MATRIX_ELEMENT_SIZE;
+                        drawPlayerMovement(*movement, arr, *barisPlayer, *kolomPlayer, *X, *Y, &urutan, *urutanBom);
+                        swapbuffers();
+                        delay(20);
+                        *Y = *Y + 5;
+                    }
                 }else{
                     *X = (*kolomPlayer)*MATRIX_ELEMENT_SIZE;
                     *Y = *Y + 5;
