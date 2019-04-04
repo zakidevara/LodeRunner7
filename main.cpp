@@ -133,6 +133,7 @@ void permainan(){
 
 
     }
+	PlaySound(NULL,NULL,0);
 }
 
 int main()
