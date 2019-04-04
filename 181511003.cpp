@@ -52,13 +52,15 @@ void playerMovement(char *movement, int arr[BARIS][KOLOM], int* barisPlayer, int
             if((*Y+5 < WINDOWS_HEIGHT-MATRIX_ELEMENT_SIZE)  && ((isClimbing(arr, *barisPlayer, *kolomPlayer) && !isStanding(arr, *barisPlayer, *kolomPlayer))|| (isSliding(arr, *barisPlayer, *kolomPlayer) && !isStanding(arr, *barisPlayer, *kolomPlayer)) || isClimbing(arr, *barisPlayer+1, *kolomPlayer) || isFalling(arr, *barisPlayer, *kolomPlayer))){
                 if(isSliding(arr,*barisPlayer,*kolomPlayer)){
                     *Y = *Y + (MATRIX_ELEMENT_SIZE/2);
+                    *kolomPlayer = (*X+(MATRIX_ELEMENT_SIZE/2))/MATRIX_ELEMENT_SIZE;
+                    *barisPlayer = (*Y)/MATRIX_ELEMENT_SIZE;
                     while(isFalling(arr,*barisPlayer,*kolomPlayer)){
-                        *kolomPlayer = (*X+(MATRIX_ELEMENT_SIZE/2))/MATRIX_ELEMENT_SIZE;
-                        *barisPlayer = (*Y)/MATRIX_ELEMENT_SIZE;
                         drawPlayerMovement(*movement, arr, *barisPlayer, *kolomPlayer, *X, *Y, &urutan, *urutanBom);
                         swapbuffers();
-                        delay(20);
+                        delay(30);
                         *Y = *Y + 5;
+                        *kolomPlayer = (*X+(MATRIX_ELEMENT_SIZE/2))/MATRIX_ELEMENT_SIZE;
+                        *barisPlayer = (*Y)/MATRIX_ELEMENT_SIZE;
                     }
                 }else{
                     *X = (*kolomPlayer)*MATRIX_ELEMENT_SIZE;
