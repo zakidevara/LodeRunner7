@@ -5,12 +5,13 @@
 1554279171 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7\181511004.h
 	"main.h"
 
-1554279234 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7\main.h
+1554328566 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7\main.h
 	<stdio.h>
 	<graphics.h>
 	<conio.h>
 	<ctime>
-	<process.h>
+	<windows.h>
+	<mmsystem.h>
 
 1554250925 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7\181511028.cpp
 	"181511028.h"
@@ -18,27 +19,27 @@
 1554250003 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7\181511028.h
 	"main.h"
 
-1554245422 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7\181511044.cpp
+1554339220 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7\181511044.cpp
 	"181511044.h"
 
 1554246922 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7\181511044.h
 	"main.h"
 
-1554279834 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7\181511003.cpp
+1554325813 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7\181511003.cpp
 	"181511003.h"
 
-1554269649 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7\181511003.h
+1554325813 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7\181511003.h
 	"main.h"
 	"181511057.h"
 
-1554270030 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7\181511057.h
+1554337373 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7\181511057.h
 	"main.h"
 	"181511028.h"
 	"181511037.h"
 	"181511003.h"
 	"181511044.h"
 
-1554280115 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7\main.cpp
+1554339330 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7\main.cpp
 	"main.h"
 	"181511057.h"
 	"181511003.h"
@@ -51,9 +52,9 @@
 	"main.h"
 	"181511028.h"
 
-1554249988 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7\181511037.cpp
+1554339621 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7\181511037.cpp
 	"181511037.h"
 
-1554280601 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7\181511057.cpp
+1554325918 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7\181511057.cpp
 	"181511057.h"
 

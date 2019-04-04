@@ -6,7 +6,8 @@
 #include <graphics.h>
 #include <conio.h>
 #include <ctime>
-#include <process.h>
+#include <windows.h>
+#include <mmsystem.h>
 
 #define WINDOWS_HEIGHT 600
 #define WINDOWS_WIDTH 800

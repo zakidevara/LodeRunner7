@@ -44,7 +44,7 @@ void permainan(){
     kolomPlayer = (player.X+(MATRIX_ELEMENT_SIZE/2))/MATRIX_ELEMENT_SIZE;
     barisPlayer = (player.Y)/MATRIX_ELEMENT_SIZE;
 
-
+    PlaySound(TEXT("audio/101-opening.wav"), NULL, SND_ASYNC);
     //menampilkan layar loading
     loading();
 
