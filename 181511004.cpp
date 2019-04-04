@@ -11,4 +11,16 @@ bool done(int arr[BARIS][KOLOM], int baris, int kolom)
 	}
 }
 
-
+bool adakoin(int arr[BARIS][KOLOM])
+{
+	for(int i=0; i<BARIS; i++)
+	{
+		for(int j=0; j<KOLOM; j++)
+		{
+			if(arr[i][j] == 4){
+				return true;
+			}
+		}
+	}
+	return false;
+}
