@@ -3,8 +3,7 @@
 
 #include "main.h"
 
-
 bool done(int arr[BARIS][KOLOM], int baris, int kolom);
-
+bool adakoin(int arr[BARIS][KOLOM]);
 
 #endif // 181511004_H
