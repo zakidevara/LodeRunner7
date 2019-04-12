@@ -58,3 +58,62 @@
 1554325918 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7\181511057.cpp
 	"181511057.h"
 
+1555067023 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7-master\181511003.cpp
+	"181511003.h"
+
+1554308148 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7-master\181511003.h
+	"main.h"
+	"181511057.h"
+
+1555069232 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7-master\main.h
+	<stdio.h>
+	<graphics.h>
+	<conio.h>
+	<ctime>
+	<windows.h>
+	<mmsystem.h>
+
+1554308148 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7-master\181511057.h
+	"main.h"
+	"181511028.h"
+	"181511037.h"
+	"181511003.h"
+	"181511044.h"
+
+1554308148 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7-master\181511028.h
+	"main.h"
+
+1554308148 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7-master\181511037.h
+	"main.h"
+	"181511028.h"
+
+1554308148 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7-master\181511044.h
+	"main.h"
+
+1554308148 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7-master\181511004.cpp
+	"181511004.h"
+
+1554308148 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7-master\181511004.h
+	"main.h"
+
+1554308148 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7-master\181511028.cpp
+	"181511028.h"
+
+1554308148 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7-master\181511037.cpp
+	"181511037.h"
+
+1555067149 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7-master\181511044.cpp
+	"181511044.h"
+
+1555070923 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7-master\181511057.cpp
+	"181511057.h"
+
+1555070663 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7-master\main.cpp
+	"main.h"
+	"181511057.h"
+	"181511003.h"
+	"181511044.h"
+	"181511037.h"
+	"181511028.h"
+	"181511004.h"
+

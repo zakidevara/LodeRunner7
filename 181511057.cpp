@@ -8,6 +8,7 @@ void drawPlayerLeft(int x1,int y1,int x2, int y2){
 // menggambar player menghadap kiri
     readimagefile("images/player/Player_Left0.gif", x1, y1, x2-1, y2-1);
 }
+
 void drawPlayerRight(int x1,int y1,int x2, int y2){
 // menggambar player( menghadap kanan
     readimagefile("images/player/Player_Right0.gif", x1, y1, x2-1, y2-1);
@@ -36,7 +37,6 @@ void playerRunningRight(int x1,int y1,int x2, int y2, int* urutan){
     if(*urutan > 7){
         *urutan = 0;
     }
-
 }
 
 void playerRunningLeft(int x1,int y1,int x2, int y2, int* urutan){
@@ -62,7 +62,6 @@ void playerRunningLeft(int x1,int y1,int x2, int y2, int* urutan){
     if(*urutan > 7){
         *urutan = 0;
     }
-
 }
 
 void botRunningRight(int x1,int y1,int x2, int y2, int* urutan){
@@ -88,7 +87,6 @@ void botRunningRight(int x1,int y1,int x2, int y2, int* urutan){
     if(*urutan > 7){
         *urutan = 0;
     }
-
 }
 
 void botRunningLeft(int x1,int y1,int x2, int y2, int* urutan){
@@ -114,7 +112,6 @@ void botRunningLeft(int x1,int y1,int x2, int y2, int* urutan){
     if(*urutan > 7){
         *urutan = 0;
     }
-
 }
 
 void playerClimbRopeLeft(int x1,int y1,int x2, int y2, int* urutan){
@@ -130,7 +127,6 @@ void playerClimbRopeLeft(int x1,int y1,int x2, int y2, int* urutan){
     if(*urutan > 1){
         *urutan = 0;
     }
-
 }
 
 void playerClimbRopeRight(int x1,int y1,int x2, int y2, int* urutan){
@@ -164,7 +160,6 @@ void playerClimbLadder(int x1,int y1,int x2, int y2, int* urutan){
 }
 
 void bombLeft(int x1,int y1,int x2, int y2, int urutan){
-
         switch(urutan){
         case 0:
             readimagefile("images/bomb/Bomb_Left0.gif", x1, y1, x2-1, y2-1);break;
@@ -172,12 +167,8 @@ void bombLeft(int x1,int y1,int x2, int y2, int urutan){
             readimagefile("images/bomb/Bomb_Left1.gif", x1, y1, x2-1, y2-1);break;
         case 2:
             readimagefile("images/bomb/Bomb_Left2.gif", x1, y1, x2-1, y2-1);break;
-
         }
-
-
 }
-
 
 void bombRight(int x1,int y1,int x2, int y2, int urutan){
 
@@ -216,7 +207,7 @@ void level1(int arr[BARIS][KOLOM],koordinat* player, koordinat bot[], int* nBot)
 // generate matriks int level 1
     for(int i=0;i<BARIS;i++){ //generate matriks komposit
         for(int j=0;j<KOLOM;j++){
-            if(i == 0 || i == BARIS-1 || j == 0 || j == KOLOM-1){ //subvariabel stage di baris paling bawah diisi dengan 1 dan yang lainnya 0
+            if((i == BARIS-1) || (i == BARIS-3)|| (i == BARIS-6)|| (i == BARIS-9)|| ((i == BARIS-14) && (j < 16))){ //subvariabel stage di baris paling bawah diisi dengan 1 dan yang lainnya 0
                 arr[i][j]=1;
             }else{
                 arr[i][j]=0;
@@ -224,77 +215,266 @@ void level1(int arr[BARIS][KOLOM],koordinat* player, koordinat bot[], int* nBot)
         }
     }
 
-    arr[BARIS-1][5] = 6;
-    arr[BARIS-1][6] = 6;
-    arr[BARIS-1][7] = 6;
-    arr[BARIS-1][8] = 6;
-    arr[BARIS-1][20] = 6;
-    arr[BARIS-1][21] = 6;
+    arr[BARIS-3][0] = 0;
+    arr[BARIS-3][1] = 0;
+    arr[BARIS-3][2] = 0;
+    arr[BARIS-3][3] = 0;
+    arr[BARIS-3][11] = 0;
+    arr[BARIS-3][12] = 0;
+    arr[BARIS-3][13] = 0;
+    arr[BARIS-3][14] = 0;
+    arr[BARIS-3][15] = 0;
+    arr[BARIS-3][16] = 0;
+    arr[BARIS-3][17] = 0;
+    arr[BARIS-3][18] = 0;
+    arr[BARIS-3][19] = 0;
 
-    arr[BARIS-2][12] = 2;
-    arr[BARIS-3][12] = 2;
-    arr[BARIS-4][12] = 2;
-    arr[BARIS-4][11] = 1;
-    arr[BARIS-4][10] = 1;
-    arr[BARIS-4][9] = 1;
-    arr[BARIS-4][13] = 1;
-    arr[BARIS-4][14] = 1;
-    arr[BARIS-4][15] = 1;
-    arr[BARIS-4][16] = 1;
-    arr[BARIS-4][17] = 1;
-    arr[BARIS-5][15] = 4;
-    arr[BARIS-5][17] = 2;
-    arr[BARIS-6][17] = 2;
-    arr[BARIS-7][17] = 2;
-    arr[BARIS-8][17] = 2;
-    arr[BARIS-9][17] = 2;
-    arr[BARIS-9][16] = 1;
-    arr[BARIS-9][15] = 1;
-    arr[BARIS-9][14] = 1;
-    arr[BARIS-9][13] = 1;
-    arr[BARIS-10][13] = 3;
-    arr[BARIS-10][12] = 3;
-    arr[BARIS-10][11] = 3;
-    arr[BARIS-10][10] = 3;
-    arr[BARIS-10][9] = 3;
-    arr[BARIS-9][9] = 1;
-    arr[BARIS-9][8] = 1;
-    arr[BARIS-9][7] = 1;
-    arr[BARIS-9][6] = 1;
-    arr[BARIS-9][5] = 1;
-    arr[BARIS-6][4] = 3;
-    arr[BARIS-6][5] = 3;
-    arr[BARIS-6][6] = 3;
-    arr[BARIS-6][7] = 3;
-    arr[BARIS-6][8] = 3;
-    arr[BARIS-10][5] = 2;
-    arr[BARIS-11][5] = 2;
-    arr[BARIS-12][5] = 2;
-    arr[BARIS-13][5] = 2;
-    arr[BARIS-14][5] = 2;
-    arr[BARIS-15][5] = 2;
-    arr[BARIS-16][5] = 2;
-    arr[BARIS-17][5] = 2;
-    arr[BARIS-17][6] = 1;
-    arr[BARIS-17][7] = 1;
-    arr[BARIS-17][8] = 1;
-    arr[BARIS-17][9] = 1;
-    arr[BARIS-17][10] = 1;
-    arr[BARIS-17][11] = 1;
-    arr[BARIS-17][12] = 1;
-    arr[BARIS-17][13] = 1;
-    arr[BARIS-17][14] = 1;
-    arr[BARIS-17][15] = 1;
-    arr[BARIS-18][14] = 4;
-    arr[BARIS-18][13] = 4;
-    arr[BARIS-18][12] = 4;
-    arr[BARIS-18][11] = 4;
-    arr[BARIS-18][10] = 4;
-    arr[BARIS-18][9] = 4;
-    arr[BARIS-18][8] = 4;
-    arr[BARIS-18][7] = 4;
-    arr[BARIS-18][6] = 4;
-    arr[BARIS-18][15] = 5;
+    arr[BARIS-6][21] = 0;
+    arr[BARIS-6][22] = 0;
+    arr[BARIS-6][23]= 0;
+    arr[BARIS-6][24]= 0;
+    arr[BARIS-6][25] = 0;
+    arr[BARIS-6][26] = 0;
+    arr[BARIS-6][27] = 0;
+    arr[BARIS-6][28] = 0;
+    arr[BARIS-6][29] = 0;
+
+    arr[BARIS-9][8] = 0;
+    arr[BARIS-9][9] = 0;
+    arr[BARIS-9][10] = 0;
+    arr[BARIS-9][11] = 0;
+
+    arr[BARIS-10][13]= 1;
+    arr[BARIS-11][13]= 1;
+    arr[BARIS-12][13]= 1;
+
+    arr[BARIS-10][12]= 1;
+    arr[BARIS-11][12]= 1;
+    arr[BARIS-12][12]= 1;
+
+    arr[BARIS-12][18]= 1;
+    arr[BARIS-12][19]= 1;
+    arr[BARIS-12][20]= 1;
+    arr[BARIS-12][21]= 1;
+    arr[BARIS-12][22]= 1;
+    arr[BARIS-12][23]= 1;
+    arr[BARIS-12][24]= 1;
+    arr[BARIS-12][25]= 1;
+    arr[BARIS-12][26]= 1;
+    arr[BARIS-12][27]= 1;
+
+    arr[BARIS-2][4]= 2;
+    arr[BARIS-3][4]= 2;
+
+    arr[BARIS-2][KOLOM-1]= 2;
+    arr[BARIS-3][KOLOM-1]= 2;
+
+    arr[BARIS-4][KOLOM-8]= 2;
+    arr[BARIS-5][KOLOM-8]= 2;
+    arr[BARIS-6][KOLOM-8]= 2;
+    arr[BARIS-7][KOLOM-8]= 2;
+    arr[BARIS-8][KOLOM-8]= 2;
+    arr[BARIS-9][KOLOM-8]= 2;
+
+    arr[BARIS-4][9]= 2;
+    arr[BARIS-5][9]= 2;
+    arr[BARIS-6][9]= 2;
+
+    arr[BARIS-7][2]= 2;
+    arr[BARIS-8][2]= 2;
+    arr[BARIS-9][2]= 2;
+
+    arr[BARIS-10][7]= 2;
+    arr[BARIS-11][7]= 2;
+    arr[BARIS-12][7]= 2;
+    arr[BARIS-13][7]= 2;
+    arr[BARIS-14][7]= 2;
+
+    arr[BARIS-10][14]= 2;
+    arr[BARIS-11][14]= 2;
+    arr[BARIS-12][14]= 2;
+
+    arr[BARIS-10][KOLOM-3]= 2;
+    arr[BARIS-11][KOLOM-3]= 2;
+    arr[BARIS-12][KOLOM-3]= 2;
+
+    arr[BARIS-4][10] = 3;
+    arr[BARIS-4][11] = 3;
+    arr[BARIS-4][12] = 3;
+    arr[BARIS-4][13] = 3;
+    arr[BARIS-4][14] = 3;
+    arr[BARIS-4][15] = 3;
+    arr[BARIS-4][16] = 3;
+    arr[BARIS-4][17] = 3;
+    arr[BARIS-4][18] = 3;
+    arr[BARIS-4][19] = 3;
+
+    arr[BARIS-13][8] = 3;
+    arr[BARIS-13][9] = 3;
+    arr[BARIS-13][10] = 3;
+    arr[BARIS-13][11] = 3;
+    arr[BARIS-13][12] = 3;
+    arr[BARIS-13][13] = 3;
+    arr[BARIS-13][14] = 3;
+    arr[BARIS-13][15] = 3;
+    arr[BARIS-13][16] = 3;
+    arr[BARIS-13][17] = 3;
+
+
+    arr[BARIS-13][23]= 4;
+    arr[BARIS-15][4]= 4;
+    arr[BARIS-4][7]= 4;
+    arr[BARIS-2][17]= 4;
+    arr[BARIS-4][24]= 4;
+    arr[BARIS-10][22]= 4;
+
+    arr[BARIS-15][9]= 5;
+
+    //set posisi player
+    (*player).X = (KOLOM/2)*MATRIX_ELEMENT_SIZE;
+    (*player).Y = (BARIS-3)*MATRIX_ELEMENT_SIZE;
+
+    //set posisi bot 1
+    bot[0].X = 15*MATRIX_ELEMENT_SIZE;
+    bot[0].Y = (BARIS-10)*MATRIX_ELEMENT_SIZE;
+
+    //set posisi bot 2
+    bot[1].X = 2*MATRIX_ELEMENT_SIZE;
+    bot[1].Y = (BARIS-2)*MATRIX_ELEMENT_SIZE;
+
+    //set posisi bot 3
+    bot[2].X = (KOLOM-3)*MATRIX_ELEMENT_SIZE;
+    bot[2].Y = (BARIS-2)*MATRIX_ELEMENT_SIZE;
+
+    *nBot = 3;
+}
+
+void level2(int arr[BARIS][KOLOM],koordinat* player, koordinat bot[], int* nBot){
+// generate matriks int level 2
+    for(int i=0;i<BARIS;i++){ //generate matriks komposit
+        for(int j=0;j<KOLOM;j++){
+            if((i == BARIS-1) || (i == BARIS-3)|| (i == BARIS-6)|| (i == BARIS-9)|| ((i == BARIS-14) && (j < 16))){ //subvariabel stage di baris paling bawah diisi dengan 1 dan yang lainnya 0
+                arr[i][j]=1;
+            }else{
+                arr[i][j]=0;
+            }
+        }
+    }
+
+    arr[BARIS-3][0] = 0;
+    arr[BARIS-3][1] = 0;
+    arr[BARIS-3][2] = 0;
+    arr[BARIS-3][3] = 0;
+    arr[BARIS-3][11] = 0;
+    arr[BARIS-3][12] = 0;
+    arr[BARIS-3][13] = 0;
+    arr[BARIS-3][14] = 0;
+    arr[BARIS-3][15] = 0;
+    arr[BARIS-3][16] = 0;
+    arr[BARIS-3][17] = 0;
+    arr[BARIS-3][18] = 0;
+    arr[BARIS-3][19] = 0;
+
+    arr[BARIS-6][21] = 0;
+    arr[BARIS-6][22] = 0;
+    arr[BARIS-6][23]= 0;
+    arr[BARIS-6][24]= 0;
+    arr[BARIS-6][25] = 0;
+    arr[BARIS-6][26] = 0;
+    arr[BARIS-6][27] = 0;
+    arr[BARIS-6][28] = 0;
+    arr[BARIS-6][29] = 0;
+
+    arr[BARIS-9][8] = 0;
+    arr[BARIS-9][9] = 0;
+    arr[BARIS-9][10] = 0;
+    arr[BARIS-9][11] = 0;
+
+    arr[BARIS-10][13]= 1;
+    arr[BARIS-11][13]= 1;
+    arr[BARIS-12][13]= 1;
+
+    arr[BARIS-10][12]= 1;
+    arr[BARIS-11][12]= 1;
+    arr[BARIS-12][12]= 1;
+
+    arr[BARIS-12][18]= 1;
+    arr[BARIS-12][19]= 1;
+    arr[BARIS-12][20]= 1;
+    arr[BARIS-12][21]= 1;
+    arr[BARIS-12][22]= 1;
+    arr[BARIS-12][23]= 1;
+    arr[BARIS-12][24]= 1;
+    arr[BARIS-12][25]= 1;
+    arr[BARIS-12][26]= 1;
+    arr[BARIS-12][27]= 1;
+
+    arr[BARIS-2][4]= 2;
+    arr[BARIS-3][4]= 2;
+
+    arr[BARIS-2][KOLOM-1]= 2;
+    arr[BARIS-3][KOLOM-1]= 2;
+
+    arr[BARIS-4][KOLOM-8]= 2;
+    arr[BARIS-5][KOLOM-8]= 2;
+    arr[BARIS-6][KOLOM-8]= 2;
+    arr[BARIS-7][KOLOM-8]= 2;
+    arr[BARIS-8][KOLOM-8]= 2;
+    arr[BARIS-9][KOLOM-8]= 2;
+
+    arr[BARIS-4][9]= 2;
+    arr[BARIS-5][9]= 2;
+    arr[BARIS-6][9]= 2;
+
+    arr[BARIS-7][2]= 2;
+    arr[BARIS-8][2]= 2;
+    arr[BARIS-9][2]= 2;
+
+    arr[BARIS-10][7]= 2;
+    arr[BARIS-11][7]= 2;
+    arr[BARIS-12][7]= 2;
+    arr[BARIS-13][7]= 2;
+    arr[BARIS-14][7]= 2;
+
+    arr[BARIS-10][14]= 2;
+    arr[BARIS-11][14]= 2;
+    arr[BARIS-12][14]= 2;
+
+    arr[BARIS-10][KOLOM-3]= 2;
+    arr[BARIS-11][KOLOM-3]= 2;
+    arr[BARIS-12][KOLOM-3]= 2;
+
+    arr[BARIS-4][10] = 3;
+    arr[BARIS-4][11] = 3;
+    arr[BARIS-4][12] = 3;
+    arr[BARIS-4][13] = 3;
+    arr[BARIS-4][14] = 3;
+    arr[BARIS-4][15] = 3;
+    arr[BARIS-4][16] = 3;
+    arr[BARIS-4][17] = 3;
+    arr[BARIS-4][18] = 3;
+    arr[BARIS-4][19] = 3;
+
+    arr[BARIS-13][8] = 3;
+    arr[BARIS-13][9] = 3;
+    arr[BARIS-13][10] = 3;
+    arr[BARIS-13][11] = 3;
+    arr[BARIS-13][12] = 3;
+    arr[BARIS-13][13] = 3;
+    arr[BARIS-13][14] = 3;
+    arr[BARIS-13][15] = 3;
+    arr[BARIS-13][16] = 3;
+    arr[BARIS-13][17] = 3;
+
+
+    arr[BARIS-13][23]= 4;
+    arr[BARIS-15][4]= 4;
+    arr[BARIS-4][7]= 4;
+    arr[BARIS-2][17]= 4;
+    arr[BARIS-4][24]= 4;
+    arr[BARIS-10][22]= 4;
+
+    arr[BARIS-15][9]= 5;
 
     //set posisi player
     (*player).X = (KOLOM/2)*MATRIX_ELEMENT_SIZE;
@@ -320,6 +500,8 @@ void generateStage(int arr[BARIS][KOLOM], int level, koordinat* player, koordina
     switch(level){
     case 1 :
         level1(arr,player, bot, nBot);
+    case 2 :
+        level2(arr,player, bot, nBot);
 
     }
 }
@@ -342,8 +524,6 @@ void drawStage(int arr[BARIS][KOLOM], koordinat player, koordinat bot[], int nBo
             }else if(arr[i][j] == 6){
                 drawBedRock(MATRIX_ELEMENT_SIZE*j, MATRIX_ELEMENT_SIZE*i, MATRIX_ELEMENT_SIZE*(j+1), MATRIX_ELEMENT_SIZE*(i+1));
             }
-
-
         }
     }
 
@@ -381,7 +561,7 @@ void drawPlayerMovement(char movement, int arr[BARIS][KOLOM], int barisPlayer, i
             clearviewport();
             setviewport(((kolomPlayer-1)*MATRIX_ELEMENT_SIZE), ((barisPlayer-1)*MATRIX_ELEMENT_SIZE),((kolomPlayer+2)*MATRIX_ELEMENT_SIZE), ((barisPlayer+2)*MATRIX_ELEMENT_SIZE),1);
             clearviewport();
-            setviewport(0,0, 800,600,1);
+            setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
             drawRight(arr,kolomPlayer-1,barisPlayer,4);
             drawRight(arr,kolomPlayer-1,barisPlayer-1,3);
             drawRight(arr,kolomPlayer-1,barisPlayer+1,3);
@@ -397,7 +577,7 @@ void drawPlayerMovement(char movement, int arr[BARIS][KOLOM], int barisPlayer, i
             clearviewport();
             setviewport(((kolomPlayer-1)*MATRIX_ELEMENT_SIZE), ((barisPlayer-1)*MATRIX_ELEMENT_SIZE),((kolomPlayer+2)*MATRIX_ELEMENT_SIZE), ((barisPlayer+2)*MATRIX_ELEMENT_SIZE),1);
             clearviewport();
-            setviewport(0,0, 800,600,1);
+            setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
             drawLeft(arr,kolomPlayer+1,barisPlayer,4);
             drawLeft(arr,kolomPlayer+1,barisPlayer-1,3);
             drawLeft(arr,kolomPlayer+1,barisPlayer+1,3);
@@ -412,7 +592,7 @@ void drawPlayerMovement(char movement, int arr[BARIS][KOLOM], int barisPlayer, i
             clearviewport();
             setviewport(((kolomPlayer-1)*MATRIX_ELEMENT_SIZE), ((barisPlayer-1)*MATRIX_ELEMENT_SIZE),((kolomPlayer+2)*MATRIX_ELEMENT_SIZE), ((barisPlayer+2)*MATRIX_ELEMENT_SIZE),1);
             clearviewport();
-            setviewport(0,0, 800,600,1);
+            setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
             drawDown(arr,kolomPlayer,barisPlayer-1,4);
             drawDown(arr,kolomPlayer+1,barisPlayer-1,3);
             drawDown(arr,kolomPlayer-1,barisPlayer-1,3);
@@ -424,7 +604,7 @@ void drawPlayerMovement(char movement, int arr[BARIS][KOLOM], int barisPlayer, i
             clearviewport();
             setviewport(((kolomPlayer-1)*MATRIX_ELEMENT_SIZE), ((barisPlayer-1)*MATRIX_ELEMENT_SIZE),((kolomPlayer+2)*MATRIX_ELEMENT_SIZE), ((barisPlayer+2)*MATRIX_ELEMENT_SIZE),1);
             clearviewport();
-            setviewport(0,0, 800,600,1);
+            setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
             drawUp(arr,kolomPlayer,barisPlayer+1,4);
             drawUp(arr,kolomPlayer+1,barisPlayer+1,3);
             drawUp(arr,kolomPlayer-1,barisPlayer+1,3);
@@ -439,7 +619,7 @@ void drawPlayerMovement(char movement, int arr[BARIS][KOLOM], int barisPlayer, i
             clearviewport();
             setviewport(X,Y,X+MATRIX_ELEMENT_SIZE,Y+MATRIX_ELEMENT_SIZE,1);
             clearviewport();
-            setviewport(0,0, 800,600,1);
+            setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
             drawRight(arr,kolomPlayer-1,barisPlayer-1,3);
             drawRight(arr,kolomPlayer-1,barisPlayer,3);
             drawRight(arr,kolomPlayer-1,barisPlayer+1,3);
@@ -449,13 +629,13 @@ void drawPlayerMovement(char movement, int arr[BARIS][KOLOM], int barisPlayer, i
             if(urutanBom >= 2){
                 setviewport((kolomPlayer+1)*MATRIX_ELEMENT_SIZE, barisPlayer*MATRIX_ELEMENT_SIZE, (kolomPlayer+2)*MATRIX_ELEMENT_SIZE, (barisPlayer+2)*MATRIX_ELEMENT_SIZE,1);
                 clearviewport();
-                setviewport(0,0, 800,600,1);
+                setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
                 drawUp(arr, kolomPlayer-1, barisPlayer+1, 2);
                 PlayerBombRight(X,Y,X+MATRIX_ELEMENT_SIZE,Y+MATRIX_ELEMENT_SIZE);
                 swapbuffers();
                 setviewport((kolomPlayer+1)*MATRIX_ELEMENT_SIZE, barisPlayer*MATRIX_ELEMENT_SIZE, (kolomPlayer+2)*MATRIX_ELEMENT_SIZE, (barisPlayer+2)*MATRIX_ELEMENT_SIZE,1);
                 clearviewport();
-                setviewport(0,0, 800,600,1);
+                setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
                 drawUp(arr, kolomPlayer+1, barisPlayer+1, 2);
                 PlayerBombRight(X,Y,X+MATRIX_ELEMENT_SIZE,Y+MATRIX_ELEMENT_SIZE);
             }
@@ -465,7 +645,7 @@ void drawPlayerMovement(char movement, int arr[BARIS][KOLOM], int barisPlayer, i
             clearviewport();
             setviewport(X,Y,X+MATRIX_ELEMENT_SIZE,Y+MATRIX_ELEMENT_SIZE,1);
             clearviewport();
-            setviewport(0,0, 800,600,1);
+            setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
             drawRight(arr,kolomPlayer-1,barisPlayer-1,3);
             drawRight(arr,kolomPlayer-1,barisPlayer,3);
             drawRight(arr,kolomPlayer-1,barisPlayer+1,3);
@@ -476,13 +656,13 @@ void drawPlayerMovement(char movement, int arr[BARIS][KOLOM], int barisPlayer, i
 
                 setviewport((kolomPlayer-1)*MATRIX_ELEMENT_SIZE, barisPlayer*MATRIX_ELEMENT_SIZE, kolomPlayer*MATRIX_ELEMENT_SIZE, (barisPlayer+2)*MATRIX_ELEMENT_SIZE,1);
                 clearviewport();
-                setviewport(0,0, 800,600,1);
+                setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
                 drawUp(arr, kolomPlayer-1, barisPlayer+1, 2);
                 PlayerBombLeft(X,Y,X+MATRIX_ELEMENT_SIZE,Y+MATRIX_ELEMENT_SIZE);
                 swapbuffers();
                 setviewport((kolomPlayer-1)*MATRIX_ELEMENT_SIZE, barisPlayer*MATRIX_ELEMENT_SIZE, kolomPlayer*MATRIX_ELEMENT_SIZE, (barisPlayer+2)*MATRIX_ELEMENT_SIZE,1);
                 clearviewport();
-                setviewport(0,0, 800,600,1);
+                setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
                 drawUp(arr, kolomPlayer-1, barisPlayer+1, 2);
                 PlayerBombLeft(X,Y,X+MATRIX_ELEMENT_SIZE,Y+MATRIX_ELEMENT_SIZE);
             }
@@ -506,10 +686,10 @@ void loading(){
 // menampilkan tampilan loading selagi matriks digambar
     setactivepage(3);
     settextstyle(10, 0, 8);
-    outtextxy((WINDOWS_WIDTH/2)-250,(WINDOWS_HEIGHT/2)-50, "Lode Runner");
+    outtextxy((WINDOWS_WIDTH/2)-250,(WINDOWS_HEIGHT/2)-100, "Lode Runner");
     settextstyle(10, 0, 2);
-    outtextxy((WINDOWS_WIDTH/2)-75,(WINDOWS_HEIGHT/2)+17, "By Kelompok 7");
-    outtextxy((WINDOWS_WIDTH/2)-150,(WINDOWS_HEIGHT/2)+40, "Proyek Perangkat Lunak 2");
+    outtextxy((WINDOWS_WIDTH/2)-75,((WINDOWS_HEIGHT-50)/2), "By Kelompok 7");
+    outtextxy((WINDOWS_WIDTH/2)-150,((WINDOWS_HEIGHT-50)/2)+30, "Proyek Perangkat Lunak 2");
     setvisualpage(3);
 }
 

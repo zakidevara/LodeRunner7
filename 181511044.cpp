@@ -9,13 +9,13 @@ void tampil_skor(int skor)
 {
     char skoor[6];
 
-    setviewport(800-50,600, 800, 650,1);
+    setviewport(WINDOWS_WIDTH-50,WINDOWS_HEIGHT-50, WINDOWS_WIDTH, WINDOWS_HEIGHT,1);
     clearviewport();
-    setviewport(0,0, 800,650,1);
+    setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
 
     sprintf(skoor,"%d", skor);
-    outtextxy(800-50,600,skoor);
-    outtextxy(800-130,600,"SCORE:");
+    outtextxy(WINDOWS_WIDTH-50,WINDOWS_HEIGHT-50,skoor);
+    outtextxy(WINDOWS_WIDTH-130,WINDOWS_HEIGHT-50,"SCORE:");
 }
 
 void waktu_Awal(clock_t* wktAwal)
@@ -45,7 +45,7 @@ void tampil_Waktu(double durasi)
     char tamWaktu[6];
 
     sprintf(tamWaktu,"%lf", durasi);
-    outtextxy(800-200,600-100,tamWaktu);
+    outtextxy(WINDOWS_WIDTH-200,WINDOWS_HEIGHT-150,tamWaktu);
 }
 
 bool lagiNgambilKoin(int arr[BARIS][KOLOM], int baris, int kolom ){

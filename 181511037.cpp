@@ -122,10 +122,6 @@ void menutama()
         getmouseclick(WM_LBUTTONDOWN, mousex, mousey);
         //menu play
         if ((mousex > 217) && (mousex < 248)&& (mousey > 298) && (mousey < 463)){
-            setactivepage(0);
-            cleardevice();
-            setactivepage(1);
-            cleardevice();
             permainan();
             break;
         //menu credit
