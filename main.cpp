@@ -124,6 +124,10 @@ void permainan(){
 
             //reset nilai movement
             movement = NULL;
+            if(!adakoin(arr))
+            {
+        	            arr[BARIS-18][15] = 5;
+	}
 
             //cek apabila player sudah ada di pintu exit
             if(done(arr,barisPlayer,kolomPlayer))
