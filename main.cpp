@@ -23,7 +23,6 @@ void permainan(){
     int arr[BARIS][KOLOM];                  // matriks map
     int barisPlayer, kolomPlayer;           // posisi player di matriks
     koordinat player;                       // posisi player di koordinat layar
-    koordinat playerBfr;                    // posisi player di koordinat layar sebelum input movement
     int score = 0;                          // Score total
     int urutan = 0;                         // urutan untuk animasi pergerakan player
     int urutanBom = -1;                     // urutan untuk animasi melempar bom
@@ -72,9 +71,7 @@ void permainan(){
         waktu_Awal(&wktmulai);
 
         while(true){
-            //masukkan nilai untuk mengecek player bergerak atau tidak
-            playerBfr.X = player.X;
-            playerBfr.Y = player.Y;
+
 
             //proses jika player mengambil koin
             if(lagiNgambilKoin(arr,barisPlayer,kolomPlayer)){
@@ -122,7 +119,7 @@ void permainan(){
             }
 
             //jika ada pergerakan maka swap buffer
-            if(isLagiBom(movement)||isGerak(arr, player, playerBfr) || lagiNgambilKoin(arr,barisPlayer,kolomPlayer) || (movement != NULL)|| (urutanBom != -1)){
+            if(isLagiBom(movement)||lagiNgambilKoin(arr,barisPlayer,kolomPlayer) || (movement != NULL)|| (urutanBom != -1)){
                 swapbuffers();
             }
 

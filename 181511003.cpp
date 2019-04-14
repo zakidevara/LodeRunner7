@@ -25,7 +25,7 @@ bool isSliding(int arr[BARIS][KOLOM], int baris, int kolom){
     }
 }
 bool isFalling(int arr[BARIS][KOLOM], int baris, int kolom){
-    if((arr[baris+1][kolom] == 0) || (arr[baris+1][kolom] == 3) || (arr[baris+1][kolom] == 7)){
+    if((arr[baris+1][kolom] == 0) || (arr[baris+1][kolom] == 3) || (arr[baris+1][kolom] == 7) || (arr[baris+1][kolom] == 4)){
         return true;
     }else{
         return false;

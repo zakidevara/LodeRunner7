@@ -52,8 +52,6 @@ void drawPlayerMovement(char movement, int arr[BARIS][KOLOM], int barisPlayer, i
 
 void loading();
 
-bool isGerak(int arr[BARIS][KOLOM], koordinat after, koordinat bfr);
-
 void prosesInput(char* movement);
 
 bool isLagiBom(int movement);

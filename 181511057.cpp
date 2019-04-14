@@ -568,13 +568,6 @@ void loading(){ // menampilkan tampilan loading selagi matriks digambar
     setvisualpage(3);
 }
 
-bool isGerak(int arr[BARIS][KOLOM], koordinat after, koordinat bfr){ //cek apabila player berubah posisi atau tidak
-    if((after.X == bfr.X) && (after.Y == bfr.Y)){
-        return false;
-    }else{
-        return true;
-    }
-}
 
 void prosesInput(char* movement){ //apabila nilai movement tidak sesuai dengan kontrol yang ditetapkan, maka assign movement = NULL
     if ((*movement != 'A') && (*movement != 'S') && (*movement != 'D') && (*movement != 'W') && (*movement != 'M') && (*movement != 'N')){
