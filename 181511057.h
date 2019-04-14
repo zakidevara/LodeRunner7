@@ -34,10 +34,12 @@ void PlayerBombLeft(int x1,int y1,int x2, int y2);
 
 void drawBot(int x1,int y1,int x2, int y2);
 
-void level1(int arr[BARIS][KOLOM],koordinat* player, koordinat bot[], int* nBot);
+void level1(int arr[BARIS][KOLOM],koordinat* player, koordinat bot[], int* nBot, posisiMatriks* pintuExit);
 // generate matriks int level 1
 
-void generateStage(int arr[BARIS][KOLOM], int level, koordinat* player, koordinat bot[], int* nBot);
+void level2(int arr[BARIS][KOLOM],koordinat* player, koordinat bot[], int* nBot, posisiMatriks* pintuExit);
+
+void generateStage(int arr[BARIS][KOLOM], int level, koordinat* player, koordinat bot[], int* nBot, posisiMatriks* pintuExit);
 
 void drawStage(int arr[BARIS][KOLOM], koordinat player, koordinat bot[], int nBot);
 

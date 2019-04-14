@@ -33,15 +33,15 @@ void permainan(){
     koordinat bot[5];                       // posisi bot di koordinat layar
     int jmlBot;                             // jumlah bot dalam stage
     arrayQueue queueLubang;                 // queue untuk bata yang dilubangi
-    int level = 1;
+    int level = 1;                          // isinya menunjukkan level yang sedang dimainkan
+    posisiMatriks pintuExit;                // poisisi pintu exit di setiap levelnya
 
-    while(level <= 2 ){
-
+    while(level <= MAX_LEVEL){
         //insiasi queue untuk lubang
         inisiasi_queue(&queueLubang);
 
-        //Memasukkan nilai ke semua elemen matriks
-        generateStage(arr, level, &player, bot, &jmlBot);
+        //Memasukkan nilai ke semua elemen matriks dan menentukan posisi player & bot di setiap level
+        generateStage(arr, level, &player, bot, &jmlBot, &pintuExit);
 
         //inisiasi posisi player dalam matriks
         kolomPlayer = (player.X+(MATRIX_ELEMENT_SIZE/2))/MATRIX_ELEMENT_SIZE;
@@ -52,14 +52,17 @@ void permainan(){
         loading();
 
         //inisiasi page double buffering
+        //gambar player, bot dan map di page 0
         setactivepage(0);
         cleardevice();
         drawStage(arr, player, bot, jmlBot);
         tampil_skor(score);
+        //gambar player, bot dan map di page 1
         setactivepage(1);
         cleardevice();
         drawStage(arr, player, bot, jmlBot);
         tampil_skor(score);
+        //set page 0 ke active page dan page 1 ke visual page
         setactivepage(0);
         setvisualpage(1);
 
@@ -84,20 +87,21 @@ void permainan(){
 
             //User input movement
             if(isFalling(arr,barisPlayer,kolomPlayer) && !isSliding(arr, barisPlayer, kolomPlayer)){
+                //jika sedang jatuh maka movement dianggap bernilai 'S', atau sama dengan sedang bergerak ke bawah
                 movement = 'S';
                 delay(30);
             }else{
                 while(kbhit()){
-                    movement=toupper(getch());
-                    prosesInput(&movement);
+                    movement = toupper(getch());
+                    prosesInput(&movement); //jika input movement tidak sesuai dengan kontrol yang sudah ditetapkan, maka assign movement = NULL
                 }
             }
 
             //memproses movement yang diinput user
             playerMovement(&movement, arr, &barisPlayer, &kolomPlayer, &player.X, &player.Y, &queueLubang, &urutanBom);
 
-            //pengembalian bata yg dibom
-            if(queueLubang.Count > 0){
+            //pengembalian lubang yg dibom
+            if(queueLubang.Count > 0){ // apabila ada lubang di dalam map
                 wktskrng = clock();
                 isi_kembali_lubang(arr, &queueLubang, wktskrng);
             }
@@ -124,10 +128,26 @@ void permainan(){
 
             //reset nilai movement
             movement = NULL;
-            if(!adakoin(arr))
+
+            //cek apa semua koin sudah terkumpul
+            if(!adakoin(arr) && (arr[pintuExit.baris][pintuExit.kolom] != 5))
             {
-        	            arr[BARIS-18][15] = 5;
-	}
+                arr[pintuExit.baris][pintuExit.kolom] = 5;
+
+                //gambar pintu exit di posisi pintuExit di kedua page
+                setviewport((pintuExit.kolom)*MATRIX_ELEMENT_SIZE, (pintuExit.baris)*MATRIX_ELEMENT_SIZE, (pintuExit.kolom + 1)*MATRIX_ELEMENT_SIZE, (pintuExit.baris + 1)*MATRIX_ELEMENT_SIZE, 1);
+                clearviewport();
+                setviewport(0, 0, WINDOWS_WIDTH, WINDOWS_HEIGHT, 1);
+                drawUp(arr, pintuExit.kolom, pintuExit.baris, 2);
+                swapbuffers();
+
+                setviewport((pintuExit.kolom)*MATRIX_ELEMENT_SIZE, (pintuExit.baris)*MATRIX_ELEMENT_SIZE, (pintuExit.kolom + 1)*MATRIX_ELEMENT_SIZE, (pintuExit.baris + 1)*MATRIX_ELEMENT_SIZE, 1);
+                clearviewport();
+                setviewport(0, 0, WINDOWS_WIDTH, WINDOWS_HEIGHT, 1);
+                drawUp(arr, pintuExit.kolom, pintuExit.baris, 2);
+                swapbuffers();
+
+            }
 
             //cek apabila player sudah ada di pintu exit
             if(done(arr,barisPlayer,kolomPlayer))
@@ -138,8 +158,6 @@ void permainan(){
                 level++;
                 break;
             }
-
-
         }
         //PlaySound(NULL,NULL,0);
     }

@@ -9,14 +9,15 @@
 #include <windows.h>
 #include <mmsystem.h>
 
-
-
 #define MATRIX_ELEMENT_SIZE 40
 #define BARIS 16
 #define KOLOM 28
 
 #define WINDOWS_HEIGHT (BARIS*MATRIX_ELEMENT_SIZE)+50
 #define WINDOWS_WIDTH KOLOM*MATRIX_ELEMENT_SIZE
+
+#define MAX_LEVEL 2
+
 
 typedef struct{
     int X;

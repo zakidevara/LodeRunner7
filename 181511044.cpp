@@ -45,6 +45,7 @@ void tampil_Waktu(double durasi)
     char tamWaktu[6];
 
     sprintf(tamWaktu,"%lf", durasi);
+    outtextxy(WINDOWS_WIDTH-300,WINDOWS_HEIGHT-150,"WAKTU:");
     outtextxy(WINDOWS_WIDTH-200,WINDOWS_HEIGHT-150,tamWaktu);
 }
 
