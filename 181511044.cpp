@@ -20,15 +20,11 @@ void tampil_skor(int skor)
 
 void waktu_Awal(clock_t* wktAwal)
 {
-
-
     *wktAwal = clock();
 }
 
 void waktu_Akhir(clock_t* wktAkhir)
 {
-
-
    * wktAkhir = clock();
 }
 
@@ -45,8 +41,38 @@ void tampil_Waktu(double durasi)
     char tamWaktu[6];
 
     sprintf(tamWaktu,"%lf", durasi);
-    outtextxy(WINDOWS_WIDTH-300,WINDOWS_HEIGHT-150,"WAKTU:");
+    outtextxy(WINDOWS_WIDTH-300,WINDOWS_HEIGHT-150,"Waktu:");
     outtextxy(WINDOWS_WIDTH-200,WINDOWS_HEIGHT-150,tamWaktu);
+}
+
+int hitung_skor_akhir(int* skor, double durasi)
+{
+    int total;
+
+    if(durasi >= 60)
+    {
+        total = 0;
+    }
+    else
+    {
+        total = 60-durasi;
+        total = total*2-10;
+        if(total <=0)
+        {
+            total=0;
+        }
+    }
+    *skor = *skor + total;
+    return *skor;
+}
+
+void tampil_skor_akhir(int skor)
+{
+    char tamSkorAkhir[6];
+
+    sprintf(tamSkorAkhir,"%d", skor);
+    outtextxy(WINDOWS_WIDTH-400,WINDOWS_HEIGHT-300,"Skor:");
+    outtextxy(WINDOWS_WIDTH-300,WINDOWS_HEIGHT-300,tamSkorAkhir);
 }
 
 bool lagiNgambilKoin(int arr[BARIS][KOLOM], int baris, int kolom ){
