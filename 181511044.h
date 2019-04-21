@@ -23,4 +23,4 @@ void tampil_skor_akhir(int skor);
 
 bool lagiNgambilKoin(int arr[BARIS][KOLOM], int baris, int kolom );
 
-#endif // 1815110044_H
+#endif //  1815110044_H
