@@ -6,11 +6,12 @@
 #include "181511028.h"
 #include "181511004.h"
 
-void tampilan_exit(double wkttotal){
+void tampilan_exit(double wkttotal, int score){
             setactivepage(2);
             clearviewport();
             outtextxy(WINDOWS_WIDTH/2,WINDOWS_HEIGHT/2-50, "Game Over");
             tampil_Waktu(wkttotal);
+            tampil_skor_akhir(score);
             setvisualpage(2);
             getch();
 }
@@ -151,7 +152,8 @@ void permainan(){
             {
                 waktu_Akhir(&wktselesai);
                 wkttotal = hitung_Waktu(wktmulai, wktselesai);
-                tampilan_exit(wkttotal);
+                score = hitung_skor_akhir(&score, wkttotal);
+                tampilan_exit(wkttotal,score);
                 level++;
                 break;
             }
