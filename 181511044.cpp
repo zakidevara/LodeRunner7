@@ -41,8 +41,8 @@ void tampil_Waktu(double durasi)
     char tamWaktu[6];
 
     sprintf(tamWaktu,"%lf", durasi);
-    outtextxy(WINDOWS_WIDTH-300,WINDOWS_HEIGHT-150,"Waktu:");
-    outtextxy(WINDOWS_WIDTH-200,WINDOWS_HEIGHT-150,tamWaktu);
+    outtextxy(WINDOWS_WIDTH-400,WINDOWS_HEIGHT-150,"Waktu Stage:");
+    outtextxy(WINDOWS_WIDTH-250,WINDOWS_HEIGHT-150,tamWaktu);
 }
 
 int hitung_skor_akhir(int* skor, double durasi)
@@ -71,14 +71,18 @@ void tampil_skor_akhir(int skor)
     char tamSkorAkhir[6];
 
     sprintf(tamSkorAkhir,"%d", skor);
-    outtextxy(WINDOWS_WIDTH-400,WINDOWS_HEIGHT-300,"Skor:");
-    outtextxy(WINDOWS_WIDTH-300,WINDOWS_HEIGHT-300,tamSkorAkhir);
+    outtextxy(WINDOWS_WIDTH-550,WINDOWS_HEIGHT-300,"Skor:");
+    outtextxy(WINDOWS_WIDTH-490,WINDOWS_HEIGHT-300,tamSkorAkhir);
 }
 
-bool lagiNgambilKoin(int arr[BARIS][KOLOM], int baris, int kolom ){
-    if(arr[baris][kolom] == 4){
+bool lagiNgambilKoin(int arr[BARIS][KOLOM], int baris, int kolom )
+{
+    if(arr[baris][kolom] == 4)
+    {
         return true;
-    }else{
+    }
+    else
+    {
         return false;
     }
 }
