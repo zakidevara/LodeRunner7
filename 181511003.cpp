@@ -46,10 +46,11 @@ void playerMovement(char *movement, int arr[BARIS][KOLOM], int* barisPlayer, int
                 *movement=NULL;
 			}
             break;
-
             case 'S' :
             *urutanBom=-1;
-            if((*Y+10 < WINDOWS_HEIGHT-50-MATRIX_ELEMENT_SIZE)  && ((isClimbing(arr, *barisPlayer, *kolomPlayer) && !isStanding(arr, *barisPlayer, *kolomPlayer))|| (isSliding(arr, *barisPlayer, *kolomPlayer) && !isStanding(arr, *barisPlayer, *kolomPlayer)) || isClimbing(arr, *barisPlayer+1, *kolomPlayer) || isFalling(arr, *barisPlayer, *kolomPlayer))){
+            if((*Y+10 < WINDOWS_HEIGHT-50-MATRIX_ELEMENT_SIZE)  && ((isClimbing(arr, *barisPlayer, *kolomPlayer) && !isStanding(arr, *barisPlayer, *kolomPlayer)) ||
+            (isSliding(arr, *barisPlayer, *kolomPlayer) && !isStanding(arr, *barisPlayer, *kolomPlayer)) || isClimbing(arr, *barisPlayer+1, *kolomPlayer) ||
+            isFalling(arr, *barisPlayer, *kolomPlayer))){
                 if(isSliding(arr,*barisPlayer,*kolomPlayer)){
                     *Y = *Y + (MATRIX_ELEMENT_SIZE/2);
                     *kolomPlayer = (*X+(MATRIX_ELEMENT_SIZE/2))/MATRIX_ELEMENT_SIZE;
@@ -70,10 +71,10 @@ void playerMovement(char *movement, int arr[BARIS][KOLOM], int* barisPlayer, int
                 *movement=NULL;
 			}
             break;
-
             case 'D' :
             *urutanBom=-1;
-            if((*X+10 <= WINDOWS_WIDTH-MATRIX_ELEMENT_SIZE) && !isNabrak(arr, *X, *Y, 1) && ((isStanding(arr, *barisPlayer, *kolomPlayer)==true)||(isSliding(arr, *barisPlayer, *kolomPlayer)==true) || isClimbing(arr, *barisPlayer, *kolomPlayer))){
+            if((*X+10 <= WINDOWS_WIDTH-MATRIX_ELEMENT_SIZE) && !isNabrak(arr, *X, *Y, 1) && ((isStanding(arr, *barisPlayer, *kolomPlayer)==true)||
+                (isSliding(arr, *barisPlayer, *kolomPlayer)==true) || isClimbing(arr, *barisPlayer, *kolomPlayer))){
                 if((isStanding(arr, *barisPlayer, *kolomPlayer) && !isClimbing(arr, *barisPlayer, *kolomPlayer)) || isSliding(arr, *barisPlayer, *kolomPlayer)){
                     *Y = (*barisPlayer)*MATRIX_ELEMENT_SIZE;
                 }
@@ -82,10 +83,10 @@ void playerMovement(char *movement, int arr[BARIS][KOLOM], int* barisPlayer, int
                 *movement=NULL;
 			}
             break;
-
             case 'A' :
             *urutanBom=-1;
-            if((*X-10 >=0) && !isNabrak(arr, *X, *Y, -1) && ((isStanding(arr, *barisPlayer, *kolomPlayer)==true)||(isSliding(arr, *barisPlayer, *kolomPlayer)==true) || isClimbing(arr, *barisPlayer, *kolomPlayer))){
+            if((*X-10 >=0) && !isNabrak(arr, *X, *Y, -1) && ((isStanding(arr, *barisPlayer, *kolomPlayer)==true)||(isSliding(arr, *barisPlayer, *kolomPlayer)==true) ||
+                isClimbing(arr, *barisPlayer, *kolomPlayer))){
                 if((isStanding(arr, *barisPlayer, *kolomPlayer) && !isClimbing(arr, *barisPlayer, *kolomPlayer)) || isSliding(arr, *barisPlayer, *kolomPlayer)){
                     *Y = (*barisPlayer)*MATRIX_ELEMENT_SIZE;
                 }

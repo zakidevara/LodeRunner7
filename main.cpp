@@ -8,8 +8,11 @@
 
 void tampilan_exit(double wkttotal, int score){
             setactivepage(2);
-            clearviewport();
-            outtextxy(WINDOWS_WIDTH/2,WINDOWS_HEIGHT/2-50, "Game Over");
+            cleardevice();
+
+            settextstyle(DEFAULT_FONT,0,50);
+            outtextxy((WINDOWS_WIDTH/2)-250,(WINDOWS_HEIGHT/2)-400, "Level Completed");
+            settextstyle(DEFAULT_FONT,0,30);
             tampil_Waktu(wkttotal);
             tampil_skor_akhir(score);
             setvisualpage(2);
@@ -72,8 +75,6 @@ void permainan(){
         waktu_Awal(&wktmulai);
 
         while(true){
-
-
             //proses jika player mengambil koin
             if(lagiNgambilKoin(arr,barisPlayer,kolomPlayer)){
                 arr[barisPlayer][kolomPlayer] = 0;

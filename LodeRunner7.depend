@@ -117,3 +117,62 @@
 	"181511028.h"
 	"181511004.h"
 
+1556090501 source:c:\users\zaki devara\documents\sda(struktur data dan algoritma)\loderunner7-master\181511003.cpp
+	"181511003.h"
+
+1555782742 c:\users\zaki devara\documents\sda(struktur data dan algoritma)\loderunner7-master\181511003.h
+	"main.h"
+	"181511057.h"
+
+1556069392 c:\users\zaki devara\documents\sda(struktur data dan algoritma)\loderunner7-master\main.h
+	<stdio.h>
+	<graphics.h>
+	<conio.h>
+	<ctime>
+	<windows.h>
+	<mmsystem.h>
+
+1555782742 c:\users\zaki devara\documents\sda(struktur data dan algoritma)\loderunner7-master\181511057.h
+	"main.h"
+	"181511028.h"
+	"181511037.h"
+	"181511003.h"
+	"181511044.h"
+
+1555782742 c:\users\zaki devara\documents\sda(struktur data dan algoritma)\loderunner7-master\181511028.h
+	"main.h"
+
+1555782742 c:\users\zaki devara\documents\sda(struktur data dan algoritma)\loderunner7-master\181511037.h
+	"main.h"
+	"181511028.h"
+
+1555782742 c:\users\zaki devara\documents\sda(struktur data dan algoritma)\loderunner7-master\181511044.h
+	"main.h"
+
+1555782742 source:c:\users\zaki devara\documents\sda(struktur data dan algoritma)\loderunner7-master\181511004.cpp
+	"181511004.h"
+
+1555782742 c:\users\zaki devara\documents\sda(struktur data dan algoritma)\loderunner7-master\181511004.h
+	"main.h"
+
+1555782742 source:c:\users\zaki devara\documents\sda(struktur data dan algoritma)\loderunner7-master\181511028.cpp
+	"181511028.h"
+
+1555782742 source:c:\users\zaki devara\documents\sda(struktur data dan algoritma)\loderunner7-master\181511037.cpp
+	"181511037.h"
+
+1556069783 source:c:\users\zaki devara\documents\sda(struktur data dan algoritma)\loderunner7-master\181511044.cpp
+	"181511044.h"
+
+1556071984 source:c:\users\zaki devara\documents\sda(struktur data dan algoritma)\loderunner7-master\181511057.cpp
+	"181511057.h"
+
+1556069852 source:c:\users\zaki devara\documents\sda(struktur data dan algoritma)\loderunner7-master\main.cpp
+	"main.h"
+	"181511057.h"
+	"181511003.h"
+	"181511044.h"
+	"181511037.h"
+	"181511028.h"
+	"181511004.h"
+

@@ -42,7 +42,7 @@ typedef struct{
     int Back;
 }arrayQueue;
 
-void tampilan_exit(double wkttotal);
+void tampilan_exit(double wkttotal, int score);
 void permainan();
 
 #endif // main_H

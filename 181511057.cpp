@@ -615,13 +615,6 @@ lubang dequeue(arrayQueue* P){ //mengeluarkan record lubang dari antrian paling 
     return temp;
 }
 
-void assign_Lubang(lubang* Z,int baris, int kolom, clock_t waktuAwal){
-    // assign posisi lubang dalam matriks dan waktu dibuatnya lubang ke record lubang
-    (*Z).pos.baris = baris;
-    (*Z).pos.kolom = kolom;
-    (*Z).start = waktuAwal;
-}
-
 void isi_kembali_lubang(int arr[BARIS][KOLOM], arrayQueue* P, clock_t wkt_sekarang){
     lubang Z;
     double durasi = hitung_Waktu(((*P).dt_lubang[(*P).Front].start), wkt_sekarang); //menghitung durasi = waktu sekarang - waktu lubang dibuat
@@ -636,6 +629,13 @@ void isi_kembali_lubang(int arr[BARIS][KOLOM], arrayQueue* P, clock_t wkt_sekara
         //hitung durasi lubang di antrian berikutnya
         durasi = hitung_Waktu(((*P).dt_lubang[(*P).Front].start), wkt_sekarang);
     }
+}
+
+void assign_Lubang(lubang* Z,int baris, int kolom, clock_t waktuAwal){
+    // assign posisi lubang dalam matriks dan waktu dibuatnya lubang ke record lubang
+    (*Z).pos.baris = baris;
+    (*Z).pos.kolom = kolom;
+    (*Z).start = waktuAwal;
 }
 
 void free_Lubang(lubang* Z){
