@@ -105,7 +105,7 @@ void playerMovement(int arr[BARIS][KOLOM], arrayQueue* P, sprite* player){ //mem
 
             		if((*player).urutanBom > -1){
                         arr[(*player).pm.baris+1][(*player).pm.kolom+1] = 7;
-                        if((*player).urutanBom>=3){
+                        if((*player).urutanBom == 4){
                             arr[(*player).pm.baris+1][(*player).pm.kolom+1] = 0;
                             Z = assign_Lubang((*player).pm.baris+1, (*player).pm.kolom+1, clock());
                             enqueue(P, Z);
@@ -122,7 +122,7 @@ void playerMovement(int arr[BARIS][KOLOM], arrayQueue* P, sprite* player){ //mem
 
                     if((*player).urutanBom>-1){
                         arr[(*player).pm.baris+1][(*player).pm.kolom-1] = 7;
-                        if((*player).urutanBom>=3){
+                        if((*player).urutanBom == 4){
                             arr[(*player).pm.baris+1][(*player).pm.kolom-1] = 0;
                             Z = assign_Lubang((*player).pm.baris +1, (*player).pm.kolom-1, clock());
                             enqueue(P, Z);

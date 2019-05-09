@@ -193,208 +193,23 @@ void drawBotArray(sprite bot[], int nBot){
     }
 }
 
-void level1(int arr[BARIS][KOLOM],koordinat* player, sprite bot[], int* nBot, posisiMatriks* pintuExit){
-    for(int i=0;i<BARIS;i++){
-        for(int j=0;j<KOLOM;j++){
-            if((i == BARIS-1) || (i == BARIS-3)|| (i == BARIS-6)|| (i == BARIS-9)|| ((i == BARIS-14) && (j < 16))){
-                arr[i][j]=1;
-            }else{
-                arr[i][j]=0; // assign semua nilai elemen matriks lainnya ke 0
-            }
-        }
-    }
-
-    // delete bata yang tidak diperlukan
-    arr[BARIS-3][0] = 0;
-    arr[BARIS-3][1] = 0;
-    arr[BARIS-3][2] = 0;
-    arr[BARIS-3][3] = 0;
-    arr[BARIS-3][11] = 0;
-    arr[BARIS-3][12] = 0;
-    arr[BARIS-3][13] = 0;
-    arr[BARIS-3][14] = 0;
-    arr[BARIS-3][15] = 0;
-    arr[BARIS-3][16] = 0;
-    arr[BARIS-3][17] = 0;
-    arr[BARIS-3][18] = 0;
-    arr[BARIS-3][19] = 0;
-
-    arr[BARIS-6][21] = 0;
-    arr[BARIS-6][22] = 0;
-    arr[BARIS-6][23]= 0;
-    arr[BARIS-6][24]= 0;
-    arr[BARIS-6][25] = 0;
-    arr[BARIS-6][26] = 0;
-    arr[BARIS-6][27] = 0;
-    arr[BARIS-6][28] = 0;
-    arr[BARIS-6][29] = 0;
-
-    arr[BARIS-9][8] = 0;
-    arr[BARIS-9][9] = 0;
-    arr[BARIS-9][10] = 0;
-    arr[BARIS-9][11] = 0;
-
-    //penambahan bata
-    arr[BARIS-10][13]= 1;
-    arr[BARIS-11][13]= 1;
-    arr[BARIS-12][13]= 1;
-
-    arr[BARIS-10][12]= 1;
-    arr[BARIS-11][12]= 1;
-    arr[BARIS-12][12]= 1;
-
-    arr[BARIS-12][18]= 1;
-    arr[BARIS-12][19]= 1;
-    arr[BARIS-12][20]= 1;
-    arr[BARIS-12][21]= 6;
-    arr[BARIS-12][22]= 6;
-    arr[BARIS-12][23]= 1;
-    arr[BARIS-12][24]= 1;
-    arr[BARIS-12][25]= 1;
-    arr[BARIS-12][26]= 1;
-    arr[BARIS-12][27]= 1;
-
-    //penambahan tangga
-    arr[BARIS-2][4]= 2;
-    arr[BARIS-3][4]= 2;
-
-    arr[BARIS-2][KOLOM-1]= 2;
-    arr[BARIS-3][KOLOM-1]= 2;
-
-    arr[BARIS-4][KOLOM-8]= 2;
-    arr[BARIS-5][KOLOM-8]= 2;
-    arr[BARIS-6][KOLOM-8]= 2;
-    arr[BARIS-7][KOLOM-8]= 2;
-    arr[BARIS-8][KOLOM-8]= 2;
-    arr[BARIS-9][KOLOM-8]= 2;
-
-    arr[BARIS-4][9]= 2;
-    arr[BARIS-5][9]= 2;
-    arr[BARIS-6][9]= 2;
-    arr[BARIS-4][8]= 2;
-    arr[BARIS-5][8]= 2;
-    arr[BARIS-6][8]= 2;
-
-    arr[BARIS-7][2]= 2;
-    arr[BARIS-8][2]= 2;
-    arr[BARIS-9][2]= 2;
-
-    arr[BARIS-10][7]= 2;
-    arr[BARIS-11][7]= 2;
-    arr[BARIS-12][7]= 2;
-    arr[BARIS-13][7]= 2;
-    arr[BARIS-14][7]= 2;
-
-    arr[BARIS-10][14]= 2;
-    arr[BARIS-11][14]= 2;
-    arr[BARIS-12][14]= 2;
-
-    arr[BARIS-10][KOLOM-3]= 2;
-    arr[BARIS-11][KOLOM-3]= 2;
-    arr[BARIS-12][KOLOM-3]= 2;
-
-    //penambahan tali
-    arr[BARIS-4][10] = 3;
-    arr[BARIS-4][11] = 3;
-    arr[BARIS-4][12] = 3;
-    arr[BARIS-4][13] = 3;
-    arr[BARIS-4][14] = 3;
-    arr[BARIS-4][15] = 3;
-    arr[BARIS-4][16] = 3;
-    arr[BARIS-4][17] = 3;
-    arr[BARIS-4][18] = 3;
-    arr[BARIS-4][19] = 3;
-
-    arr[BARIS-13][8] = 3;
-    arr[BARIS-13][9] = 3;
-    arr[BARIS-13][10] = 3;
-    arr[BARIS-13][11] = 3;
-    arr[BARIS-13][12] = 3;
-    arr[BARIS-13][13] = 3;
-    arr[BARIS-13][14] = 3;
-    arr[BARIS-13][15] = 3;
-    arr[BARIS-13][16] = 3;
-    arr[BARIS-13][17] = 3;
-
-    //penambahan koin
-    arr[BARIS-13][23]= 4;
-    arr[BARIS-15][4]= 4;
-    arr[BARIS-4][7]= 4;
-    arr[BARIS-2][17]= 4;
-    arr[BARIS-4][24]= 4;
-    arr[BARIS-10][22]= 4;
-
-    //set posisi pintu exit
-    (*pintuExit).baris = BARIS-15;
-    (*pintuExit).kolom = 9;
-
-    //set posisi player
-    (*player).X = (KOLOM/2)*MATRIX_ELEMENT_SIZE;
-    (*player).Y = (BARIS-3)*MATRIX_ELEMENT_SIZE;
-
-    //set posisi bot 1
-    bot[0].koor.X = 15*MATRIX_ELEMENT_SIZE;
-    bot[0].koor.Y = (BARIS-10)*MATRIX_ELEMENT_SIZE;
-
-    //set posisi bot 2
-    bot[1].koor.X = 2*MATRIX_ELEMENT_SIZE;
-    bot[1].koor.Y = (BARIS-2)*MATRIX_ELEMENT_SIZE;
-
-    //set posisi bot 3
-    bot[2].koor.X = (KOLOM-3)*MATRIX_ELEMENT_SIZE;
-    bot[2].koor.Y = (BARIS-2)*MATRIX_ELEMENT_SIZE;
-
-    //jumlah bot dalam level
-    *nBot = 3;
-}
-
-void level2(int arr[BARIS][KOLOM],koordinat* player, sprite bot[], int* nBot, posisiMatriks* pintuExit){
-    for(int i=0;i<BARIS;i++){
-        for(int j=0;j<KOLOM;j++){
-            if((i == BARIS-1)){
-                arr[i][j]=1;
-            }else{
-                arr[i][j]=0;
-            }
-        }
-    }
-
-    //penambahan koin
-    arr[BARIS-2][17]= 4;
-
-    //set posisi pintu exit
-    (*pintuExit).baris = BARIS-2;
-    (*pintuExit).kolom = 10;
-
-    //set posisi player
-    (*player).X = (KOLOM/2)*MATRIX_ELEMENT_SIZE;
-    (*player).Y = (BARIS-3)*MATRIX_ELEMENT_SIZE;
-
-    //set posisi bot 1
-    bot[0].koor.X = 2*MATRIX_ELEMENT_SIZE;
-    bot[0].koor.Y = (BARIS-2)*MATRIX_ELEMENT_SIZE;
-
-    //set posisi bot 3
-    bot[1].koor.X = (KOLOM-3)*MATRIX_ELEMENT_SIZE;
-    bot[1].koor.Y = (BARIS-2)*MATRIX_ELEMENT_SIZE;
-
-    //jumlah bot dalam level
-    *nBot = 2;
-}
-
-void generateStage(int arr[BARIS][KOLOM], int level, koordinat* player, sprite bot[], int* nBot, posisiMatriks* pintuExit){
+infoLevel generateStage(int level){
 //Pemilihan level yang akan di generate
+    infoLevel temp;
+
     switch(level){
     case 1 :
-        level1(arr,player, bot, nBot, pintuExit);break;
+        temp = readFileLevel("level/level1.dat");break;
     case 2 :
-        level2(arr,player, bot, nBot, pintuExit);break;
-
+        temp = readFileLevel("level/level2.dat");break;
     }
+    temp.lv = level;
+    return temp;
 }
 
 void drawStage(int arr[BARIS][KOLOM], koordinat player, sprite bot[], int nBot){
 // menggambar seluruh matriks arr
+
     for(int i=0; i<BARIS; i++){
         for(int j=0; j<KOLOM; j++){
             //penggambaran stage
@@ -644,7 +459,7 @@ lubang dequeue(arrayQueue* P){ //mengeluarkan record lubang dari antrian paling 
     lubang temp;
     if((*P).Count != 0 ){
         temp = (*P).dt_lubang[(*P).Front];
-        free_Lubang(&((*P).dt_lubang[(*P).Front]));
+        (*P).dt_lubang[(*P).Front] = free_Lubang();
         (*P).Front = ((*P).Front)+1;
         if((*P).Front >= (*P).MaxSize){
             (*P).Front = 0;
@@ -678,11 +493,13 @@ lubang assign_Lubang(int baris, int kolom, clock_t waktuAwal){
     return Z;
 }
 
-void free_Lubang(lubang* Z){
+lubang free_Lubang(){
     //kosongkan nilai semua subvariabel record bertipe lubang
-    (*Z).pos.baris = NULL;
-    (*Z).pos.kolom = NULL;
-    (*Z).start = NULL;
+    lubang Z;
+    (Z).pos.baris = NULL;
+    (Z).pos.kolom = NULL;
+    (Z).start = NULL;
+    return Z;
 }
 
 void tampil_level(int level){
@@ -699,7 +516,7 @@ void tampil_level(int level){
 
 void resetAnimasiBom(int arr[BARIS][KOLOM], int barisPlayer, int kolomPlayer, int* urutan, int* urutanBom, int movement, koordinat player){
     if(!isLagiBom(movement)){
-                *urutanBom=-1;
+                *urutanBom = -1;
                 if(arr[barisPlayer+1][kolomPlayer+1]==7){
                     arr[barisPlayer+1][kolomPlayer+1]=1;
                     *urutan = 0;
@@ -735,4 +552,37 @@ void resetAnimasiBom(int arr[BARIS][KOLOM], int barisPlayer, int kolomPlayer, in
                     swapbuffers();
                 }
             }
+}
+
+infoLevel readFileLevel(char file[]){
+    infoLevel level;
+    FILE* pf;
+    if((pf = fopen(file,"rb")) != NULL){
+        for(int i = 0; i < BARIS; i++){
+            for(int j = 0; j < KOLOM; j++){
+                fscanf(pf,"%d ", &(level.arr[i][j]));
+                //printf("%d", level.arr[i][j]);
+            }
+            //printf("\n");
+        }
+        fscanf(pf, "\n%d %d\n", &(level.pintuExit.baris), &(level.pintuExit.kolom));
+        //printf("%d %d\n", (level.pintuExit.baris), (level.pintuExit.kolom));
+        fscanf(pf, "%d %d\n", &(level.player.baris), &(level.player.kolom));
+        //printf("%d %d\n", (level.player.baris), (level.player.kolom));
+        fscanf(pf, "%d\n", &(level.jmlBot));
+        //printf("%d\n", (level.jmlBot));
+        for(int i = 0; i < level.jmlBot; i++){
+            fscanf(pf, "%d %d\n", &(level.bot[i].baris), &(level.bot[i].kolom));
+            //printf("%d %d\n", level.bot[i].baris, level.bot[i].kolom);
+        }
+    }
+    fclose(pf);
+    return level;
+}
+
+posisiMatriks getPosisiMatriks(koordinat koor){
+    posisiMatriks pos;
+    (pos).kolom = (koor.X+(MATRIX_ELEMENT_SIZE/2))/MATRIX_ELEMENT_SIZE;
+    (pos).baris = (koor.Y)/MATRIX_ELEMENT_SIZE;
+    return pos;
 }

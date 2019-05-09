@@ -34,12 +34,7 @@ void PlayerBombLeft(int x1,int y1,int x2, int y2);
 
 void drawBot(int x1,int y1,int x2, int y2);
 
-void level1(int arr[BARIS][KOLOM],koordinat* player, sprite bot[], int* nBot, posisiMatriks* pintuExit);
-// generate matriks int level 1
-
-void level2(int arr[BARIS][KOLOM],koordinat* player, sprite bot[], int* nBot, posisiMatriks* pintuExit);
-
-void generateStage(int arr[BARIS][KOLOM], int level, koordinat* player, sprite bot[], int* nBot, posisiMatriks* pintuExit);
+infoLevel generateStage(int level);
 
 void drawStage(int arr[BARIS][KOLOM], koordinat player, sprite bot[], int nBot);
 
@@ -59,7 +54,7 @@ void drawBotArray(sprite bot[], int nBot);
 
 lubang assign_Lubang(int baris, int kolom, clock_t waktuAwal);
 
-void free_Lubang(lubang* Z);
+lubang free_Lubang();
 
 arrayQueue inisiasi_queue();
 
@@ -72,4 +67,8 @@ void isi_kembali_lubang(int arr[BARIS][KOLOM], arrayQueue* P, clock_t wkt_sekara
 void tampil_level(int level);
 
 void resetAnimasiBom(int arr[BARIS][KOLOM], int barisPlayer, int kolomPlayer, int* urutan, int* urutanBom, int movement, koordinat player);
+
+infoLevel readFileLevel(char file[]);
+
+posisiMatriks getPosisiMatriks(koordinat koor);
 #endif

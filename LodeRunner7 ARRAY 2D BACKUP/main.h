@@ -32,10 +32,10 @@ typedef struct{
 typedef struct{
     koordinat koor;
     posisiMatriks pm;
-    char movement;
-    int urutanAnimasi;
-    int urutanBom;
-}sprite;                //info/data suatu sprite
+    char movement = NULL;
+    int urutanAnimasi = 0;
+    int urutanBom = 0;
+}sprite;                //struktur data suatu sprite
 
 typedef struct{
     posisiMatriks pos;
@@ -51,10 +51,11 @@ typedef struct{
 }arrayQueue;            //queue alokasi statis untuk menampung data lubang yang dibuat
 
 typedef struct{
-    int level;
+    int lv;
     int arr[BARIS][KOLOM];
     posisiMatriks pintuExit;
     posisiMatriks player;
+    posisiMatriks bot[5];
     int jmlBot;
 }infoLevel;            //info satu level
 
