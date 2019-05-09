@@ -23,17 +23,13 @@ void permainan(){
     initwindow(WINDOWS_WIDTH, WINDOWS_HEIGHT, " ", 0, 0, true, true);
 
     //VARIABEL LOKAL
-    char movement;                          // input movement player
     int arr[BARIS][KOLOM];                  // matriks map
-    int barisPlayer, kolomPlayer;           // posisi player di matriks
-    koordinat player;                       // posisi player di koordinat layar
+    sprite player;                          // sprite player
     int score = 0;                          // Score total
-    int urutan = 0;                         // urutan untuk animasi pergerakan player
-    int urutanBom = -1;                     // urutan untuk animasi melempar bom
     clock_t wktmulai,wktselesai;            // mencatat waktu mulai dan waktu selesai dalam satu stage
     clock_t wktskrng;                       // mencatat waktu sekarang
     double wkttotal;                        // mencatat durasi penyelesaian stage
-    koordinat bot[5];                       // posisi bot di koordinat layar
+    sprite bot[5];                          // sprite bot
     int jmlBot;                             // jumlah bot dalam stage
     arrayQueue queueLubang;                 // queue untuk bata yang dilubangi
     int level = 1;                          // isinya menunjukkan level yang sedang dimainkan
@@ -41,14 +37,14 @@ void permainan(){
 
     while(level <= MAX_LEVEL){
         //insiasi queue untuk lubang
-        inisiasi_queue(&queueLubang);
+        queueLubang = inisiasi_queue();
 
         //Memasukkan nilai ke semua elemen matriks dan menentukan posisi player & bot di setiap level
-        generateStage(arr, level, &player, bot, &jmlBot, &pintuExit);
+        generateStage(arr, level, &player.koor, bot, &jmlBot, &pintuExit);
 
         //inisiasi posisi player dalam matriks
-        kolomPlayer = (player.X+(MATRIX_ELEMENT_SIZE/2))/MATRIX_ELEMENT_SIZE;
-        barisPlayer = (player.Y)/MATRIX_ELEMENT_SIZE;
+        player.pm.kolom = (player.koor.X+(MATRIX_ELEMENT_SIZE/2))/MATRIX_ELEMENT_SIZE;
+        player.pm.baris = (player.koor.Y)/MATRIX_ELEMENT_SIZE;
 
         //PlaySound(TEXT("audio/101-opening.wav"), NULL, SND_ASYNC);
         //menampilkan layar loading
@@ -58,12 +54,12 @@ void permainan(){
         //gambar player, bot dan map di page 0
         setactivepage(0);
         cleardevice();
-        drawStage(arr, player, bot, jmlBot);
+        drawStage(arr, player.koor, bot, jmlBot);
         tampil_skor(score);
         //gambar player, bot dan map di page 1
         setactivepage(1);
         cleardevice();
-        drawStage(arr, player, bot, jmlBot);
+        drawStage(arr, player.koor, bot, jmlBot);
         tampil_skor(score);
         //set page 0 ke active page dan page 1 ke visual page
         setactivepage(0);
@@ -76,8 +72,8 @@ void permainan(){
 
         while(true){
             //proses jika player mengambil koin
-            if(lagiNgambilKoin(arr,barisPlayer,kolomPlayer)){
-                arr[barisPlayer][kolomPlayer] = 0;
+            if(lagiNgambilKoin(arr,player.pm.baris,player.pm.kolom)){
+                arr[player.pm.baris][player.pm.kolom] = 0;
                 hitung_skor(&score);
             }
 
@@ -87,20 +83,20 @@ void permainan(){
             //mengupdate score player
             tampil_skor(score);
 
-            //User input movement
-            if(isFalling(arr,barisPlayer,kolomPlayer) && !isSliding(arr, barisPlayer, kolomPlayer)){
-                //jika sedang jatuh maka movement dianggap bernilai 'S', atau sama dengan sedang bergerak ke bawah
-                movement = 'S';
+            //User input player.movement
+            if(isFalling(arr,player.pm.baris,player.pm.kolom) && !isSliding(arr, player.pm.baris, player.pm.kolom)){
+                //jika sedang jatuh maka player.movement dianggap bernilai 'S', atau sama dengan sedang bergerak ke bawah
+                player.movement = 'S';
                 delay(30);
             }else{
                 while(kbhit()){
-                    movement = toupper(getch());
-                    prosesInput(&movement); //jika input movement tidak sesuai dengan kontrol yang sudah ditetapkan, maka assign movement = NULL
+                    player.movement = toupper(getch());
+                    player.movement = prosesInput(player.movement); //jika input player.movement tidak sesuai dengan kontrol yang sudah ditetapkan, maka assign player.movement = NULL
                 }
             }
 
-            //memproses movement yang diinput user
-            playerMovement(&movement, arr, &barisPlayer, &kolomPlayer, &player.X, &player.Y, &queueLubang, &urutanBom);
+            //memproses player.movement yang diinput user
+            playerMovement(arr, &queueLubang, &player);
 
             //pengembalian lubang yg dibom
             if(queueLubang.Count > 0){ // apabila ada lubang di dalam map
@@ -109,25 +105,25 @@ void permainan(){
             }
 
             //update posisi player dalam matriks
-            kolomPlayer = (player.X+(MATRIX_ELEMENT_SIZE/2))/MATRIX_ELEMENT_SIZE;
-            barisPlayer = (player.Y)/MATRIX_ELEMENT_SIZE;
+            player.pm.kolom = (player.koor.X+(MATRIX_ELEMENT_SIZE/2))/MATRIX_ELEMENT_SIZE;
+            player.pm.baris = (player.koor.Y)/MATRIX_ELEMENT_SIZE;
 
             //penggambaran ulang di layar
-            drawPlayerMovement(movement, arr, barisPlayer, kolomPlayer, player.X, player.Y, &urutan, urutanBom);
+            drawPlayerMovement(arr, &player);
 
             //penggambaran bot
             drawBotArray(bot, jmlBot);
 
-            //reset animasi melempar bom jika player melakukan movement lain
-            resetAnimasiBom(arr, barisPlayer, kolomPlayer, &urutan, &urutanBom, movement, player);
+            //reset animasi melempar bom jika player melakukan player.movement lain
+            resetAnimasiBom(arr, player.pm.baris, player.pm.kolom, &player.urutanAnimasi, &player.urutanBom, player.movement, player.koor);
 
             //jika ada pergerakan maka swap buffer
-            if(isLagiBom(movement)||lagiNgambilKoin(arr,barisPlayer,kolomPlayer) || (movement != NULL)|| (urutanBom != -1)){
+            if(isLagiBom(player.movement)||lagiNgambilKoin(arr, player.pm.baris, player.pm.kolom) || (player.movement != NULL)|| (player.urutanBom != -1)){
                 swapbuffers();
             }
 
-            //reset nilai movement
-            movement = NULL;
+            //reset nilai player.movement
+            player.movement = NULL;
 
             //cek apa semua koin sudah terkumpul
             if(!adakoin(arr) && (arr[pintuExit.baris][pintuExit.kolom] != 5))
@@ -150,7 +146,7 @@ void permainan(){
             }
 
             //cek apabila player sudah ada di pintu exit
-            if(done(arr,barisPlayer,kolomPlayer))
+            if(done(arr,player.pm.baris,player.pm.kolom))
             {
                 waktu_Akhir(&wktselesai);
                 wkttotal = hitung_Waktu(wktmulai, wktselesai);

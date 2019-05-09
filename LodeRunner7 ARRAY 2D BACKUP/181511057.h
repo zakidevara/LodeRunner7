@@ -34,35 +34,34 @@ void PlayerBombLeft(int x1,int y1,int x2, int y2);
 
 void drawBot(int x1,int y1,int x2, int y2);
 
-void level1(int arr[BARIS][KOLOM],koordinat* player, koordinat bot[], int* nBot, posisiMatriks* pintuExit);
+void level1(int arr[BARIS][KOLOM],koordinat* player, sprite bot[], int* nBot, posisiMatriks* pintuExit);
 // generate matriks int level 1
 
-void level2(int arr[BARIS][KOLOM],koordinat* player, koordinat bot[], int* nBot, posisiMatriks* pintuExit);
+void level2(int arr[BARIS][KOLOM],koordinat* player, sprite bot[], int* nBot, posisiMatriks* pintuExit);
 
-void generateStage(int arr[BARIS][KOLOM], int level, koordinat* player, koordinat bot[], int* nBot, posisiMatriks* pintuExit);
+void generateStage(int arr[BARIS][KOLOM], int level, koordinat* player, sprite bot[], int* nBot, posisiMatriks* pintuExit);
 
-void drawStage(int arr[BARIS][KOLOM], koordinat player, koordinat bot[], int nBot);
+void drawStage(int arr[BARIS][KOLOM], koordinat player, sprite bot[], int nBot);
 
 bool isNabrak(int arr[BARIS][KOLOM], int X, int Y, int arah);
 // Pengecekan sisi kiri dan kanan player, jika ada tembok return true dan jika tidak ada return false
 // arah = -1 kalau ke kiri dan arah = 1 kalau ke kanan
 
-void drawPlayerMovement(char movement, int arr[BARIS][KOLOM], int barisPlayer, int kolomPlayer, int X, int Y,int* urutan, int urutanBom);
-//menggambar player setelah posisinya diubah
+void drawPlayerMovement(int arr[BARIS][KOLOM], sprite* player);
 
 void loading();
 
-void prosesInput(char* movement);
+char prosesInput(char movement);
 
 bool isLagiBom(int movement);
 
-void drawBotArray(koordinat bot[], int nBot);
+void drawBotArray(sprite bot[], int nBot);
 
-void assign_Lubang(lubang* Z, int baris, int kolom, clock_t waktuAwal);
+lubang assign_Lubang(int baris, int kolom, clock_t waktuAwal);
 
 void free_Lubang(lubang* Z);
 
-void inisiasi_queue(arrayQueue* P);
+arrayQueue inisiasi_queue();
 
 void enqueue(arrayQueue* P, lubang Z);
 

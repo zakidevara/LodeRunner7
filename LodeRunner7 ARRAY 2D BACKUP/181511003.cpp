@@ -32,101 +32,105 @@ bool isFalling(int arr[BARIS][KOLOM], int baris, int kolom){
     }
 }
 
-void playerMovement(char *movement, int arr[BARIS][KOLOM], int* barisPlayer, int* kolomPlayer, int *X, int* Y, arrayQueue* P,int*urutanBom){ //memindahkan posisi player dalam matriks sesuai movement yang dipilih oleh user
+void playerMovement(int arr[BARIS][KOLOM], arrayQueue* P, sprite* player){ //memindahkan posisi player dalam matriks sesuai movement yang dipilih oleh user
     lubang Z;
-    int BarisAtasPlayer=(*Y-10)/MATRIX_ELEMENT_SIZE;
-	int urutan =0;
-	switch(*movement){
+    int BarisAtasPlayer=((*player).koor.Y-10)/MATRIX_ELEMENT_SIZE;
+	switch((*player).movement){
+            case KEY_UP :
             case 'W' :
-            *urutanBom=-1;
-            if((*Y-10 >= 0) && (isClimbing(arr, *barisPlayer, *kolomPlayer) || !isFalling(arr,BarisAtasPlayer,*kolomPlayer))){
-                *X = (*kolomPlayer)*MATRIX_ELEMENT_SIZE;
-                *Y= *Y - 10;
+            (*player).urutanBom=-1;
+            if(((*player).koor.Y-10 >= 0) && (isClimbing(arr, (*player).pm.baris, (*player).pm.kolom) || !isFalling(arr,BarisAtasPlayer,(*player).pm.kolom))){
+                (*player).koor.X = ((*player).pm.kolom)*MATRIX_ELEMENT_SIZE;
+                (*player).koor.Y = (*player).koor.Y - 10;
 			}else{
-                *movement=NULL;
+                (*player).movement=NULL;
 			}
             break;
+            case KEY_DOWN :
             case 'S' :
-            *urutanBom=-1;
-            if((*Y+10 < WINDOWS_HEIGHT-50-MATRIX_ELEMENT_SIZE)  && ((isClimbing(arr, *barisPlayer, *kolomPlayer) && !isStanding(arr, *barisPlayer, *kolomPlayer)) ||
-            (isSliding(arr, *barisPlayer, *kolomPlayer) && !isStanding(arr, *barisPlayer, *kolomPlayer)) || isClimbing(arr, *barisPlayer+1, *kolomPlayer) ||
-            isFalling(arr, *barisPlayer, *kolomPlayer))){
-                if(isSliding(arr,*barisPlayer,*kolomPlayer)){
-                    *Y = *Y + (MATRIX_ELEMENT_SIZE/2);
-                    *kolomPlayer = (*X+(MATRIX_ELEMENT_SIZE/2))/MATRIX_ELEMENT_SIZE;
-                    *barisPlayer = (*Y)/MATRIX_ELEMENT_SIZE;
-                    while(isFalling(arr,*barisPlayer,*kolomPlayer)){
-                        drawPlayerMovement(*movement, arr, *barisPlayer, *kolomPlayer, *X, *Y, &urutan, *urutanBom);
+            (*player).urutanBom=-1;
+            if(((*player).koor.Y+10 < WINDOWS_HEIGHT-50-MATRIX_ELEMENT_SIZE)  && ((isClimbing(arr, (*player).pm.baris, (*player).pm.kolom) && !isStanding(arr, (*player).pm.baris, (*player).pm.kolom)) ||
+            (isSliding(arr, (*player).pm.baris, (*player).pm.kolom) && !isStanding(arr, (*player).pm.baris, (*player).pm.kolom)) || isClimbing(arr, (*player).pm.baris+1, (*player).pm.kolom) ||
+            isFalling(arr, (*player).pm.baris, (*player).pm.kolom))){
+                if(isSliding(arr,(*player).pm.baris,(*player).pm.kolom)){
+                    (*player).koor.Y = (*player).koor.Y + (MATRIX_ELEMENT_SIZE/2);
+                    (*player).pm.kolom = ((*player).koor.X+(MATRIX_ELEMENT_SIZE/2))/MATRIX_ELEMENT_SIZE;
+                    (*player).pm.baris = ((*player).koor.Y)/MATRIX_ELEMENT_SIZE;
+                    while(isFalling(arr,(*player).pm.baris,(*player).pm.kolom)){
+                        drawPlayerMovement(arr, player);
                         swapbuffers();
                         delay(30);
-                        *Y = *Y + 10;
-                        *kolomPlayer = (*X+(MATRIX_ELEMENT_SIZE/2))/MATRIX_ELEMENT_SIZE;
-                        *barisPlayer = (*Y)/MATRIX_ELEMENT_SIZE;
+                        (*player).koor.Y = (*player).koor.Y + 10;
+                        (*player).pm.kolom = ((*player).koor.X+(MATRIX_ELEMENT_SIZE/2))/MATRIX_ELEMENT_SIZE;
+                        (*player).pm.baris = ((*player).koor.Y)/MATRIX_ELEMENT_SIZE;
                     }
                 }else{
-                    *X = (*kolomPlayer)*MATRIX_ELEMENT_SIZE;
-                    *Y = *Y + 10;
+                    (*player).koor.X = ((*player).pm.kolom)*MATRIX_ELEMENT_SIZE;
+                    (*player).koor.Y = (*player).koor.Y + 10;
                 }
             }else{
-                *movement=NULL;
+                (*player).movement=NULL;
 			}
             break;
+            case KEY_RIGHT :
             case 'D' :
-            *urutanBom=-1;
-            if((*X+10 <= WINDOWS_WIDTH-MATRIX_ELEMENT_SIZE) && !isNabrak(arr, *X, *Y, 1) && ((isStanding(arr, *barisPlayer, *kolomPlayer)==true)||
-                (isSliding(arr, *barisPlayer, *kolomPlayer)==true) || isClimbing(arr, *barisPlayer, *kolomPlayer))){
-                if((isStanding(arr, *barisPlayer, *kolomPlayer) && !isClimbing(arr, *barisPlayer, *kolomPlayer)) || isSliding(arr, *barisPlayer, *kolomPlayer)){
-                    *Y = (*barisPlayer)*MATRIX_ELEMENT_SIZE;
+            (*player).urutanBom=-1;
+            if(((*player).koor.X+10 <= WINDOWS_WIDTH-MATRIX_ELEMENT_SIZE) && !isNabrak(arr, (*player).koor.X, (*player).koor.Y, 1) && ((isStanding(arr, (*player).pm.baris, (*player).pm.kolom)==true)||
+                (isSliding(arr, (*player).pm.baris, (*player).pm.kolom)==true) || isClimbing(arr, (*player).pm.baris, (*player).pm.kolom))){
+                if((isStanding(arr, (*player).pm.baris, (*player).pm.kolom) && !isClimbing(arr, (*player).pm.baris, (*player).pm.kolom)) || isSliding(arr, (*player).pm.baris, (*player).pm.kolom)){
+                    (*player).koor.Y = ((*player).pm.baris)*MATRIX_ELEMENT_SIZE;
                 }
-                *X = *X + 10;
+                (*player).koor.X = (*player).koor.X + 10;
             }else{
-                *movement=NULL;
+                (*player).movement=NULL;
 			}
             break;
+            case KEY_LEFT :
             case 'A' :
-            *urutanBom=-1;
-            if((*X-10 >=0) && !isNabrak(arr, *X, *Y, -1) && ((isStanding(arr, *barisPlayer, *kolomPlayer)==true)||(isSliding(arr, *barisPlayer, *kolomPlayer)==true) ||
-                isClimbing(arr, *barisPlayer, *kolomPlayer))){
-                if((isStanding(arr, *barisPlayer, *kolomPlayer) && !isClimbing(arr, *barisPlayer, *kolomPlayer)) || isSliding(arr, *barisPlayer, *kolomPlayer)){
-                    *Y = (*barisPlayer)*MATRIX_ELEMENT_SIZE;
+            (*player).urutanBom=-1;
+            if(((*player).koor.X-10 >=0) && !isNabrak(arr, (*player).koor.X, (*player).koor.Y, -1) && ((isStanding(arr, (*player).pm.baris, (*player).pm.kolom)==true)||(isSliding(arr, (*player).pm.baris, (*player).pm.kolom)==true) ||
+                isClimbing(arr, (*player).pm.baris, (*player).pm.kolom))){
+                if((isStanding(arr, (*player).pm.baris, (*player).pm.kolom) && !isClimbing(arr, (*player).pm.baris, (*player).pm.kolom)) || isSliding(arr, (*player).pm.baris, (*player).pm.kolom)){
+                    (*player).koor.Y = ((*player).pm.baris)*MATRIX_ELEMENT_SIZE;
                 }
-                *X = *X - 10;
+                (*player).koor.X = (*player).koor.X - 10;
             }else{
-                *movement=NULL;
+                (*player).movement=NULL;
 			}
             break;
-            case 'M' :
-            	if(((arr[*barisPlayer+1][*kolomPlayer+1] == 1)||(arr[*barisPlayer+1][*kolomPlayer+1] == 7)) && (arr[*barisPlayer][*kolomPlayer+1] == 0)){
-            		(*urutanBom)++;
+            case 'X' :
+            //case 'M' :
+            	if(((arr[(*player).pm.baris+1][(*player).pm.kolom+1] == 1)||(arr[(*player).pm.baris+1][(*player).pm.kolom+1] == 7)) && (arr[(*player).pm.baris][(*player).pm.kolom+1] == 0)){
+            		((*player).urutanBom)++;
 
-            		if(*urutanBom> -1){
-                        arr[*barisPlayer+1][*kolomPlayer+1] = 7;
-                        if(*urutanBom>=3){
-                            arr[*barisPlayer+1][*kolomPlayer+1] = 0;
-                            assign_Lubang(&Z,*barisPlayer+1, *kolomPlayer+1, clock());
+            		if((*player).urutanBom > -1){
+                        arr[(*player).pm.baris+1][(*player).pm.kolom+1] = 7;
+                        if((*player).urutanBom>=3){
+                            arr[(*player).pm.baris+1][(*player).pm.kolom+1] = 0;
+                            Z = assign_Lubang((*player).pm.baris+1, (*player).pm.kolom+1, clock());
                             enqueue(P, Z);
                         }
                     }
             	}else{
-                    *movement=NULL;
+                    (*player).movement=NULL;
                 }
 				break;
-
+            case 'Z' :
 			case 'N' :
-				if(((arr[*barisPlayer+1][*kolomPlayer-1] == 1)||(arr[*barisPlayer+1][*kolomPlayer-1] == 7)) && (arr[*barisPlayer][*kolomPlayer-1] == 0)){
-                    (*urutanBom)++;
+				if(((arr[(*player).pm.baris+1][(*player).pm.kolom-1] == 1)||(arr[(*player).pm.baris+1][(*player).pm.kolom-1] == 7)) && (arr[(*player).pm.baris][(*player).pm.kolom-1] == 0)){
+                    ((*player).urutanBom)++;
 
-                    if(*urutanBom>-1){
-                        arr[*barisPlayer+1][*kolomPlayer-1] = 7;
-                        if(*urutanBom>=3){
-                            arr[*barisPlayer+1][*kolomPlayer-1] = 0;
-                            assign_Lubang(&Z,*barisPlayer+1, *kolomPlayer-1, clock());
+                    if((*player).urutanBom>-1){
+                        arr[(*player).pm.baris+1][(*player).pm.kolom-1] = 7;
+                        if((*player).urutanBom>=3){
+                            arr[(*player).pm.baris+1][(*player).pm.kolom-1] = 0;
+                            Z = assign_Lubang((*player).pm.baris +1, (*player).pm.kolom-1, clock());
                             enqueue(P, Z);
                         }
                     }
 
 				}else{
-                    *movement=NULL;
+                    (*player).movement=NULL;
                 }
 				break;
         }

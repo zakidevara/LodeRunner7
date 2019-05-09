@@ -22,17 +22,25 @@
 typedef struct{
     int X;
     int Y;
-}koordinat;
+}koordinat;  //koordinat/posisi sprite dalam pixel
 
 typedef struct{
     int baris;
     int kolom;
-}posisiMatriks;
+}posisiMatriks; //posisi sprite dalam matriks
+
+typedef struct{
+    koordinat koor;
+    posisiMatriks pm;
+    char movement;
+    int urutanAnimasi;
+    int urutanBom;
+}sprite;                //info/data suatu sprite
 
 typedef struct{
     posisiMatriks pos;
     clock_t start;
-}lubang;
+}lubang;            //data satu lubang hasil dilempar bom
 
 typedef struct{
     lubang dt_lubang[20];
@@ -40,7 +48,15 @@ typedef struct{
     int MaxSize;
     int Front;
     int Back;
-}arrayQueue;
+}arrayQueue;            //queue alokasi statis untuk menampung data lubang yang dibuat
+
+typedef struct{
+    int level;
+    int arr[BARIS][KOLOM];
+    posisiMatriks pintuExit;
+    posisiMatriks player;
+    int jmlBot;
+}infoLevel;            //info satu level
 
 void tampilan_exit(double wkttotal, int score);
 void permainan();
