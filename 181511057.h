@@ -24,9 +24,7 @@ void playerClimbRopeRight(int x1,int y1,int x2, int y2, int* urutan);
 
 void playerClimbLadder(int x1,int y1,int x2, int y2, int* urutan);
 
-void bombLeft(int x1,int y1,int x2, int y2, int urutan);
-
-void bombRight(int x1,int y1,int x2, int y2, int urutan);
+void bataDestroyed(int x1,int y1,int x2, int y2, int urutan);
 
 void PlayerBombRight(int x1,int y1,int x2, int y2);
 
@@ -70,4 +68,5 @@ lubang dequeue(arrayQueue* P);
 
 void isi_kembali_lubang(int arr[BARIS][KOLOM], arrayQueue* P, clock_t wkt_sekarang);
 
+void tampil_level(int level);
 #endif

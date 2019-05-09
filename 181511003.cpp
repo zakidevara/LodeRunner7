@@ -96,13 +96,16 @@ void playerMovement(char *movement, int arr[BARIS][KOLOM], int* barisPlayer, int
 			}
             break;
             case 'M' :
-            	if((arr[*barisPlayer+1][*kolomPlayer+1] == 1) && (arr[*barisPlayer][*kolomPlayer+1] == 0)){
+            	if(((arr[*barisPlayer+1][*kolomPlayer+1] == 1)||(arr[*barisPlayer+1][*kolomPlayer+1] == 7)) && (arr[*barisPlayer][*kolomPlayer+1] == 0)){
             		(*urutanBom)++;
 
-            		if(*urutanBom>=2){
+            		if(*urutanBom> -1){
                         arr[*barisPlayer+1][*kolomPlayer+1] = 7;
-                        assign_Lubang(&Z,*barisPlayer+1, *kolomPlayer+1, clock());
-                        enqueue(P, Z);
+                        if(*urutanBom>=3){
+                            arr[*barisPlayer+1][*kolomPlayer+1] = 0;
+                            assign_Lubang(&Z,*barisPlayer+1, *kolomPlayer+1, clock());
+                            enqueue(P, Z);
+                        }
                     }
             	}else{
                     *movement=NULL;
@@ -110,13 +113,16 @@ void playerMovement(char *movement, int arr[BARIS][KOLOM], int* barisPlayer, int
 				break;
 
 			case 'N' :
-				if((arr[*barisPlayer+1][*kolomPlayer-1] == 1) && (arr[*barisPlayer][*kolomPlayer-1] == 0)){
+				if(((arr[*barisPlayer+1][*kolomPlayer-1] == 1)||(arr[*barisPlayer+1][*kolomPlayer-1] == 7)) && (arr[*barisPlayer][*kolomPlayer-1] == 0)){
                     (*urutanBom)++;
 
-                    if(*urutanBom>=2){
+                    if(*urutanBom>-1){
                         arr[*barisPlayer+1][*kolomPlayer-1] = 7;
-                        assign_Lubang(&Z,*barisPlayer+1, *kolomPlayer-1, clock());
-                        enqueue(P, Z);
+                        if(*urutanBom>=3){
+                            arr[*barisPlayer+1][*kolomPlayer-1] = 0;
+                            assign_Lubang(&Z,*barisPlayer+1, *kolomPlayer-1, clock());
+                            enqueue(P, Z);
+                        }
                     }
 
 				}else{

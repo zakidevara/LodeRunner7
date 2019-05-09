@@ -32,7 +32,7 @@ double hitung_Waktu(clock_t wktAwal, clock_t wktAkhir)
 {
     double durasi;
 
-    durasi = ( wktAkhir - wktAwal ) / (double) CLOCKS_PER_SEC;;
+    durasi = ( wktAkhir - wktAwal ) / (double) CLOCKS_PER_SEC;
     return durasi;
 }
 
