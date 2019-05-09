@@ -1,0 +1,61 @@
+# depslib dependency file v1.0
+1557368486 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7sll\181511003.cpp
+	"181511003.h"
+
+1557316172 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7sll\181511003.h
+	"main.h"
+	"181511057.h"
+
+1557316172 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7sll\main.h
+	<stdio.h>
+	<graphics.h>
+	<conio.h>
+	<ctime>
+	<windows.h>
+	<mmsystem.h>
+	"matrix.h"
+
+1557316172 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7sll\matrix.h
+	<stdlib.h>
+	<stdio.h>
+	<stdint.h>
+
+1557368488 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7sll\181511057.h
+	"main.h"
+	"181511028.h"
+	"181511037.h"
+	"181511003.h"
+	"181511044.h"
+
+1557316172 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7sll\181511028.h
+	"main.h"
+
+1557316172 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7sll\181511037.h
+	"main.h"
+	"181511028.h"
+
+1557316172 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7sll\181511044.h
+	"main.h"
+
+1557316172 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7sll\181511004.cpp
+	"181511004.h"
+
+1557316172 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7sll\181511004.h
+	"main.h"
+
+1557316172 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7sll\181511028.cpp
+	"181511028.h"
+	"main.h"
+
+1557316172 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7sll\181511037.cpp
+	"181511037.h"
+
+1557316172 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7sll\181511044.cpp
+	"181511044.h"
+
+1557368558 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7sll\181511057.cpp
+	"181511057.h"
+
+1557316172 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7sll\matrix.c
+	"matrix.h"
+
