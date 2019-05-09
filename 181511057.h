@@ -18,6 +18,8 @@ void drawPlayerRight(int x1,int y1,int x2, int y2);
 
 void playerRunningRight(int x1,int y1,int x2, int y2, int* urutan);
 
+void playerRunningLeft(int x1,int y1,int x2, int y2, int* urutan);
+
 void playerClimbRopeLeft(int x1,int y1,int x2, int y2, int* urutan);
 
 void playerClimbRopeRight(int x1,int y1,int x2, int y2, int* urutan);
@@ -69,4 +71,6 @@ lubang dequeue(arrayQueue* P);
 void isi_kembali_lubang(int arr[BARIS][KOLOM], arrayQueue* P, clock_t wkt_sekarang);
 
 void tampil_level(int level);
+
+void resetAnimasiBom(int arr[BARIS][KOLOM], int barisPlayer, int kolomPlayer, int* urutan, int* urutanBom, int movement, koordinat player);
 #endif

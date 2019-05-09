@@ -674,3 +674,42 @@ void tampil_level(int level){
     outtextxy(100,WINDOWS_HEIGHT-50,levelStr);
     outtextxy(20,WINDOWS_HEIGHT-50,"LEVEL:");
 }
+
+void resetAnimasiBom(int arr[BARIS][KOLOM], int barisPlayer, int kolomPlayer, int* urutan, int* urutanBom, int movement, koordinat player){
+    if(!isLagiBom(movement)){
+                *urutanBom=-1;
+                if(arr[barisPlayer+1][kolomPlayer+1]==7){
+                    arr[barisPlayer+1][kolomPlayer+1]=1;
+                    *urutan = 0;
+                    setviewport((kolomPlayer+1)*MATRIX_ELEMENT_SIZE, (barisPlayer+1)*MATRIX_ELEMENT_SIZE, (kolomPlayer+2)*MATRIX_ELEMENT_SIZE, (barisPlayer+2)*MATRIX_ELEMENT_SIZE,1);
+                    clearviewport();
+                    setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
+                    drawUp(arr,kolomPlayer+1,barisPlayer+1,1);
+                    playerRunningRight(player.X,player.Y,player.X+MATRIX_ELEMENT_SIZE,player.Y+MATRIX_ELEMENT_SIZE, urutan);
+                    swapbuffers();
+                    *urutan = 0;
+                    setviewport((kolomPlayer+1)*MATRIX_ELEMENT_SIZE, (barisPlayer+1)*MATRIX_ELEMENT_SIZE, (kolomPlayer+2)*MATRIX_ELEMENT_SIZE, (barisPlayer+2)*MATRIX_ELEMENT_SIZE,1);
+                    clearviewport();
+                    setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
+                    drawUp(arr,kolomPlayer+1,barisPlayer+1,1);
+                    playerRunningRight(player.X,player.Y,player.X+MATRIX_ELEMENT_SIZE,player.Y+MATRIX_ELEMENT_SIZE, urutan);
+
+                }
+                if(arr[barisPlayer+1][kolomPlayer-1]==7){
+                    arr[barisPlayer+1][kolomPlayer-1]=1;
+                    *urutan = 0;
+                    setviewport((kolomPlayer-1)*MATRIX_ELEMENT_SIZE, (barisPlayer+1)*MATRIX_ELEMENT_SIZE, (kolomPlayer)*MATRIX_ELEMENT_SIZE, (barisPlayer+2)*MATRIX_ELEMENT_SIZE,1);
+                    clearviewport();
+                    setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
+                    drawUp(arr,kolomPlayer-1,barisPlayer+1,1);
+                    playerRunningLeft(player.X,player.Y,player.X+MATRIX_ELEMENT_SIZE,player.Y+MATRIX_ELEMENT_SIZE, urutan);
+                    swapbuffers();
+                    *urutan = 0;
+                    setviewport((kolomPlayer-1)*MATRIX_ELEMENT_SIZE, (barisPlayer+1)*MATRIX_ELEMENT_SIZE, (kolomPlayer)*MATRIX_ELEMENT_SIZE, (barisPlayer+2)*MATRIX_ELEMENT_SIZE,1);
+                    clearviewport();
+                    setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
+                    drawUp(arr,kolomPlayer-1,barisPlayer+1,1);
+                    playerRunningLeft(player.X,player.Y,player.X+MATRIX_ELEMENT_SIZE,player.Y+MATRIX_ELEMENT_SIZE, urutan);
+                }
+            }
+}

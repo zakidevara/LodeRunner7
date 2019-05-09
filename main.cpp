@@ -81,6 +81,9 @@ void permainan(){
                 hitung_skor(&score);
             }
 
+            //menampilkan level
+            tampil_level(level);
+
             //mengupdate score player
             tampil_skor(score);
 
@@ -116,9 +119,7 @@ void permainan(){
             drawBotArray(bot, jmlBot);
 
             //reset animasi melempar bom jika player melakukan movement lain
-            if(!isLagiBom(movement)){
-                urutanBom=-1;
-            }
+            resetAnimasiBom(arr, barisPlayer, kolomPlayer, &urutan, &urutanBom, movement, player);
 
             //jika ada pergerakan maka swap buffer
             if(isLagiBom(movement)||lagiNgambilKoin(arr,barisPlayer,kolomPlayer) || (movement != NULL)|| (urutanBom != -1)){
