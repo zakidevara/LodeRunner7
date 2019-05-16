@@ -102,6 +102,7 @@ void playerMovement(int arr[BARIS][KOLOM], arrayQueue* P, sprite* player){ //mem
             //case 'M' :
             	if(((arr[(*player).pm.baris+1][(*player).pm.kolom+1] == 1)||(arr[(*player).pm.baris+1][(*player).pm.kolom+1] == 7)) && (arr[(*player).pm.baris][(*player).pm.kolom+1] == 0)){
             		((*player).urutanBom)++;
+            		player->urutanAnimasi = 0;
 
             		if((*player).urutanBom > -1){
                         arr[(*player).pm.baris+1][(*player).pm.kolom+1] = 7;
@@ -119,6 +120,7 @@ void playerMovement(int arr[BARIS][KOLOM], arrayQueue* P, sprite* player){ //mem
 			case 'N' :
 				if(((arr[(*player).pm.baris+1][(*player).pm.kolom-1] == 1)||(arr[(*player).pm.baris+1][(*player).pm.kolom-1] == 7)) && (arr[(*player).pm.baris][(*player).pm.kolom-1] == 0)){
                     ((*player).urutanBom)++;
+                    player->urutanAnimasi = 8;
 
                     if((*player).urutanBom>-1){
                         arr[(*player).pm.baris+1][(*player).pm.kolom-1] = 7;

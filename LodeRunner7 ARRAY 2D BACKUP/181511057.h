@@ -12,10 +12,6 @@
 #include "181511044.h"
 
 
-void drawPlayerLeft(int x1,int y1,int x2, int y2);
-
-void drawPlayerRight(int x1,int y1,int x2, int y2);
-
 void playerRunningRight(int x1,int y1,int x2, int y2, int* urutan);
 
 void playerRunningLeft(int x1,int y1,int x2, int y2, int* urutan);
@@ -32,8 +28,6 @@ void PlayerBombRight(int x1,int y1,int x2, int y2);
 
 void PlayerBombLeft(int x1,int y1,int x2, int y2);
 
-void drawBot(int x1,int y1,int x2, int y2);
-
 infoLevel generateStage(int level);
 
 void drawStage(int arr[BARIS][KOLOM], koordinat player, sprite bot[], int nBot);
@@ -44,13 +38,15 @@ bool isNabrak(int arr[BARIS][KOLOM], int X, int Y, int arah);
 
 void drawPlayerMovement(int arr[BARIS][KOLOM], sprite* player);
 
+void drawBotMovement(int arr[BARIS][KOLOM], sprite* player);
+
 void loading();
 
 char prosesInput(char movement);
 
 bool isLagiBom(int movement);
 
-void drawBotArray(sprite bot[], int nBot);
+void drawBotArray(int arr[BARIS][KOLOM], sprite bot[], int nBot);
 
 lubang assign_Lubang(int baris, int kolom, clock_t waktuAwal);
 
@@ -71,4 +67,8 @@ void resetAnimasiBom(int arr[BARIS][KOLOM], int barisPlayer, int kolomPlayer, in
 infoLevel readFileLevel(char file[]);
 
 posisiMatriks getPosisiMatriks(koordinat koor);
+
+koordinat getKoordinat(posisiMatriks pos);
+
+void returnBata(int x1,int y1,int x2, int y2, int* urutan);
 #endif

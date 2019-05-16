@@ -33,13 +33,14 @@ typedef struct{
     koordinat koor;
     posisiMatriks pm;
     char movement = NULL;
-    int urutanAnimasi = 0;
-    int urutanBom = 0;
+    int urutanAnimasi = 1;
+    int urutanBom = -1;
 }sprite;                //struktur data suatu sprite
 
 typedef struct{
     posisiMatriks pos;
     clock_t start;
+    int urutan = -1;
 }lubang;            //data satu lubang hasil dilempar bom
 
 typedef struct{
