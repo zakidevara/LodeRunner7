@@ -71,4 +71,8 @@ posisiMatriks getPosisiMatriks(koordinat koor);
 koordinat getKoordinat(posisiMatriks pos);
 
 void returnBata(int x1,int y1,int x2, int y2, int* urutan);
+
+void writeFileHighScore(tUser user);
+
+void readFileHighScore();
 #endif

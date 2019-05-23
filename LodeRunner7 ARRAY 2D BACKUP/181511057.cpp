@@ -28,6 +28,9 @@ void playerRunningRight(int x1,int y1,int x2, int y2, int* urutan){
         readimagefile("images/player/Player_Right7.gif", x1, y1, x2-1, y2-1);break;
     }
     (*urutan)++;
+    if(*urutan > 7){
+        *urutan = 0;
+    }
 
 }
 
@@ -54,6 +57,9 @@ void playerRunningLeft(int x1,int y1,int x2, int y2, int* urutan){
         readimagefile("images/player/Player_Left7.gif", x1, y1, x2-1, y2-1);break;
     }
     (*urutan)++;
+    if(*urutan > 15){
+        *urutan = 8;
+    }
 }
 
 void botRunningRight(int x1,int y1,int x2, int y2, int* urutan){
@@ -79,7 +85,9 @@ void botRunningRight(int x1,int y1,int x2, int y2, int* urutan){
         readimagefile("images/bot/Bot_Right7.gif", x1, y1, x2-1, y2-1);break;
     }
     (*urutan)++;
-
+    if(*urutan > 7){
+        *urutan = 0;
+    }
 }
 
 void botRunningLeft(int x1,int y1,int x2, int y2, int* urutan){
@@ -105,7 +113,9 @@ void botRunningLeft(int x1,int y1,int x2, int y2, int* urutan){
         readimagefile("images/bot/Bot_Left7.gif", x1, y1, x2-1, y2-1);break;
     }
     (*urutan)++;
-
+    if(*urutan > 15){
+        *urutan = 8;
+    }
 }
 
 void playerClimbRopeLeft(int x1,int y1,int x2, int y2, int* urutan){
@@ -121,6 +131,9 @@ void playerClimbRopeLeft(int x1,int y1,int x2, int y2, int* urutan){
         readimagefile("images/player/Player_ClimbRope_Left0.gif", x1, y1, x2-1, y2-1);
     }
     (*urutan)++;
+    if((*urutan > 3)){
+        *urutan = 2;
+    }
 
 }
 
@@ -137,7 +150,9 @@ void playerClimbRopeRight(int x1,int y1,int x2, int y2, int* urutan){
         readimagefile("images/player/Player_ClimbRope_Right0.gif", x1, y1, x2-1, y2-1);
     }
     (*urutan)++;
-
+    if((*urutan > 1)){
+        *urutan = 0;
+    }
 }
 
 void playerClimbLadder(int x1,int y1,int x2, int y2, int* urutan){
@@ -153,6 +168,9 @@ void playerClimbLadder(int x1,int y1,int x2, int y2, int* urutan){
         readimagefile("images/player/Player_ClimbLadder0.gif", x1, y1, x2-1, y2-1);
     }
     (*urutan)++;
+    if(*urutan > 1){
+        *urutan = 0;
+    }
 
 }
 
@@ -639,34 +657,34 @@ void tampil_level(int level){
 
 void resetAnimasiBom(int arr[BARIS][KOLOM], int barisPlayer, int kolomPlayer, int* urutan, int* urutanBom, int movement, koordinat player){
     if(!isLagiBom(movement)){
-                *urutanBom = -1;
-                if(arr[barisPlayer+1][kolomPlayer+1]==7){
-                    arr[barisPlayer+1][kolomPlayer+1]=1;
-                    setviewport((kolomPlayer+1)*MATRIX_ELEMENT_SIZE, (barisPlayer+1)*MATRIX_ELEMENT_SIZE, (kolomPlayer+2)*MATRIX_ELEMENT_SIZE, (barisPlayer+2)*MATRIX_ELEMENT_SIZE,1);
-                    clearviewport();
-                    setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
-                    drawUp(arr,kolomPlayer+1,barisPlayer+1,1);
-                    swapbuffers();
-                    setviewport((kolomPlayer+1)*MATRIX_ELEMENT_SIZE, (barisPlayer+1)*MATRIX_ELEMENT_SIZE, (kolomPlayer+2)*MATRIX_ELEMENT_SIZE, (barisPlayer+2)*MATRIX_ELEMENT_SIZE,1);
-                    clearviewport();
-                    setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
-                    drawUp(arr,kolomPlayer+1,barisPlayer+1,1);
-                    swapbuffers();
-                }
-                if(arr[barisPlayer+1][kolomPlayer-1]==7){
-                    arr[barisPlayer+1][kolomPlayer-1]=1;
-                    setviewport((kolomPlayer-1)*MATRIX_ELEMENT_SIZE, (barisPlayer+1)*MATRIX_ELEMENT_SIZE, (kolomPlayer)*MATRIX_ELEMENT_SIZE, (barisPlayer+2)*MATRIX_ELEMENT_SIZE,1);
-                    clearviewport();
-                    setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
-                    drawUp(arr,kolomPlayer-1,barisPlayer+1,1);
-                    swapbuffers();
-                    setviewport((kolomPlayer-1)*MATRIX_ELEMENT_SIZE, (barisPlayer+1)*MATRIX_ELEMENT_SIZE, (kolomPlayer)*MATRIX_ELEMENT_SIZE, (barisPlayer+2)*MATRIX_ELEMENT_SIZE,1);
-                    clearviewport();
-                    setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
-                    drawUp(arr,kolomPlayer-1,barisPlayer+1,1);
-                    swapbuffers();
-                }
-            }
+        *urutanBom = -1;
+        if(arr[barisPlayer+1][kolomPlayer+1]==7){
+            arr[barisPlayer+1][kolomPlayer+1]=1;
+                setviewport((kolomPlayer+1)*MATRIX_ELEMENT_SIZE, (barisPlayer+1)*MATRIX_ELEMENT_SIZE, (kolomPlayer+2)*MATRIX_ELEMENT_SIZE, (barisPlayer+2)*MATRIX_ELEMENT_SIZE,1);
+                clearviewport();
+                setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
+                drawUp(arr,kolomPlayer+1,barisPlayer+1,1);
+                swapbuffers();
+                setviewport((kolomPlayer+1)*MATRIX_ELEMENT_SIZE, (barisPlayer+1)*MATRIX_ELEMENT_SIZE, (kolomPlayer+2)*MATRIX_ELEMENT_SIZE, (barisPlayer+2)*MATRIX_ELEMENT_SIZE,1);
+                clearviewport();
+                setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
+                drawUp(arr,kolomPlayer+1,barisPlayer+1,1);
+                swapbuffers();
+        }
+        if(arr[barisPlayer+1][kolomPlayer-1]==7){
+            arr[barisPlayer+1][kolomPlayer-1]=1;
+            setviewport((kolomPlayer-1)*MATRIX_ELEMENT_SIZE, (barisPlayer+1)*MATRIX_ELEMENT_SIZE, (kolomPlayer)*MATRIX_ELEMENT_SIZE, (barisPlayer+2)*MATRIX_ELEMENT_SIZE,1);
+            clearviewport();
+            setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
+            drawUp(arr,kolomPlayer-1,barisPlayer+1,1);
+            swapbuffers();
+            setviewport((kolomPlayer-1)*MATRIX_ELEMENT_SIZE, (barisPlayer+1)*MATRIX_ELEMENT_SIZE, (kolomPlayer)*MATRIX_ELEMENT_SIZE, (barisPlayer+2)*MATRIX_ELEMENT_SIZE,1);
+            clearviewport();
+            setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
+            drawUp(arr,kolomPlayer-1,barisPlayer+1,1);
+            swapbuffers();
+        }
+    }
 }
 
 infoLevel readFileLevel(char file[]){
@@ -721,4 +739,38 @@ void returnBata(int x1,int y1,int x2, int y2, int* urutan){
         readimagefile("images/bata.gif", x1, y1, x2-1, y2-1);
     }
     (*urutan)++;
+}
+
+void readFileHighScore(){
+    FILE* hs;
+    tUser temp;
+    koordinat koor;
+
+    initwindow(WINDOWS_WIDTH, WINDOWS_HEIGHT, " ", 0, 0, true, true);
+    koor.X = 40;
+    koor.Y = 40;
+    char tempStr[30];
+    setactivepage(0);
+    if((hs = fopen("highscore.dat", "rb")) != NULL){
+        fread(&temp, sizeof(temp), 1, hs);
+        while(!feof(hs)){
+            sprintf(tempStr, "%2d. %s   %d", temp.peringkat, temp.nama, temp.score);
+            outtextxy(koor.X, koor.Y, tempStr);
+            fread(&temp, sizeof(temp), 1, hs);
+            koor.Y += 40;
+        }
+    }
+    fclose(hs);
+    setvisualpage(0);
+    getch();
+    closegraph(-1);
+}
+
+void writeFileHighScore(tUser user){
+    FILE* hs;
+
+    if((hs = fopen("highscore.dat", "ab")) != NULL){
+        fwrite(&user, sizeof(user), 1, hs);
+    }
+    fclose(hs);
 }

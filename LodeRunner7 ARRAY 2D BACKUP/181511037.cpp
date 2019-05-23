@@ -1,4 +1,5 @@
 #include "181511037.h"
+#include "181511057.h"
 
 void drawDown(int arr[BARIS][KOLOM], int kolom, int baris, int n){ //menggambar matriks sebanyak 2 block ke bawah.
 
@@ -84,12 +85,12 @@ void drawLeft(int arr[BARIS][KOLOM], int kolom, int baris, int n){ //menggambar 
 
 void menutama()
 {
-    initwindow(800, 650, " ", 0, 0, false, true);
+
 
     int mousex,mousey;
     char pil;
 
-
+    initwindow(800, 650, " ", 0, 0, false, true);
     while(!ismouseclick(WM_LBUTTONDOWN)){
         settextstyle(SCRIPT_FONT,HORIZ_DIR,3);
         outtextxy(10,10,"click to choose!!");
@@ -121,18 +122,20 @@ void menutama()
         getmouseclick(WM_LBUTTONDOWN, mousex, mousey);
         //menu play
         if ((mousex > 217) && (mousex < 248)&& (mousey > 298) && (mousey < 463)){
+            //closegraph(-1);
             permainan();
-            break;
-            //menu credit
-            //}else if ((mousex > 515) && (mousex < 695)&& (mousey > 460) && (mousey < 510)){
-            //  exit(1);
-            //menu exit
+
+        //menu hi score
+        }else if ((mousex > 270) && (mousex < 302) && (mousey > 298) && (mousey < 510)){
+            //closegraph(-1);
+            readFileHighScore();
+        //menu exit
         }else if ((mousex > 562) && (mousex < 594)&& (mousey > 298) && (mousey < 463)){
             cleardevice();
             settextstyle(SANS_SERIF_FONT,HORIZ_DIR,6);
             outtextxy(250,200,"Good Bye");
             delay(1000);
-            closegraph();
+            closegraph(-1);
             exit(1);
         }
     }

@@ -25,11 +25,11 @@ void permainan(){
     //VARIABEL LOKAL
     infoLevel level;                        // nilai matriks map dan posisi awal sprite dalam level
     sprite player;                          // sprite player
-    int score = 0;                          // Score total
     clock_t wktmulai,wktselesai;            // mencatat waktu mulai dan waktu selesai dalam satu stage
     double wkttotal;                        // mencatat durasi penyelesaian stage
     sprite bot[5];                          // sprite bot
     arrayQueue queueLubang;                 // queue untuk bata yang dilubangi
+    tUser user;
     //void* bitmap;
 
     level.lv = 1;
@@ -60,13 +60,13 @@ void permainan(){
         setactivepage(0);
         cleardevice();
         drawStage(level.arr, player.koor, bot, level.jmlBot);
-        tampil_skor(score);
+        tampil_skor(user.score);
         tampil_level(level.lv);
         //gambar player, bot dan map di page 1
         setactivepage(1);
         cleardevice();
         drawStage(level.arr, player.koor, bot, level.jmlBot);
-        tampil_skor(score);
+        tampil_skor(user.score);
         tampil_level(level.lv);
         //set page 0 ke active page dan page 1 ke visual page
         setactivepage(0);
@@ -81,14 +81,14 @@ void permainan(){
             //proses jika player mengambil koin
             if(lagiNgambilKoin(level.arr, player.pm.baris, player.pm.kolom)){
                 level.arr[player.pm.baris][player.pm.kolom] = 0;
-                hitung_skor(&score);
+                hitung_skor(&(user.score));
             }
 
             //menampilkan level
             tampil_level(level.lv);
 
             //mengupdate score player
-            tampil_skor(score);
+            tampil_skor(user.score);
 
             //User input player.movement
             if(isFalling(level.arr, player.pm.baris, player.pm.kolom) && !isSliding(level.arr, player.pm.baris, player.pm.kolom)){
@@ -177,19 +177,26 @@ void permainan(){
             {
                 waktu_Akhir(&wktselesai);
                 wkttotal = hitung_Waktu(wktmulai, wktselesai);
-                score = hitung_skor_akhir(&score, wkttotal);
-                tampilan_exit(wkttotal,score);
+                user.score = hitung_skor_akhir(&(user.score), wkttotal);
+                tampilan_exit(wkttotal,user.score);
                 (level.lv)++;
                 break;
             }
         }
+
         //PlaySound(NULL,NULL,0);
     }
+    closegraph(-1);
+    printf("nama : ");fflush(stdin);
+    scanf("%[^\n]s", user.nama);
+    user.peringkat = 0;
+    writeFileHighScore(user);
 }
 
 int main()
 {
     while(1){
+
         menutama();
     }
     return 0;

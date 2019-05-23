@@ -60,6 +60,12 @@ typedef struct{
     int jmlBot;
 }infoLevel;            //info satu level
 
+typedef struct{
+    int peringkat;
+    char nama[10];
+    int score = 0;
+}tUser;
+
 void tampilan_exit(double wkttotal, int score);
 void permainan();
 
