@@ -45,8 +45,7 @@ void tampil_Waktu(double durasi)
     outtextxy(WINDOWS_WIDTH-300,WINDOWS_HEIGHT-200,tamWaktu);
 }
 
-int hitung_skor_akhir(int* skor, double durasi)
-{
+int hitung_skor_akhir(int skor, double durasi){
     int total;
 
     if(durasi >= 60)
@@ -62,8 +61,7 @@ int hitung_skor_akhir(int* skor, double durasi)
             total=0;
         }
     }
-    *skor = *skor + total;
-    return *skor;
+    return skor+total;
 }
 
 void tampil_skor_akhir(int skor)

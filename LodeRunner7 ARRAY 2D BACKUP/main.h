@@ -1,7 +1,6 @@
 #ifndef main_H
 #define main_H
 
-
 #include <stdio.h>
 #include <graphics.h>
 #include <conio.h>
@@ -13,11 +12,15 @@
 #define BARIS 16
 #define KOLOM 28
 
-#define WINDOWS_HEIGHT (BARIS*MATRIX_ELEMENT_SIZE)+50
-#define WINDOWS_WIDTH KOLOM*MATRIX_ELEMENT_SIZE
+#define SCOREBAR 50
+#define GAME_HEIGHT BARIS*MATRIX_ELEMENT_SIZE
+#define GAME_WIDTH KOLOM*MATRIX_ELEMENT_SIZE
+
+#define WINDOWS_HEIGHT GAME_HEIGHT+SCOREBAR
+#define WINDOWS_WIDTH  GAME_WIDTH
 
 #define MAX_LEVEL 2
-
+#define FALL 1
 
 typedef struct{
     int X;
@@ -62,9 +65,18 @@ typedef struct{
 
 typedef struct{
     int peringkat;
-    char nama[10];
+    char nama[50];
     int score = 0;
 }tUser;
+
+typedef struct{
+    void* brick;
+    void* bedrock;
+    void* ladder;
+    void* coin;
+    void* exit;
+    void* rope;
+}blockSprite;
 
 void tampilan_exit(double wkttotal, int score);
 void permainan();

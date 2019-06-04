@@ -294,14 +294,14 @@
 	"181511028.h"
 	"181511004.h"
 
-1557968381 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 array 2d backup\181511003.cpp
+1559560209 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 array 2d backup\181511003.cpp
 	"181511003.h"
 
 1557968381 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 array 2d backup\181511003.h
 	"main.h"
 	"181511057.h"
 
-1557974407 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 array 2d backup\main.h
+1559579677 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 array 2d backup\main.h
 	<stdio.h>
 	<graphics.h>
 	<conio.h>
@@ -309,7 +309,7 @@
 	<windows.h>
 	<mmsystem.h>
 
-1558064636 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 array 2d backup\181511057.h
+1559596709 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 array 2d backup\181511057.h
 	"main.h"
 	"181511028.h"
 	"181511037.h"
@@ -323,7 +323,7 @@
 	"main.h"
 	"181511028.h"
 
-1557316172 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 array 2d backup\181511044.h
+1559581933 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 array 2d backup\181511044.h
 	"main.h"
 
 1557316172 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 array 2d backup\181511004.cpp
@@ -335,17 +335,17 @@
 1557316172 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 array 2d backup\181511028.cpp
 	"181511028.h"
 
-1558065584 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 array 2d backup\181511037.cpp
+1558553743 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 array 2d backup\181511037.cpp
 	"181511037.h"
 	"181511057.h"
 
-1557316172 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 array 2d backup\181511044.cpp
+1559581910 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 array 2d backup\181511044.cpp
 	"181511044.h"
 
-1558065534 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 array 2d backup\181511057.cpp
+1559596166 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 array 2d backup\181511057.cpp
 	"181511057.h"
 
-1558178099 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 array 2d backup\main.cpp
+1559596437 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 array 2d backup\main.cpp
 	"main.h"
 	"181511057.h"
 	"181511003.h"
@@ -353,4 +353,64 @@
 	"181511037.h"
 	"181511028.h"
 	"181511004.h"
+
+1559658994 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 tes getimage\181511003.cpp
+	"181511003.h"
+
+1559657368 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 tes getimage\181511003.h
+	"main.h"
+	"181511057.h"
+
+1559658994 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 tes getimage\main.h
+	<stdio.h>
+	<graphics.h>
+	<conio.h>
+	<ctime>
+	<windows.h>
+	<mmsystem.h>
+
+1559659752 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 tes getimage\181511057.h
+	"main.h"
+	"181511028.h"
+	"181511037.h"
+	"181511003.h"
+	"181511044.h"
+
+1557316172 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 tes getimage\181511028.h
+	"main.h"
+
+1559656943 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 tes getimage\181511037.h
+	"main.h"
+	"181511028.h"
+
+1559581933 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 tes getimage\181511044.h
+	"main.h"
+
+1557316172 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 tes getimage\181511004.cpp
+	"181511004.h"
+
+1557316172 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 tes getimage\181511004.h
+	"main.h"
+
+1557316172 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 tes getimage\181511028.cpp
+	"181511028.h"
+
+1559658266 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 tes getimage\181511037.cpp
+	"181511037.h"
+	"181511057.h"
+
+1559581910 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 tes getimage\181511044.cpp
+	"181511044.h"
+
+1559659806 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 tes getimage\main.cpp
+	"main.h"
+	"181511057.h"
+	"181511003.h"
+	"181511044.h"
+	"181511037.h"
+	"181511028.h"
+	"181511004.h"
+
+1559659806 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 tes getimage\181511057.cpp
+	"181511057.h"
 

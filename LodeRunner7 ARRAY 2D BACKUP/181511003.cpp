@@ -32,7 +32,7 @@ bool isFalling(int arr[BARIS][KOLOM], int baris, int kolom){
     }
 }
 
-void playerMovement(int arr[BARIS][KOLOM], arrayQueue* P, sprite* player){ //memindahkan posisi player dalam matriks sesuai movement yang dipilih oleh user
+void playerMovement(int arr[BARIS][KOLOM], arrayQueue* P, sprite* player, blockSprite block){ //memindahkan posisi player dalam matriks sesuai movement yang dipilih oleh user
     lubang Z;
     int BarisAtasPlayer=((*player).koor.Y-10)/MATRIX_ELEMENT_SIZE;
 	switch((*player).movement){
@@ -53,17 +53,7 @@ void playerMovement(int arr[BARIS][KOLOM], arrayQueue* P, sprite* player){ //mem
             (isSliding(arr, (*player).pm.baris, (*player).pm.kolom) && !isStanding(arr, (*player).pm.baris, (*player).pm.kolom)) || isClimbing(arr, (*player).pm.baris+1, (*player).pm.kolom) ||
             isFalling(arr, (*player).pm.baris, (*player).pm.kolom))){
                 if(isSliding(arr,(*player).pm.baris,(*player).pm.kolom)){
-                    (*player).koor.Y = (*player).koor.Y + (MATRIX_ELEMENT_SIZE/2);
-                    (*player).pm.kolom = ((*player).koor.X+(MATRIX_ELEMENT_SIZE/2))/MATRIX_ELEMENT_SIZE;
-                    (*player).pm.baris = ((*player).koor.Y)/MATRIX_ELEMENT_SIZE;
-                    while(isFalling(arr,(*player).pm.baris,(*player).pm.kolom)){
-                        drawPlayerMovement(arr, player);
-                        swapbuffers();
-                        delay(30);
-                        (*player).koor.Y = (*player).koor.Y + 10;
-                        (*player).pm.kolom = ((*player).koor.X+(MATRIX_ELEMENT_SIZE/2))/MATRIX_ELEMENT_SIZE;
-                        (*player).pm.baris = ((*player).koor.Y)/MATRIX_ELEMENT_SIZE;
-                    }
+                    (*player).koor.Y = (*player).koor.Y + MATRIX_ELEMENT_SIZE;
                 }else{
                     (*player).koor.X = ((*player).pm.kolom)*MATRIX_ELEMENT_SIZE;
                     (*player).koor.Y = (*player).koor.Y + 10;
@@ -135,5 +125,13 @@ void playerMovement(int arr[BARIS][KOLOM], arrayQueue* P, sprite* player){ //mem
                     (*player).movement=NULL;
                 }
 				break;
+            case FALL :
+                (*player).urutanBom=-1;
+                if((*player).koor.Y+10 < WINDOWS_HEIGHT-50-MATRIX_ELEMENT_SIZE){
+                    (*player).koor.Y = (*player).koor.Y + 10;
+                }else{
+                    (*player).movement = NULL;
+                }
+                break;
         }
 }
