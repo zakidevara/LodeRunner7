@@ -181,7 +181,6 @@ void permainan(){
     }
 
     inputNama(user.nama ,50);
-    user.peringkat = 0;
     writeFileHighScore(user);
 }
 

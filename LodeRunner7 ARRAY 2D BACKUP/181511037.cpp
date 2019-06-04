@@ -127,6 +127,7 @@ void menutama()
                 break;
             //menu hi score
             }else if ((mousex > 270) && (mousex < 302) && (mousey > 298) && (mousey < 510)){
+                sortFileHighScore();
                 readFileHighScore();
                 break;
             //menu exit

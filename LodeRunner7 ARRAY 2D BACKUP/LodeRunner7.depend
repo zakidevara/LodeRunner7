@@ -361,7 +361,7 @@
 	"main.h"
 	"181511057.h"
 
-1559661649 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 tes getimage\main.h
+1559685709 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 tes getimage\main.h
 	<stdio.h>
 	<graphics.h>
 	<conio.h>
@@ -369,7 +369,7 @@
 	<windows.h>
 	<mmsystem.h>
 
-1559659752 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 tes getimage\181511057.h
+1559684873 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 tes getimage\181511057.h
 	"main.h"
 	"181511028.h"
 	"181511037.h"
@@ -395,14 +395,14 @@
 1557316172 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 tes getimage\181511028.cpp
 	"181511028.h"
 
-1559658266 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 tes getimage\181511037.cpp
+1559684873 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 tes getimage\181511037.cpp
 	"181511037.h"
 	"181511057.h"
 
 1559581910 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 tes getimage\181511044.cpp
 	"181511044.h"
 
-1559661215 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 tes getimage\main.cpp
+1559661701 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 tes getimage\main.cpp
 	"main.h"
 	"181511057.h"
 	"181511003.h"
@@ -411,6 +411,6 @@
 	"181511028.h"
 	"181511004.h"
 
-1559661346 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 tes getimage\181511057.cpp
+1559685269 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 tes getimage\181511057.cpp
 	"181511057.h"
 

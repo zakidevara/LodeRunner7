@@ -64,7 +64,6 @@ typedef struct{
 }infoLevel;            //info satu level
 
 typedef struct{
-    int peringkat;
     char nama[50];
     int score = 0;
 }tUser;

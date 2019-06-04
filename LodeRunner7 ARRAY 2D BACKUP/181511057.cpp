@@ -625,7 +625,7 @@ void readFileHighScore(){
     FILE* hs;
     tUser temp;
     koordinat koor;
-
+    int rank = 1;
     koor.X = 40;
     koor.Y = 90;
     char tempStr[100];
@@ -636,10 +636,11 @@ void readFileHighScore(){
     outtextxy(40, 20, "=================== HIGH SCORE ===================");
     outtextxy(40, 60, "No.   Nama                                   Score");
     if((hs = fopen("highscore.dat", "rb")) != NULL){
-        while((fread(&temp, sizeof(tUser), 1, hs)) == 1){
-            sprintf(tempStr, "%2d.      %-40s %-5d", temp.peringkat, temp.nama, temp.score);
+        while((fread(&temp, sizeof(tUser), 1, hs) == 1) && (rank <= 10)){
+            sprintf(tempStr, "%2d.      %-40s %-5d", rank, temp.nama, temp.score);
             outtextxy(koor.X, koor.Y, tempStr);
             koor.Y += 30;
+            rank++;
         }
     }else{
         outtextxy(WINDOWS_WIDTH/2-100, WINDOWS_HEIGHT/2-50, "File tidak ada isinya");
@@ -863,4 +864,25 @@ void eraseDrawing(sprite* player){
 
 void eraseBotArray(sprite bot[], int n){
     for(int i = 0; i < n; i++) eraseDrawing(&bot[i]);
+}
+
+void sortFileHighScore(){
+    FILE* hs;
+    tUser temp1, temp2;
+    int nSwap=1;
+    if((hs = fopen("highscore.dat", "rb+")) != NULL){
+        while(nSwap != 0){
+            nSwap = 0;
+            rewind(hs);
+            while((fread(&temp1, sizeof(tUser), 1, hs) == 1) && (fread(&temp2, sizeof(tUser), 1, hs))){
+                if(temp1.score < temp2.score){
+                    fseek(hs, (-2)*sizeof(tUser), SEEK_CUR);
+                    fwrite(&temp2, sizeof(tUser), 1, hs);
+                    fwrite(&temp1, sizeof(tUser), 1, hs);
+                    nSwap++;
+                }
+                fseek(hs, (-1)*sizeof(tUser), SEEK_CUR);
+            }
+        }
+    }
 }

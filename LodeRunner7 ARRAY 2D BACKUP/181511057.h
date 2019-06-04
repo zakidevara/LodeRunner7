@@ -142,4 +142,6 @@ blockSprite loadBlockSprites();
 
 void eraseDrawing(sprite* player);
 void eraseBotArray(sprite bot[], int n);
+
+void sortFileHighScore();
 #endif
