@@ -52,7 +52,7 @@ typedef struct{
     int MaxSize;
     int Front;
     int Back;
-}arrayQueue;            //queue alokasi statis untuk menampung data lubang yang dibuat
+}arrayQueue;            //queue alokasi statis untuk menampung data lubang
 
 typedef struct{
     int lv;
@@ -76,7 +76,7 @@ typedef struct{
     void* coin;
     void* exit;
     void* rope;
-}blockSprite;
+}blockSprite;  // Sprite block
 
 void tampilan_exit(double wkttotal, int score);
 void permainan();

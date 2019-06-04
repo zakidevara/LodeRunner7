@@ -38,8 +38,6 @@ void tampilan_exit(double wkttotal, int score){
 }
 
 void permainan(){
-    //initwindow(WINDOWS_WIDTH, WINDOWS_HEIGHT, " ", 0, 0, true, true);
-
     //VARIABEL LOKAL
     infoLevel level;                        // nilai matriks map dan posisi awal sprite dalam level
     sprite player;                          // sprite player
@@ -147,32 +145,19 @@ void permainan(){
                 bot[i].pm = getPosisiMatriks(bot[i].koor);
             }
 
-
+            //Penghapusan gambar sebelumnya
             eraseDrawing(&player);
             eraseBotArray(bot, level.jmlBot);
-            //penggambaran bot
+
+            //penggambaran ulang
             drawBotArray(level.arr, bot, level.jmlBot, block);
-            //penggambaran ulang di layar
             drawPlayerMovement(level.arr, &player, block);
-
-
-            /*if(((player.movement != NULL) || isLagiBom(player.movement) || lagiNgambilKoin(level.arr, player.pm.baris, player.pm.kolom) || (player.urutanBom != -1)) || (bot[0].movement != NULL)){
-                int area = imagesize(player.koor.X, player.koor.Y, player.koor.X + MATRIX_ELEMENT_SIZE, player.koor.Y + MATRIX_ELEMENT_SIZE);
-                bitmap = malloc(area);
-                getimage(player.koor.X, player.koor.Y, player.koor.X + MATRIX_ELEMENT_SIZE, player.koor.Y + MATRIX_ELEMENT_SIZE, bitmap);
-                swapbuffers();
-                putimage(player.koor.X, player.koor.Y, bitmap,XOR_PUT);
-            }*/
-
 
             //reset animasi melempar bom jika player melakukan player.movement lain
             resetAnimasiBom(level.arr, player.pm.baris, player.pm.kolom, &player.urutanAnimasi, &player.urutanBom, player.movement, player.koor, block);
 
-            //jika ada pergerakan maka swap buffer
-            swapbuffers();
-            //if((player.movement != NULL) || isLagiBom(player.movement) || lagiNgambilKoin(level.arr, player.pm.baris, player.pm.kolom) ||(player.urutanBom != -1)){
 
-            //}
+            swapbuffers();
 
             //reset nilai player.movement
             player.movement = NULL;

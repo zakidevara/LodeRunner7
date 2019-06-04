@@ -778,7 +778,7 @@ blockSprite loadBlockSprites(){
     temp.brick = loadSprite("images/bata.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
     temp.ladder = loadSprite("images/ladder.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
     temp.coin = loadSprite("images/coin.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
-    temp.exit = loadSprite("images/gif.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
+    temp.exit = loadSprite("images/exit.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
     temp.rope = loadSprite("images/rope.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
     return temp;
 }
