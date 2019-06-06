@@ -52,8 +52,8 @@ void drawBedRock(int x1,int y1,int x2, int y2);
 
 ///////////////////////////////////////////////////////////////////////////////////
 
-bool isinbrick(signed char arr[BARIS][KOLOM], int barisPlayer, int kolomPlayer, int *Nyawa);
-bool ismeetbot(signed char arr[BARIS][KOLOM], int barisPlayer, int kolomPlayer, int *Nyawa);
+bool isinbrick(int arr[BARIS][KOLOM], posisiMatriks player, int *Nyawa);
+bool ismeetbot(int arr[BARIS][KOLOM], spriteInfo player, int *Nyawa, spriteInfo bot[], int nBot);
 
 
 

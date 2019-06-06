@@ -136,4 +136,6 @@ void eraseBotArray(spriteInfo bot[], int n);
 void sortFileHighScore();
 spriteAnim loadSpriteAnim(char c);
 
+void tampil_durasi_permainan(double durasi);
+void tampil_lives(int lives);
 #endif

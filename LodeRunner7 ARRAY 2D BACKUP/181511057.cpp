@@ -449,9 +449,7 @@ infoLevel readFileLevel(char file[]){
         for(int i = 0; i < BARIS; i++){
             for(int j = 0; j < KOLOM; j++){
                 fscanf(pf,"%d ", &(level.arr[i][j]));
-                //printf("%d", level.arr[i][j]);
             }
-            //printf("\n");
         }
         fscanf(pf, "\n%d %d\n", &(level.exitPos.baris), &(level.exitPos.kolom));
         fscanf(pf, "%d %d\n", &(level.playerPos.baris), &(level.playerPos.kolom));
@@ -506,13 +504,19 @@ void readFileHighScore(){
 
     setactivepage(0);
     cleardevice();
-    settextstyle(SANS_SERIF_FONT, 1, 3);
+    settextstyle(COMPLEX_FONT, 0, 3);
     outtextxy(40, 20, "=================== HIGH SCORE ===================");
-    outtextxy(40, 60, "No.   Nama                                   Score");
+    outtextxy(40, 60, "No.");
+    outtextxy(100, 60, "Nama");
+    outtextxy(500, 60, "Score");
     if((hs = fopen("highscore.dat", "rb")) != NULL){
         while((fread(&temp, sizeof(tUser), 1, hs) == 1) && (rank <= 10)){
-            sprintf(tempStr, "%2d.      %-40s %-5d", rank, temp.nama, temp.score);
-            outtextxy(koor.X, koor.Y, tempStr);
+            sprintf(tempStr, "%2d.", rank);
+            outtextxy(40, koor.Y, tempStr);
+            sprintf(tempStr, "%s", temp.nama);
+            outtextxy(100, koor.Y, tempStr);
+            sprintf(tempStr, "%5d", temp.score);
+            outtextxy(500, koor.Y, tempStr);
             koor.Y += 30;
             rank++;
         }
@@ -522,8 +526,6 @@ void readFileHighScore(){
     fclose(hs);
     setvisualpage(0);
     getch();
-
-
 }
 
 void writeFileHighScore(tUser user){
@@ -842,4 +844,21 @@ spriteAnim loadSpriteAnim(char c){ // c == 'P' untuk load animasi player, 'B' un
         temp.bombing[1] = loadSprite("images/player/Player_ThrowBomb_Left0.gif",MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
     }
     return temp;
+}
+
+void tampil_durasi_permainan(double durasi){
+    char str[10];
+
+    sprintf(str,"%0.1lf", durasi);
+    outtextxy(WINDOWS_WIDTH-250,WINDOWS_HEIGHT-50,str);
+    outtextxy(WINDOWS_WIDTH-350,WINDOWS_HEIGHT-50,"TIME:");
+}
+
+
+void tampil_lives(int lives){
+    char str[10];
+
+    sprintf(str,"%d", lives);
+    outtextxy(WINDOWS_WIDTH-450,WINDOWS_HEIGHT-50,str);
+    outtextxy(WINDOWS_WIDTH-550,WINDOWS_HEIGHT-50,"LIVES:");
 }

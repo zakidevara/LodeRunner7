@@ -125,6 +125,9 @@ void permainan(){
             // Menampilkan score player
             tampil_skor(user.score);
 
+            tampil_durasi_permainan(hitung_Waktu(wktmulai, clock()));
+            tampil_lives(user.lives);
+
             // Baca Input User
             if(isFalling(headLvl->info.arr, player.pm.baris, player.pm.kolom) && !isSliding(headLvl->info.arr, player.pm.baris, player.pm.kolom)){
                 //jika sedang jatuh maka player.movement dianggap bernilai 'S', atau sama dengan sedang bergerak ke bawah
@@ -190,6 +193,8 @@ void permainan(){
                 user.score = hitung_skor_akhir(user.score, wkttotal);
                 tampilan_exit(wkttotal,user.score);
                 sub_head(&headLvl);
+                break;
+            }else if(ismeetbot(headLvl->info.arr, player, &(user.lives), bot, headLvl->info.jmlBot) || isinbrick(headLvl->info.arr, player.pm, &(user.lives))){
                 break;
             }
         }

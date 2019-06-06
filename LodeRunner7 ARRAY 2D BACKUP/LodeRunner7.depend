@@ -420,7 +420,7 @@
 1557316172 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 (versi paling baru)\181511004.h
 	"main.h"
 
-1559822922 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 (versi paling baru)\main.h
+1559826717 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 (versi paling baru)\main.h
 	<stdio.h>
 	<graphics.h>
 	<conio.h>
@@ -428,14 +428,14 @@
 	<windows.h>
 	<mmsystem.h>
 
-1559822858 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 (versi paling baru)\181511028.cpp
+1559828546 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 (versi paling baru)\181511028.cpp
 	"181511028.h"
 
-1559822858 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 (versi paling baru)\181511028.h
+1559828546 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 (versi paling baru)\181511028.h
 	"main.h"
 	"181511057.h"
 
-1559818765 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 (versi paling baru)\181511037.cpp
+1559826405 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 (versi paling baru)\181511037.cpp
 	"181511037.h"
 	"181511057.h"
 
@@ -443,7 +443,7 @@
 	"main.h"
 	"181511028.h"
 
-1559818765 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 (versi paling baru)\181511057.h
+1559826848 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 (versi paling baru)\181511057.h
 	"main.h"
 	"181511028.h"
 	"181511037.h"
@@ -457,16 +457,16 @@
 1559801683 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 (versi paling baru)\181511044.h
 	"main.h"
 
-1559581910 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 (versi paling baru)\181511044.cpp
+1559825154 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 (versi paling baru)\181511044.cpp
 	"181511044.h"
 
 1559819135 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 (versi paling baru)\181511003.cpp
 	"181511003.h"
 
-1559823041 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 (versi paling baru)\181511057.cpp
+1559826816 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 (versi paling baru)\181511057.cpp
 	"181511057.h"
 
-1559823345 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 (versi paling baru)\main.cpp
+1559828546 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 (versi paling baru)\main.cpp
 	"main.h"
 	"181511057.h"
 	"181511003.h"

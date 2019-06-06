@@ -90,8 +90,8 @@ void menutama()
 
     setactivepage(0);
     cleardevice();
-    settextstyle(SCRIPT_FONT,HORIZ_DIR,3);
-    outtextxy(10,10,"click to choose!!");
+    //settextstyle(SCRIPT_FONT,HORIZ_DIR,3);
+    //outtextxy(10,10,"click to choose!!");
     settextstyle(SANS_SERIF_FONT,HORIZ_DIR,6);
     outtextxy(210,200,"LODE RUNNER");
     // play

@@ -127,7 +127,7 @@ void playerMovement(int arr[BARIS][KOLOM], arrayQueue* P, spriteInfo* player){ /
 				break;
             case FALL :
                 (*player).urutanBom=-1;
-                if((*player).koor.Y+10 < WINDOWS_HEIGHT-50-MATRIX_ELEMENT_SIZE){
+                if((*player).koor.Y < WINDOWS_HEIGHT-50-MATRIX_ELEMENT_SIZE){
                     (*player).koor.X = (*player).pm.kolom * MATRIX_ELEMENT_SIZE;
                     (*player).koor.Y = (*player).koor.Y + 10;
                 }else{

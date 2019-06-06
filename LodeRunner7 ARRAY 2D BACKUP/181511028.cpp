@@ -165,19 +165,22 @@ load_level (pnode_t *lp, FILE *fp_read, long file_size)
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
-bool isinbrick(signed char arr[BARIS][KOLOM], int barisPlayer, int kolomPlayer, int *Nyawa)
+bool isinbrick(int arr[BARIS][KOLOM], posisiMatriks player, int *Nyawa)
 {
-	bool isdied = arr[barisPlayer][kolomPlayer] == 1 ? true : false;
+	bool isdied = arr[player.baris][player.kolom] == 1 ? true : false;
 	if (isdied)
-		*Nyawa--;
+		(*Nyawa)--;
 	return isdied;
 }
 
 #define BOT 99
-bool ismeetbot(signed char arr[BARIS][KOLOM], int barisPlayer, int kolomPlayer, int *Nyawa)
+bool ismeetbot(int arr[BARIS][KOLOM], spriteInfo player, int *Nyawa, spriteInfo bot[], int nBot)
 {
-	bool isdied = arr[barisPlayer][kolomPlayer] == BOT ? true : false;
-	if (isdied)
-		*Nyawa--;
-	return isdied;
+	for(int i = 0; i < nBot; i++){
+        if ((player.pm.baris == bot[i].pm.baris) && (player.pm.kolom == bot[i].pm.kolom)){
+            (*Nyawa)--;
+            return true;
+        }
+	}
+	return false;
 }

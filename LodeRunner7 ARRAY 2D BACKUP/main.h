@@ -66,6 +66,7 @@ typedef struct{
 typedef struct{
     char nama[50];
     int score = 0;
+    int lives = 3;
 }tUser;
 
 typedef struct{

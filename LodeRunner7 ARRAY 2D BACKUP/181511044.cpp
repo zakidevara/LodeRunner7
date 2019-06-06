@@ -15,7 +15,7 @@ void tampil_skor(int skor)
 
     sprintf(skoor,"%d", skor);
     outtextxy(WINDOWS_WIDTH-50,WINDOWS_HEIGHT-50,skoor);
-    outtextxy(WINDOWS_WIDTH-130,WINDOWS_HEIGHT-50,"SCORE:");
+    outtextxy(WINDOWS_WIDTH-150,WINDOWS_HEIGHT-50,"SCORE:");
 }
 
 void waktu_Awal(clock_t* wktAwal)
@@ -40,7 +40,7 @@ void tampil_Waktu(double durasi)
 {
     char tamWaktu[6];
 
-    sprintf(tamWaktu,"%lf", durasi);
+    sprintf(tamWaktu,"%0.1lf", durasi);
     outtextxy(WINDOWS_WIDTH-400,WINDOWS_HEIGHT-200,"Waktu:");
     outtextxy(WINDOWS_WIDTH-300,WINDOWS_HEIGHT-200,tamWaktu);
 }
