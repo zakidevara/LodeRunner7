@@ -51,7 +51,8 @@ __plist_loop (pnode_t *lp, unsigned short sum_node)
 {
   if (null (*lp) && sum_node != END_LOOP)
     {
-      *lp = pnode ();
+        *lp = pnode ();
+        (*lp)->info = generateLevel(MAX_LEVEL - sum_node + 1);
         __plist_loop (&(*lp)->next, sum_node - LEAP_LOOP);
     }
 }
@@ -112,7 +113,7 @@ print_arr (pnode_t lp)
     for (i = 0; i < BARIS; i++)
       {
         for (j = 0; j < KOLOM; j++)
-          printf ("%hhi ", lp->arr[i][j]);
+          printf ("%d ", lp->info.arr[i][j]);
         printf ("\n");
       }
   else
@@ -137,7 +138,7 @@ save_level (pnode_t lp, FILE *fp_write)
         {
           for (i = 0; i < BARIS; i++)
             for (j = 0; j < KOLOM; j++)
-              fwrite (&lp->arr[i][j], sizeof (signed char), LEAP_LOOP, fp_write);
+              fwrite (&lp->info.arr[i][j], sizeof (signed char), LEAP_LOOP, fp_write);
           lp = lp->next;
         }
     }
@@ -156,7 +157,7 @@ load_level (pnode_t *lp, FILE *fp_read, long file_size)
         {
           for (i = 0; i < BARIS; i++)
             for (j = 0; j < KOLOM; j++)
-              fread (&temp_p->arr[i][j], sizeof (signed char), LEAP_LOOP, fp_read);
+              fread (&temp_p->info.arr[i][j], sizeof (signed char), LEAP_LOOP, fp_read);
           temp_p = temp_p->next;
         }
     }

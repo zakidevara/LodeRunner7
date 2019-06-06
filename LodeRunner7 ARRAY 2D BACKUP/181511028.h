@@ -2,6 +2,7 @@
 #define RENOL_028_H
 
 #include "main.h"
+#include "181511057.h"
 
 #define END_LOOP ((unsigned short) 0)
 #define LEAP_LOOP ((unsigned short) 1)
@@ -17,7 +18,7 @@
 
 typedef struct node
 {
-  signed char arr[BARIS][KOLOM];
+  infoLevel info;
   struct node *next;
 } *pnode_t;
 

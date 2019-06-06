@@ -57,9 +57,9 @@ typedef struct{
 typedef struct{
     int lv;
     int arr[BARIS][KOLOM];
-    posisiMatriks pintuExit;
-    posisiMatriks player;
-    posisiMatriks bot[5];
+    posisiMatriks exitPos;
+    posisiMatriks playerPos;
+    posisiMatriks botPos[5];
     int jmlBot;
 }infoLevel;            //info satu level
 

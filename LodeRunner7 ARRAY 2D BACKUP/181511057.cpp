@@ -453,15 +453,11 @@ infoLevel readFileLevel(char file[]){
             }
             //printf("\n");
         }
-        fscanf(pf, "\n%d %d\n", &(level.pintuExit.baris), &(level.pintuExit.kolom));
-        //printf("%d %d\n", (level.pintuExit.baris), (level.pintuExit.kolom));
-        fscanf(pf, "%d %d\n", &(level.player.baris), &(level.player.kolom));
-        //printf("%d %d\n", (level.player.baris), (level.player.kolom));
+        fscanf(pf, "\n%d %d\n", &(level.exitPos.baris), &(level.exitPos.kolom));
+        fscanf(pf, "%d %d\n", &(level.playerPos.baris), &(level.playerPos.kolom));
         fscanf(pf, "%d\n", &(level.jmlBot));
-        //printf("%d\n", (level.jmlBot));
         for(int i = 0; i < level.jmlBot; i++){
-            fscanf(pf, "%d %d\n", &(level.bot[i].baris), &(level.bot[i].kolom));
-            //printf("%d %d\n", level.bot[i].baris, level.bot[i].kolom);
+            fscanf(pf, "%d %d\n", &(level.botPos[i].baris), &(level.botPos[i].kolom));
         }
     }
     fclose(pf);
@@ -606,10 +602,10 @@ void printStats(infoLevel level, spriteInfo player, clock_t Start, clock_t End, 
         printf("\n");
         warnateks(WHITE);
     }
-    printf("Pintu Exit : %d %d\n", level.pintuExit);
-    printf("Posisi Player : %d %d\n", level.player);
+    printf("Pintu Exit : %d %d\n", level.exitPos);
+    printf("Posisi Player : %d %d\n", level.playerPos);
     for(int i = 0; i < level.jmlBot; i++){
-        printf("Posisi Bot %d : %d %d\n", i+1, level.bot[i]);
+        printf("Posisi Bot %d : %d %d\n", i+1, level.botPos[i]);
     }
     printf("Durasi : %lf\n", (End - Start)/(double) CLOCKS_PER_SEC);
 
