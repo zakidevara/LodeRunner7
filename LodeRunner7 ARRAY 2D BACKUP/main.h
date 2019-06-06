@@ -38,7 +38,7 @@ typedef struct{
     char movement = NULL;
     int urutanAnimasi = 1;
     int urutanBom = -1;
-}sprite;                //struktur data suatu sprite
+}spriteInfo;                //struktur data suatu sprite
 
 typedef struct{
     posisiMatriks pos;
@@ -76,6 +76,13 @@ typedef struct{
     void* exit;
     void* rope;
 }blockSprite;  // Sprite block
+
+typedef struct{
+    void* running[16];
+    void* climbingLadder[2];
+    void* climbingRope[4];
+    void* bombing[2];
+}spriteAnim;
 
 void tampilan_exit(double wkttotal, int score);
 void permainan();

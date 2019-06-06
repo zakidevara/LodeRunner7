@@ -4,156 +4,106 @@
 
 #include "181511057.h"
 
-/*---------------------------- Load/Animasi Sprite Player ----------------------------*/
-void playerRunningRight(int x1,int y1,int x2, int y2, int* urutan){
+/*---------------------------- Load/Animasi Sprite ----------------------------*/
+void drawAnimRunningRight(int x, int y, int* urutan, spriteAnim anim){
     if((*urutan > 7) ||(*urutan < 0)) *urutan = 0;
     switch(*urutan){
     case 0:
-        readimagefile("images/player/Player_Right0.gif", x1, y1, x2-1, y2-1);break;
+        putimage(x, y, anim.running[0], OR_PUT);break;
     case 1:
-        readimagefile("images/player/Player_Right1.gif", x1, y1, x2-1, y2-1);break;
+        putimage(x, y, anim.running[1], OR_PUT);break;
     case 2:
-        readimagefile("images/player/Player_Right2.gif", x1, y1, x2-1, y2-1);break;
+        putimage(x, y, anim.running[2], OR_PUT);break;
     case 3:
-        readimagefile("images/player/Player_Right3.gif", x1, y1, x2-1, y2-1);break;
+        putimage(x, y, anim.running[3], OR_PUT);break;
     case 4:
-        readimagefile("images/player/Player_Right4.gif", x1, y1, x2-1, y2-1);break;
+        putimage(x, y, anim.running[4], OR_PUT);break;
     case 5:
-        readimagefile("images/player/Player_Right5.gif", x1, y1, x2-1, y2-1);break;
+        putimage(x, y, anim.running[5], OR_PUT);break;
     case 6:
-        readimagefile("images/player/Player_Right6.gif", x1, y1, x2-1, y2-1);break;
+        putimage(x, y, anim.running[6], OR_PUT);break;
     case 7:
-        readimagefile("images/player/Player_Right7.gif", x1, y1, x2-1, y2-1);break;
+        putimage(x, y, anim.running[7], OR_PUT);break;
     }
     (*urutan)++;
     if(*urutan > 7) *urutan = 0;
 }
 
-void playerRunningLeft(int x1,int y1,int x2, int y2, int* urutan){
+void drawAnimRunningLeft(int x, int y, int* urutan, spriteAnim anim){
     if((*urutan > 15) ||(*urutan < 8)) *urutan = 8;
     switch(*urutan){
     case 8:
-        readimagefile("images/player/Player_Left0.gif", x1, y1, x2-1, y2-1);break;
+        putimage(x, y, anim.running[8], OR_PUT);break;
     case 9:
-        readimagefile("images/player/Player_Left1.gif", x1, y1, x2-1, y2-1);break;
+        putimage(x, y, anim.running[9], OR_PUT);break;
     case 10:
-        readimagefile("images/player/Player_Left2.gif", x1, y1, x2-1, y2-1);break;
+        putimage(x, y, anim.running[10], OR_PUT);break;
     case 11:
-        readimagefile("images/player/Player_Left3.gif", x1, y1, x2-1, y2-1);break;
+        putimage(x, y, anim.running[11], OR_PUT);break;
     case 12:
-        readimagefile("images/player/Player_Left4.gif", x1, y1, x2-1, y2-1);break;
+        putimage(x, y, anim.running[12], OR_PUT);break;
     case 13:
-        readimagefile("images/player/Player_Left5.gif", x1, y1, x2-1, y2-1);break;
+        putimage(x, y, anim.running[13], OR_PUT);break;
     case 14:
-        readimagefile("images/player/Player_Left6.gif", x1, y1, x2-1, y2-1);break;
+        putimage(x, y, anim.running[14], OR_PUT);break;
     case 15:
-        readimagefile("images/player/Player_Left7.gif", x1, y1, x2-1, y2-1);break;
+        putimage(x, y, anim.running[15], OR_PUT);break;
     }
 
     (*urutan)++;
     if(*urutan > 15) *urutan = 8;
 }
 
-void playerClimbRopeRight(int x1,int y1,int x2, int y2, int* urutan){
+void drawAnimClimbRopeRight(int x,int y, int* urutan, spriteAnim anim){
     if((*urutan > 1) || (*urutan < 0)) *urutan = 0;
     switch(*urutan){
     case 0:
-        readimagefile("images/player/Player_ClimbRope_Right0.gif", x1, y1, x2-1, y2-1);break;
+        putimage(x, y, anim.climbingRope[0], OR_PUT);break;
     case 1:
-        readimagefile("images/player/Player_ClimbRope_Right1.gif", x1, y1, x2-1, y2-1);break;
+        putimage(x, y, anim.climbingRope[1], OR_PUT);break;
     default:
-        readimagefile("images/player/Player_ClimbRope_Right0.gif", x1, y1, x2-1, y2-1);
+        putimage(x, y, anim.climbingRope[0], OR_PUT);break;
     }
     (*urutan)++;
     if((*urutan > 1)) *urutan = 0;
 }
 
-void playerClimbRopeLeft(int x1,int y1,int x2, int y2, int* urutan){
+void drawAnimClimbRopeLeft(int x,int y, int* urutan, spriteAnim anim){
     if((*urutan > 3) || (*urutan < 2)) *urutan = 2;
     switch(*urutan){
     case 2:
-        readimagefile("images/player/Player_ClimbRope_Left0.gif", x1, y1, x2-1, y2-1);break;
+        putimage(x, y, anim.climbingRope[2], OR_PUT);break;
     case 3:
-        readimagefile("images/player/Player_ClimbRope_Left1.gif", x1, y1, x2-1, y2-1);break;
+        putimage(x, y, anim.climbingRope[3], OR_PUT);break;
     default:
-        readimagefile("images/player/Player_ClimbRope_Left0.gif", x1, y1, x2-1, y2-1);
+        putimage(x, y, anim.climbingRope[2], OR_PUT);break;
     }
     (*urutan)++;
     if((*urutan > 3)) *urutan = 2;
 }
 
-void playerClimbLadder(int x1,int y1,int x2, int y2, int* urutan){
+void drawAnimClimbLadder(int x,int y, int* urutan, spriteAnim anim){
     if(*urutan > 1) *urutan = 0;
     switch(*urutan){
     case 0:
-        readimagefile("images/player/Player_ClimbLadder0.gif", x1, y1, x2-1, y2-1);break;
+        putimage(x, y, anim.climbingLadder[0], OR_PUT);break;
     case 1:
-        readimagefile("images/player/Player_ClimbLadder1.gif", x1, y1, x2-1, y2-1);break;
+        putimage(x, y, anim.climbingLadder[1], OR_PUT);break;
     default:
-        readimagefile("images/player/Player_ClimbLadder0.gif", x1, y1, x2-1, y2-1);
+        putimage(x, y, anim.climbingLadder[0], OR_PUT);break;
     }
     (*urutan)++;
     if(*urutan > 1) *urutan = 0;
 }
 
-void PlayerBombRight(int x1,int y1,int x2, int y2){
-    readimagefile("images/player/Player_ThrowBomb_Right0.gif", x1, y1, x2-1, y2-1);
+void drawAnimBombRight(int x,int y, spriteAnim anim){
+    putimage(x, y, anim.bombing[0], OR_PUT);
 }
 
-void PlayerBombLeft(int x1,int y1,int x2, int y2){
-    readimagefile("images/player/Player_ThrowBomb_Left0.gif", x1, y1, x2-1, y2-1);
+void drawAnimBombLeft(int x,int y, spriteAnim anim){
+    putimage(x, y, anim.bombing[1], OR_PUT);
 }
 
-
-
-/*---------------------------- Load/Animasi Sprite Bot ----------------------------*/
-void botRunningRight(int x1,int y1,int x2, int y2, int* urutan){
-    if((*urutan > 7) ||(*urutan < 0)) *urutan = 0;
-    switch(*urutan){
-    case 0:
-        readimagefile("images/bot/Bot_Right0.gif", x1, y1, x2-1, y2-1);break;
-    case 1:
-        readimagefile("images/bot/Bot_Right1.gif", x1, y1, x2-1, y2-1);break;
-    case 2:
-        readimagefile("images/bot/Bot_Right2.gif", x1, y1, x2-1, y2-1);break;
-    case 3:
-        readimagefile("images/bot/Bot_Right3.gif", x1, y1, x2-1, y2-1);break;
-    case 4:
-        readimagefile("images/bot/Bot_Right4.gif", x1, y1, x2-1, y2-1);break;
-    case 5:
-        readimagefile("images/bot/Bot_Right5.gif", x1, y1, x2-1, y2-1);break;
-    case 6:
-        readimagefile("images/bot/Bot_Right6.gif", x1, y1, x2-1, y2-1);break;
-    case 7:
-        readimagefile("images/bot/Bot_Right7.gif", x1, y1, x2-1, y2-1);break;
-    }
-    (*urutan)++;
-    if(*urutan > 7) *urutan = 0;
-}
-
-void botRunningLeft(int x1,int y1,int x2, int y2, int* urutan){
-    if((*urutan > 15) ||(*urutan < 8)) *urutan = 8;
-    switch(*urutan){
-    case 8:
-        readimagefile("images/bot/Bot_Left0.gif", x1, y1, x2-1, y2-1);break;
-    case 9:
-        readimagefile("images/bot/Bot_Left1.gif", x1, y1, x2-1, y2-1);break;
-    case 10:
-        readimagefile("images/bot/Bot_Left2.gif", x1, y1, x2-1, y2-1);break;
-    case 11:
-        readimagefile("images/bot/Bot_Left3.gif", x1, y1, x2-1, y2-1);break;
-    case 12:
-        readimagefile("images/bot/Bot_Left4.gif", x1, y1, x2-1, y2-1);break;
-    case 13:
-        readimagefile("images/bot/Bot_Left5.gif", x1, y1, x2-1, y2-1);break;
-    case 14:
-        readimagefile("images/bot/Bot_Left6.gif", x1, y1, x2-1, y2-1);break;
-    case 15:
-        readimagefile("images/bot/Bot_Left7.gif", x1, y1, x2-1, y2-1);break;
-    }
-    (*urutan)++;
-    if(*urutan > 15) *urutan = 8;
-}
 
 /*---------------------------- Animasi Bata ----------------------------*/
 void bataDestroyed(int x1,int y1,int x2, int y2, int urutan){
@@ -185,7 +135,7 @@ void returnBata(int x1,int y1,int x2, int y2, int* urutan){
 
 
 /*---------------------------- Operasi Penggambaran ----------------------------*/
-void drawPlayerMovement(int arr[BARIS][KOLOM], sprite* player, blockSprite block){
+void drawMovement(int arr[BARIS][KOLOM], spriteInfo* player, blockSprite block, spriteAnim anim){
     switch((*player).movement){
     case KEY_LEFT :
     case 'A' :
@@ -196,9 +146,9 @@ void drawPlayerMovement(int arr[BARIS][KOLOM], sprite* player, blockSprite block
 
             //gambar ulang karakter utama
             if(isSliding(arr, (*player).pm.baris, (*player).pm.kolom)){
-                playerClimbRopeLeft((*player).koor.X, (*player).koor.Y,(*player).koor.X+MATRIX_ELEMENT_SIZE,(*player).koor.Y+MATRIX_ELEMENT_SIZE, &((*player).urutanAnimasi));
+                drawAnimClimbRopeLeft(player->koor.X, player->koor.Y, &(player->urutanAnimasi), anim);
             }else{
-                playerRunningLeft((*player).koor.X, (*player).koor.Y, (*player).koor.X+MATRIX_ELEMENT_SIZE, (*player).koor.Y+MATRIX_ELEMENT_SIZE, &((*player).urutanAnimasi));
+                drawAnimRunningLeft(player->koor.X, player->koor.Y, &(player->urutanAnimasi), anim);
             }
             break;
     case KEY_RIGHT :
@@ -207,9 +157,9 @@ void drawPlayerMovement(int arr[BARIS][KOLOM], sprite* player, blockSprite block
             drawLeft(arr, (*player).pm.kolom+1, (*player).pm.baris-1,3, block);
             drawLeft(arr, (*player).pm.kolom+1, (*player).pm.baris+1,3, block);
             if(isSliding(arr, (*player).pm.baris, (*player).pm.kolom)){
-                playerClimbRopeRight((*player).koor.X, (*player).koor.Y, (*player).koor.X+MATRIX_ELEMENT_SIZE, (*player).koor.Y+MATRIX_ELEMENT_SIZE, &((*player).urutanAnimasi));
+                drawAnimClimbRopeRight(player->koor.X, player->koor.Y, &(player->urutanAnimasi), anim);
             }else{
-                playerRunningRight((*player).koor.X, (*player).koor.Y, (*player).koor.X+MATRIX_ELEMENT_SIZE, (*player).koor.Y+MATRIX_ELEMENT_SIZE, &((*player).urutanAnimasi));
+                drawAnimRunningRight(player->koor.X, player->koor.Y, &(player->urutanAnimasi), anim);
             }
             break;
     case KEY_UP :
@@ -217,7 +167,7 @@ void drawPlayerMovement(int arr[BARIS][KOLOM], sprite* player, blockSprite block
             drawDown(arr, (*player).pm.kolom, (*player).pm.baris-1,4, block);
             drawDown(arr, (*player).pm.kolom+1, (*player).pm.baris-1,3, block);
             drawDown(arr, (*player).pm.kolom-1, (*player).pm.baris-1,3, block);
-            playerClimbLadder((*player).koor.X, (*player).koor.Y, (*player).koor.X+MATRIX_ELEMENT_SIZE, (*player).koor.Y+MATRIX_ELEMENT_SIZE, &((*player).urutanAnimasi));
+            drawAnimClimbLadder(player->koor.X, player->koor.Y, &(player->urutanAnimasi), anim);
             break;
     case FALL :
     case KEY_DOWN :
@@ -226,9 +176,9 @@ void drawPlayerMovement(int arr[BARIS][KOLOM], sprite* player, blockSprite block
             drawUp(arr, (*player).pm.kolom+1, (*player).pm.baris+1,3, block);
             drawUp(arr, (*player).pm.kolom-1, (*player).pm.baris+1,3, block);
             if(isClimbing(arr, (*player).pm.baris, (*player).pm.kolom)){
-                playerClimbLadder((*player).koor.X, (*player).koor.Y, (*player).koor.X+MATRIX_ELEMENT_SIZE, (*player).koor.Y+MATRIX_ELEMENT_SIZE, &((*player).urutanAnimasi));
+                drawAnimClimbLadder(player->koor.X, player->koor.Y, &(player->urutanAnimasi), anim);
             }else{
-                playerRunningRight((*player).koor.X, (*player).koor.Y, (*player).koor.X+MATRIX_ELEMENT_SIZE, (*player).koor.Y+MATRIX_ELEMENT_SIZE, &((*player).urutanAnimasi));
+                drawAnimRunningRight(player->koor.X, player->koor.Y, &(player->urutanAnimasi), anim);
             }
             break;
     case 'X' :
@@ -236,13 +186,13 @@ void drawPlayerMovement(int arr[BARIS][KOLOM], sprite* player, blockSprite block
             drawRight(arr, (*player).pm.kolom-1, (*player).pm.baris-1,3, block);
             drawRight(arr, (*player).pm.kolom-1, (*player).pm.baris,3, block);
             drawRight(arr, (*player).pm.kolom-1, (*player).pm.baris+1,3, block);
-            PlayerBombRight((*player).koor.X, (*player).koor.Y, (*player).koor.X+MATRIX_ELEMENT_SIZE, (*player).koor.Y+MATRIX_ELEMENT_SIZE);
+            drawAnimBombRight(player->koor.X, player->koor.Y, anim);
 
             bataDestroyed(( (*player).pm.kolom+1)*MATRIX_ELEMENT_SIZE, ((*player).pm.baris+1)*MATRIX_ELEMENT_SIZE, ((*player).pm.kolom+2)*MATRIX_ELEMENT_SIZE, ((*player).pm.baris+2)*MATRIX_ELEMENT_SIZE, (*player).urutanBom);
             delay(15);
             if((*player).urutanBom == 3){
                 drawUp(arr, (*player).pm.kolom-1, (*player).pm.baris+1, 2, block);
-                PlayerBombRight((*player).koor.X, (*player).koor.Y, (*player).koor.X+MATRIX_ELEMENT_SIZE, (*player).koor.Y+MATRIX_ELEMENT_SIZE);
+                drawAnimBombRight(player->koor.X, player->koor.Y, anim);
             }
             break;
     case 'Z' :
@@ -250,14 +200,14 @@ void drawPlayerMovement(int arr[BARIS][KOLOM], sprite* player, blockSprite block
             drawRight(arr, (*player).pm.kolom-1, (*player).pm.baris-1,3, block);
             drawRight(arr, (*player).pm.kolom-1, (*player).pm.baris,3, block);
             drawRight(arr, (*player).pm.kolom-1, (*player).pm.baris+1,3, block);
-            PlayerBombLeft((*player).koor.X, (*player).koor.Y, (*player).koor.X+MATRIX_ELEMENT_SIZE, (*player).koor.Y+MATRIX_ELEMENT_SIZE);
+            drawAnimBombLeft(player->koor.X, player->koor.Y, anim);
 
             bataDestroyed(( (*player).pm.kolom-1)*MATRIX_ELEMENT_SIZE, ((*player).pm.baris+1)*MATRIX_ELEMENT_SIZE, ((*player).pm.kolom)*MATRIX_ELEMENT_SIZE, ((*player).pm.baris+2)*MATRIX_ELEMENT_SIZE, (*player).urutanBom);
             delay(15);
 
             if((*player).urutanBom == 3){
                 drawUp(arr, (*player).pm.kolom-1, (*player).pm.baris+1, 2, block);
-                PlayerBombLeft((*player).koor.X, (*player).koor.Y, (*player).koor.X+MATRIX_ELEMENT_SIZE, (*player).koor.Y+MATRIX_ELEMENT_SIZE);
+                drawAnimBombLeft(player->koor.X, player->koor.Y, anim);
             }
             break;
     default :
@@ -267,102 +217,30 @@ void drawPlayerMovement(int arr[BARIS][KOLOM], sprite* player, blockSprite block
             int urutan = 0;
             if(isClimbing(arr, player->pm.baris, player->pm.kolom)){
                 urutan = player->urutanAnimasi;
-                playerClimbLadder(((*player).koor.X), (((*player).koor.Y)),((*player).koor.X) + MATRIX_ELEMENT_SIZE, ((*player).koor.Y) + MATRIX_ELEMENT_SIZE, &urutan);
+                drawAnimClimbLadder(player->koor.X, player->koor.Y, &urutan , anim);
             }else if(isSliding(arr, player->pm.baris, player->pm.kolom)){
                 urutan = player->urutanAnimasi;
                 if(player->urutanAnimasi > 1){
-                    playerClimbRopeLeft(((*player).koor.X), (((*player).koor.Y)),((*player).koor.X) + MATRIX_ELEMENT_SIZE, ((*player).koor.Y) + MATRIX_ELEMENT_SIZE, &urutan);
+                    drawAnimClimbRopeLeft(player->koor.X, player->koor.Y, &urutan , anim);
                 }else{
-                    playerClimbRopeRight(((*player).koor.X), (((*player).koor.Y)),((*player).koor.X) + MATRIX_ELEMENT_SIZE, ((*player).koor.Y) + MATRIX_ELEMENT_SIZE, &urutan);
+                    drawAnimClimbRopeRight(player->koor.X, player->koor.Y, &urutan , anim);
                 }
             }else{
                 if(player->urutanAnimasi > 7){
-                    playerRunningLeft(((*player).koor.X), (((*player).koor.Y)),((*player).koor.X) + MATRIX_ELEMENT_SIZE, ((*player).koor.Y) + MATRIX_ELEMENT_SIZE, &urutan);
+                    drawAnimRunningLeft(player->koor.X, player->koor.Y, &urutan , anim);
                 }else{
-                    playerRunningRight(((*player).koor.X), (((*player).koor.Y)),((*player).koor.X) + MATRIX_ELEMENT_SIZE, ((*player).koor.Y) + MATRIX_ELEMENT_SIZE, &urutan);
+                    drawAnimRunningRight(player->koor.X, player->koor.Y, &urutan , anim);
                 }
             }
 
     }
 }
 
-void drawBotMovement(int arr[BARIS][KOLOM], sprite* player, blockSprite block){
-    switch((*player).movement){
-    case KEY_LEFT :
-    case 'A' :
-            //gambar ulang map
-            drawRight(arr, (*player).pm.kolom-1,(*player).pm.baris,4, block);
-            drawRight(arr, (*player).pm.kolom-1,(*player).pm.baris-1,3, block);
-            drawRight(arr, (*player).pm.kolom-1,(*player).pm.baris+1,3, block);
-
-            //gambar ulang bot
-            if(isSliding(arr, (*player).pm.baris, (*player).pm.kolom)){
-                botRunningLeft((*player).koor.X, (*player).koor.Y,(*player).koor.X+MATRIX_ELEMENT_SIZE,(*player).koor.Y+MATRIX_ELEMENT_SIZE, &((*player).urutanAnimasi));
-            }else{
-                botRunningLeft((*player).koor.X, (*player).koor.Y, (*player).koor.X+MATRIX_ELEMENT_SIZE, (*player).koor.Y+MATRIX_ELEMENT_SIZE, &((*player).urutanAnimasi));
-            }
-            break;
-    case KEY_RIGHT :
-    case 'D' :
-            drawLeft(arr, (*player).pm.kolom+1, (*player).pm.baris,4, block);
-            drawLeft(arr, (*player).pm.kolom+1, (*player).pm.baris-1,3, block);
-            drawLeft(arr, (*player).pm.kolom+1, (*player).pm.baris+1,3, block);
-            if(isSliding(arr, (*player).pm.baris, (*player).pm.kolom)){
-                botRunningRight((*player).koor.X, (*player).koor.Y, (*player).koor.X+MATRIX_ELEMENT_SIZE, (*player).koor.Y+MATRIX_ELEMENT_SIZE, &((*player).urutanAnimasi));
-            }else{
-                botRunningRight((*player).koor.X, (*player).koor.Y, (*player).koor.X+MATRIX_ELEMENT_SIZE, (*player).koor.Y+MATRIX_ELEMENT_SIZE, &((*player).urutanAnimasi));
-            }
-            break;
-    case KEY_UP :
-    case 'W' :
-            drawDown(arr, (*player).pm.kolom, (*player).pm.baris-1,4, block);
-            drawDown(arr, (*player).pm.kolom+1, (*player).pm.baris-1,3, block);
-            drawDown(arr, (*player).pm.kolom-1, (*player).pm.baris-1,3, block);
-            botRunningLeft((*player).koor.X, (*player).koor.Y, (*player).koor.X+MATRIX_ELEMENT_SIZE, (*player).koor.Y+MATRIX_ELEMENT_SIZE, &((*player).urutanAnimasi));
-            break;
-    case FALL:
-    case KEY_DOWN :
-    case 'S' :
-            drawUp(arr, (*player).pm.kolom, (*player).pm.baris+1,4, block);
-            drawUp(arr, (*player).pm.kolom+1, (*player).pm.baris+1,3, block);
-            drawUp(arr, (*player).pm.kolom-1, (*player).pm.baris+1,3, block);
-            if(isClimbing(arr, (*player).pm.baris, (*player).pm.kolom)){
-                botRunningLeft((*player).koor.X, (*player).koor.Y, (*player).koor.X+MATRIX_ELEMENT_SIZE, (*player).koor.Y+MATRIX_ELEMENT_SIZE, &((*player).urutanAnimasi));
-            }else{
-                botRunningRight((*player).koor.X, (*player).koor.Y, (*player).koor.X+MATRIX_ELEMENT_SIZE, (*player).koor.Y+MATRIX_ELEMENT_SIZE, &((*player).urutanAnimasi));
-            }
-            break;
-    default :
-            drawUp(arr, (*player).pm.kolom, (*player).pm.baris+1,3, block);
-            drawUp(arr, (*player).pm.kolom+1, (*player).pm.baris+1,3, block);
-            drawUp(arr, (*player).pm.kolom-1, (*player).pm.baris+1,3, block);
-            int urutan = 0;
-            if(isClimbing(arr, player->pm.baris, player->pm.kolom)){
-                urutan = player->urutanAnimasi;
-                playerClimbLadder(((*player).koor.X), (((*player).koor.Y)),((*player).koor.X) + MATRIX_ELEMENT_SIZE, ((*player).koor.Y) + MATRIX_ELEMENT_SIZE, &urutan);
-            }else if(isSliding(arr, player->pm.baris, player->pm.kolom)){
-                urutan = player->urutanAnimasi;
-                if(player->urutanAnimasi > 1){
-                    playerClimbRopeLeft(((*player).koor.X), (((*player).koor.Y)),((*player).koor.X) + MATRIX_ELEMENT_SIZE, ((*player).koor.Y) + MATRIX_ELEMENT_SIZE, &urutan);
-                }else{
-                    playerClimbRopeRight(((*player).koor.X), (((*player).koor.Y)),((*player).koor.X) + MATRIX_ELEMENT_SIZE, ((*player).koor.Y) + MATRIX_ELEMENT_SIZE, &urutan);
-                }
-            }else{
-                if(player->urutanAnimasi > 7){
-                    botRunningLeft(((*player).koor.X), (((*player).koor.Y)),((*player).koor.X) + MATRIX_ELEMENT_SIZE, ((*player).koor.Y) + MATRIX_ELEMENT_SIZE, &urutan);
-                }else{
-                    botRunningRight(((*player).koor.X), (((*player).koor.Y)),((*player).koor.X) + MATRIX_ELEMENT_SIZE, ((*player).koor.Y) + MATRIX_ELEMENT_SIZE, &urutan);
-                }
-            }
-    }
-
+void drawBotArray(int arr[BARIS][KOLOM], spriteInfo bot[], int nBot, blockSprite block, spriteAnim anim){
+    for(int i = 0; i < nBot; i++) drawMovement(arr, &bot[i], block, anim);
 }
 
-void drawBotArray(int arr[BARIS][KOLOM], sprite bot[], int nBot, blockSprite block){
-    for(int i = 0; i < nBot; i++) drawBotMovement(arr, &bot[i], block);
-}
-
-void drawStage(int arr[BARIS][KOLOM], koordinat player, sprite bot[], int nBot, blockSprite block){
+void drawStage(int arr[BARIS][KOLOM], koordinat player, spriteInfo bot[], int nBot, blockSprite block, spriteAnim animBot, spriteAnim animPlayer){
     int urutan = 0;
     for(int i=0; i<BARIS; i++){
         for(int j=0; j<KOLOM; j++){
@@ -384,10 +262,10 @@ void drawStage(int arr[BARIS][KOLOM], koordinat player, sprite bot[], int nBot, 
     }
 
     //penggambaran bot
-    drawBotArray(arr, bot, nBot, block);
+    drawBotArray(arr, bot, nBot, block, animBot);
 
     //penggambaran player
-    playerRunningRight(player.X, player.Y, (player.X) + MATRIX_ELEMENT_SIZE, (player.Y) + MATRIX_ELEMENT_SIZE, &urutan);
+    drawAnimRunningRight(player.X, player.Y, &urutan, animPlayer);
 }
 
 
@@ -706,7 +584,7 @@ void warnateks(int warna) //modul yang berfungsi untuk memberi warna ke karakter
 	SetConsoleTextAttribute(hConsole, warna);
 }
 
-void printStats(infoLevel level, sprite player, clock_t Start, clock_t End, sprite bot[], arrayQueue queueLubang, tUser user){
+void printStats(infoLevel level, spriteInfo player, clock_t Start, clock_t End, spriteInfo bot[], arrayQueue queueLubang, tUser user){
     system("cls");
     printf("--- LEVEL ---\n");
     printf("Level : %d\n", level.lv);
@@ -764,12 +642,12 @@ void printStats(infoLevel level, sprite player, clock_t Start, clock_t End, spri
 
 }
 
-void* loadSprite(const char* dir, int sizeX, int sizeY){
+void* loadSprite(const char* dir, int width, int height){
     cleardevice();
-    readimagefile(dir, 0, 0, sizeX-1, sizeY-1);
-    void* bitmap = (void*) malloc(imagesize(0,0, sizeX-1, sizeY-1));
+    readimagefile(dir, 0, 0, width-1, height-1);
+    void* bitmap = (void*) malloc(imagesize(0,0, width-1, height-1));
 
-    getimage(0,0, sizeX-1, sizeY-1, bitmap);
+    getimage(0,0, width-1, height-1, bitmap);
     return bitmap;
 }
 
@@ -784,7 +662,7 @@ blockSprite loadBlockSprites(){
     return temp;
 }
 
-void eraseDrawing(sprite* player){
+void eraseDrawing(spriteInfo* player){
     switch((*player).movement){
     case KEY_LEFT :
     case 'A' :
@@ -862,7 +740,7 @@ void eraseDrawing(sprite* player){
     }
 }
 
-void eraseBotArray(sprite bot[], int n){
+void eraseBotArray(spriteInfo bot[], int n){
     for(int i = 0; i < n; i++) eraseDrawing(&bot[i]);
 }
 
@@ -885,4 +763,87 @@ void sortFileHighScore(){
             }
         }
     }
+}
+
+
+spriteAnim loadSpriteAnim(char c){ // c == 'P' untuk load animasi player, 'B' untuk load animasi bot
+    spriteAnim temp;
+    char str[255];
+    if(c == 'P'){
+        // load running animation
+        for(int i = 0; i < 16; i++){
+            switch(i){
+                case 0 : strcpy(str, "images/player/Player_Right0.gif");break;
+                case 1 : strcpy(str, "images/player/Player_Right1.gif");break;
+                case 2 : strcpy(str, "images/player/Player_Right2.gif");break;
+                case 3 : strcpy(str, "images/player/Player_Right3.gif");break;
+                case 4 : strcpy(str, "images/player/Player_Right4.gif");break;
+                case 5 : strcpy(str, "images/player/Player_Right5.gif");break;
+                case 6 : strcpy(str, "images/player/Player_Right6.gif");break;
+                case 7 : strcpy(str, "images/player/Player_Right7.gif");break;
+                case 8 : strcpy(str, "images/player/Player_Left0.gif");break;
+                case 9 : strcpy(str, "images/player/Player_Left1.gif");break;
+                case 10 : strcpy(str, "images/player/Player_Left2.gif");break;
+                case 11 : strcpy(str, "images/player/Player_Left3.gif");break;
+                case 12 : strcpy(str, "images/player/Player_Left4.gif");break;
+                case 13 : strcpy(str, "images/player/Player_Left5.gif");break;
+                case 14 : strcpy(str, "images/player/Player_Left6.gif");break;
+                case 15 : strcpy(str, "images/player/Player_Left7.gif");break;
+            }
+            temp.running[i] = loadSprite(str, MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
+        }
+
+        // load climbLadder animation
+        temp.climbingLadder[0] = loadSprite("images/player/Player_ClimbLadder0.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
+        temp.climbingLadder[1] = loadSprite("images/player/Player_ClimbLadder1.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
+
+        // load climb Rope animation
+        temp.climbingRope[0] = loadSprite("images/player/Player_ClimbRope_Right0.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
+        temp.climbingRope[1] = loadSprite("images/player/Player_ClimbRope_Right1.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
+        temp.climbingRope[2] = loadSprite("images/player/Player_ClimbRope_Left0.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
+        temp.climbingRope[3] = loadSprite("images/player/Player_ClimbRope_Left1.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
+
+        // load bombing animation
+        temp.bombing[0] = loadSprite("images/player/Player_ThrowBomb_Right0.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
+        temp.bombing[1] = loadSprite("images/player/Player_ThrowBomb_Left0.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
+
+    }else if(c == 'B'){ // Load animasi bot
+        // load running animation
+        for(int i = 0; i < 16; i++){
+            switch(i){
+                case 0 : strcpy(str, "images/bot/Bot_Right0.gif");break;
+                case 1 : strcpy(str, "images/bot/Bot_Right1.gif");break;
+                case 2 : strcpy(str, "images/bot/Bot_Right2.gif");break;
+                case 3 : strcpy(str, "images/bot/Bot_Right3.gif");break;
+                case 4 : strcpy(str, "images/bot/Bot_Right4.gif");break;
+                case 5 : strcpy(str, "images/bot/Bot_Right5.gif");break;
+                case 6 : strcpy(str, "images/bot/Bot_Right6.gif");break;
+                case 7 : strcpy(str, "images/bot/Bot_Right7.gif");break;
+                case 8 : strcpy(str, "images/bot/Bot_Left0.gif");break;
+                case 9 : strcpy(str, "images/bot/Bot_Left1.gif");break;
+                case 10 : strcpy(str, "images/bot/Bot_Left2.gif");break;
+                case 11 : strcpy(str, "images/bot/Bot_Left3.gif");break;
+                case 12 : strcpy(str, "images/bot/Bot_Left4.gif");break;
+                case 13 : strcpy(str, "images/bot/Bot_Left5.gif");break;
+                case 14 : strcpy(str, "images/bot/Bot_Left6.gif");break;
+                case 15 : strcpy(str, "images/bot/Bot_Left7.gif");break;
+            }
+            temp.running[i] = loadSprite(str, MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
+        }
+
+        // load climbLadder animation
+        temp.climbingLadder[0] = loadSprite("images/player/Player_ClimbLadder0.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
+        temp.climbingLadder[1] = loadSprite("images/player/Player_ClimbLadder1.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
+
+        // load climb Rope animation
+        temp.climbingRope[0] = loadSprite("images/player/Player_ClimbRope_Right0.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
+        temp.climbingRope[1] = loadSprite("images/player/Player_ClimbRope_Right1.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
+        temp.climbingRope[2] = loadSprite("images/player/Player_ClimbRope_Left0.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
+        temp.climbingRope[3] = loadSprite("images/player/Player_ClimbRope_Left1.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
+
+        // load bombing animation
+        temp.bombing[0] = loadSprite("images/player/Player_ThrowBomb_Right0.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
+        temp.bombing[1] = loadSprite("images/player/Player_ThrowBomb_Left0.gif",MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
+    }
+    return temp;
 }

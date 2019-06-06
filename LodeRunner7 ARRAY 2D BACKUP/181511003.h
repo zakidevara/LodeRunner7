@@ -13,7 +13,7 @@ bool isSliding(int arr[BARIS][KOLOM], int baris, int kolom);
 
 bool isFalling(int arr[BARIS][KOLOM], int baris, int kolom);
 
-void playerMovement(int arr[BARIS][KOLOM], arrayQueue* P, sprite* player, blockSprite block);
+void playerMovement(int arr[BARIS][KOLOM], arrayQueue* P, spriteInfo* player);
 //memindahkan posisi player dalam matriks sesuai movement yang dipilih oleh user
 #endif // 181511003_H
 

@@ -5,17 +5,17 @@ void drawDown(int arr[BARIS][KOLOM], int kolom, int baris, int n, blockSprite bl
     for(int i=0;i<n;i++){
         //penggambaran
         if(arr[baris + i][kolom] == 1){
-            putimage(MATRIX_ELEMENT_SIZE*kolom, MATRIX_ELEMENT_SIZE*(baris+i), block.brick, COPY_PUT);
+            putimage(MATRIX_ELEMENT_SIZE*kolom, MATRIX_ELEMENT_SIZE*(baris+i), block.brick, OR_PUT);
         }else if(arr[baris + i][kolom] == 2){
-            putimage(MATRIX_ELEMENT_SIZE*kolom, MATRIX_ELEMENT_SIZE*(baris+i), block.ladder, COPY_PUT);
+            putimage(MATRIX_ELEMENT_SIZE*kolom, MATRIX_ELEMENT_SIZE*(baris+i), block.ladder, OR_PUT);
         }else if(arr[baris + i][kolom] == 3){
-            putimage(MATRIX_ELEMENT_SIZE*kolom, MATRIX_ELEMENT_SIZE*(baris+i), block.rope, COPY_PUT);
+            putimage(MATRIX_ELEMENT_SIZE*kolom, MATRIX_ELEMENT_SIZE*(baris+i), block.rope, OR_PUT);
         }else if(arr[baris + i][kolom] == 4){
-            putimage(MATRIX_ELEMENT_SIZE*kolom, MATRIX_ELEMENT_SIZE*(baris+i), block.coin, COPY_PUT);
+            putimage(MATRIX_ELEMENT_SIZE*kolom, MATRIX_ELEMENT_SIZE*(baris+i), block.coin, OR_PUT);
         }else if(arr[baris + i][kolom] == 5){
-            putimage(MATRIX_ELEMENT_SIZE*kolom, MATRIX_ELEMENT_SIZE*(baris+i), block.exit, COPY_PUT);
+            putimage(MATRIX_ELEMENT_SIZE*kolom, MATRIX_ELEMENT_SIZE*(baris+i), block.exit, OR_PUT);
         }else if(arr[baris + i][kolom] == 6){
-            putimage(MATRIX_ELEMENT_SIZE*kolom, MATRIX_ELEMENT_SIZE*(baris+i), block.bedrock, COPY_PUT);
+            putimage(MATRIX_ELEMENT_SIZE*kolom, MATRIX_ELEMENT_SIZE*(baris+i), block.bedrock, OR_PUT);
         }
     }
 }
@@ -24,17 +24,17 @@ void drawUp(int arr[BARIS][KOLOM], int kolom, int baris, int n, blockSprite bloc
     for(int i=0;i<n;i++){
         //penggambaran
         if(arr[baris - i][kolom] == 1){
-            putimage(MATRIX_ELEMENT_SIZE*kolom, MATRIX_ELEMENT_SIZE*(baris-i), block.brick, COPY_PUT);
+            putimage(MATRIX_ELEMENT_SIZE*kolom, MATRIX_ELEMENT_SIZE*(baris-i), block.brick, OR_PUT);
         }else if(arr[baris - i][kolom] == 2){
-            putimage(MATRIX_ELEMENT_SIZE*kolom, MATRIX_ELEMENT_SIZE*(baris-i), block.ladder, COPY_PUT);
+            putimage(MATRIX_ELEMENT_SIZE*kolom, MATRIX_ELEMENT_SIZE*(baris-i), block.ladder, OR_PUT);
         }else if(arr[baris - i][kolom] == 3){
-            putimage(MATRIX_ELEMENT_SIZE*kolom, MATRIX_ELEMENT_SIZE*(baris-i), block.rope, COPY_PUT);
+            putimage(MATRIX_ELEMENT_SIZE*kolom, MATRIX_ELEMENT_SIZE*(baris-i), block.rope, OR_PUT);
         }else if(arr[baris - i][kolom] == 4){
-            putimage(MATRIX_ELEMENT_SIZE*kolom, MATRIX_ELEMENT_SIZE*(baris-i), block.coin, COPY_PUT);
+            putimage(MATRIX_ELEMENT_SIZE*kolom, MATRIX_ELEMENT_SIZE*(baris-i), block.coin, OR_PUT);
         }else if(arr[baris - i][kolom] == 5){
-            putimage(MATRIX_ELEMENT_SIZE*kolom, MATRIX_ELEMENT_SIZE*(baris-i), block.exit, COPY_PUT);
+            putimage(MATRIX_ELEMENT_SIZE*kolom, MATRIX_ELEMENT_SIZE*(baris-i), block.exit, OR_PUT);
         }else if(arr[baris - i][kolom] == 6){
-            putimage(MATRIX_ELEMENT_SIZE*kolom, MATRIX_ELEMENT_SIZE*(baris-i), block.bedrock, COPY_PUT);
+            putimage(MATRIX_ELEMENT_SIZE*kolom, MATRIX_ELEMENT_SIZE*(baris-i), block.bedrock, OR_PUT);
         }
     }
 }
@@ -43,17 +43,17 @@ void drawRight(int arr[BARIS][KOLOM], int kolom, int baris, int n, blockSprite b
     for(int i=0;i<n;i++){
         //penggambaran
         if(arr[baris][kolom+i] == 1){
-            putimage(MATRIX_ELEMENT_SIZE*(kolom+i), MATRIX_ELEMENT_SIZE*baris, block.brick, COPY_PUT);
+            putimage(MATRIX_ELEMENT_SIZE*(kolom+i), MATRIX_ELEMENT_SIZE*baris, block.brick, OR_PUT);
         }else if(arr[baris][kolom+i] == 2){
-            putimage(MATRIX_ELEMENT_SIZE*(kolom+i), MATRIX_ELEMENT_SIZE*baris, block.ladder, COPY_PUT);
+            putimage(MATRIX_ELEMENT_SIZE*(kolom+i), MATRIX_ELEMENT_SIZE*baris, block.ladder, OR_PUT);
         }else if(arr[baris][kolom+i] == 3){
-            putimage(MATRIX_ELEMENT_SIZE*(kolom+i), MATRIX_ELEMENT_SIZE*baris, block.rope, COPY_PUT);
+            putimage(MATRIX_ELEMENT_SIZE*(kolom+i), MATRIX_ELEMENT_SIZE*baris, block.rope, OR_PUT);
         }else if(arr[baris][kolom+i] == 4){
-            putimage(MATRIX_ELEMENT_SIZE*(kolom+i), MATRIX_ELEMENT_SIZE*baris, block.coin, COPY_PUT);
+            putimage(MATRIX_ELEMENT_SIZE*(kolom+i), MATRIX_ELEMENT_SIZE*baris, block.coin, OR_PUT);
         }else if(arr[baris][kolom+i] == 5){
-            putimage(MATRIX_ELEMENT_SIZE*(kolom+i), MATRIX_ELEMENT_SIZE*baris, block.exit, COPY_PUT);
+            putimage(MATRIX_ELEMENT_SIZE*(kolom+i), MATRIX_ELEMENT_SIZE*baris, block.exit, OR_PUT);
         }else if(arr[baris][kolom+i] == 6){
-            putimage(MATRIX_ELEMENT_SIZE*(kolom+i), MATRIX_ELEMENT_SIZE*baris, block.bedrock, COPY_PUT);
+            putimage(MATRIX_ELEMENT_SIZE*(kolom+i), MATRIX_ELEMENT_SIZE*baris, block.bedrock, OR_PUT);
         }
     }
 }
@@ -62,17 +62,17 @@ void drawLeft(int arr[BARIS][KOLOM], int kolom, int baris, int n, blockSprite bl
     for(int i=0;i<n;i++){
         //penggambaran
         if(arr[baris][kolom-i] == 1){
-            putimage(MATRIX_ELEMENT_SIZE*(kolom-i), MATRIX_ELEMENT_SIZE*baris, block.brick, COPY_PUT);
+            putimage(MATRIX_ELEMENT_SIZE*(kolom-i), MATRIX_ELEMENT_SIZE*baris, block.brick, OR_PUT);
         }else if(arr[baris][kolom-i] == 2){
-            putimage(MATRIX_ELEMENT_SIZE*(kolom-i), MATRIX_ELEMENT_SIZE*baris, block.ladder, COPY_PUT);
+            putimage(MATRIX_ELEMENT_SIZE*(kolom-i), MATRIX_ELEMENT_SIZE*baris, block.ladder, OR_PUT);
         }else if(arr[baris][kolom-i] == 3){
-            putimage(MATRIX_ELEMENT_SIZE*(kolom-i), MATRIX_ELEMENT_SIZE*baris, block.rope, COPY_PUT);
+            putimage(MATRIX_ELEMENT_SIZE*(kolom-i), MATRIX_ELEMENT_SIZE*baris, block.rope, OR_PUT);
         }else if(arr[baris][kolom-i] == 4){
-            putimage(MATRIX_ELEMENT_SIZE*(kolom-i), MATRIX_ELEMENT_SIZE*baris, block.coin, COPY_PUT);
+            putimage(MATRIX_ELEMENT_SIZE*(kolom-i), MATRIX_ELEMENT_SIZE*baris, block.coin, OR_PUT);
         }else if(arr[baris][kolom-i] == 5){
-            putimage(MATRIX_ELEMENT_SIZE*(kolom-i), MATRIX_ELEMENT_SIZE*baris, block.exit, COPY_PUT);
+            putimage(MATRIX_ELEMENT_SIZE*(kolom-i), MATRIX_ELEMENT_SIZE*baris, block.exit, OR_PUT);
         }else if(arr[baris][kolom-i] == 6){
-            putimage(MATRIX_ELEMENT_SIZE*(kolom-i), MATRIX_ELEMENT_SIZE*baris, block.bedrock, COPY_PUT);
+            putimage(MATRIX_ELEMENT_SIZE*(kolom-i), MATRIX_ELEMENT_SIZE*baris, block.bedrock, OR_PUT);
         }
     }
 

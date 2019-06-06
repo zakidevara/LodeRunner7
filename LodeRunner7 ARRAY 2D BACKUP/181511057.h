@@ -12,35 +12,27 @@
 #include "181511044.h"
 
 
-/*---------------------------- Load/Animasi Sprite Player ----------------------------*/
-void playerRunningRight(int x1,int y1,int x2, int y2, int* urutan);
+/*---------------------------- Load/Animasi Sprite ----------------------------*/
+void drawAnimRunningRight(int x,int y, int* urutan, spriteAnim anim);
 // Animasi karakter utama berlari ke kanan
 
-void playerRunningLeft(int x1,int y1,int x2, int y2, int* urutan);
+void drawAnimRunningLeft(int x,int y, int* urutan, spriteAnim anim);
 // Animasi karakter utama berlari ke kiri
 
-void playerClimbRopeRight(int x1,int y1,int x2, int y2, int* urutan);
+void drawAnimClimbRopeRight(int x,int y, int* urutan, spriteAnim anim);
 // Animasi karakter utama memanjat tali ke kanan
 
-void playerClimbRopeLeft(int x1,int y1,int x2, int y2, int* urutan);
+void drawAnimClimbRopeLeft(int x,int y, int* urutan, spriteAnim anim);
 // Animasi karakter utama memanjat tali ke kiri
 
-void playerClimbLadder(int x1,int y1,int x2, int y2, int* urutan);
+void drawAnimClimbLadder(int x,int y, int* urutan, spriteAnim anim);
 // Animasi karakter utama saat memanjat tangga
 
-void PlayerBombRight(int x1,int y1,int x2, int y2);
+void drawAnimBombRight(int x,int y, spriteAnim anim);
 // Animasi karakter utama saat melempar bom ke arah kanan
 
-void PlayerBombLeft(int x1,int y1,int x2, int y2);
+void drawAnimBombLeft(int x,int y, spriteAnim anim);
 // Animasi karakter utama saat melempar bom ke arah kiri
-
-
-/*---------------------------- Load/Animasi Sprite Bot ----------------------------*/
-void botRunningRight(int x1,int y1,int x2, int y2, int* urutan);
-// Animasi karakter utama berlari ke kanan
-
-void botRunningLeft(int x1,int y1,int x2, int y2, int* urutan);
-// Animasi karakter utama berlari ke kiri
 
 
 /*---------------------------- Animasi Bata ----------------------------*/
@@ -52,16 +44,14 @@ void returnBata(int x1,int y1,int x2, int y2, int* urutan);
 
 
 /*---------------------------- Operasi Penggambaran ----------------------------*/
-void drawStage(int arr[BARIS][KOLOM], koordinat player, sprite bot[], int nBot, blockSprite block);
+void drawStage(int arr[BARIS][KOLOM], koordinat player, spriteInfo bot[], int nBot, blockSprite block, spriteAnim animBot, spriteAnim animPlayer);
 // Menggambar kondisi awal suatu level
 
-void drawPlayerMovement(int arr[BARIS][KOLOM], sprite* player, blockSprite block);
+void drawMovement(int arr[BARIS][KOLOM], spriteInfo* player, blockSprite block, spriteAnim anim);
 // Menggambar pergerakan karakter utama
 
-void drawBotMovement(int arr[BARIS][KOLOM], sprite* player, blockSprite block);
-// Menggambar pergerakan bot
 
-void drawBotArray(int arr[BARIS][KOLOM], sprite bot[], int nBot, blockSprite block);
+void drawBotArray(int arr[BARIS][KOLOM], spriteInfo bot[], int nBot, blockSprite block, spriteAnim anim);
 // Menggambar pergerakan semua bot yang ada dalam level
 
 void loading();
@@ -135,13 +125,15 @@ void inputNama(char inputbuf[], int nchars);
 // Input string dalam graphics.h
 
 void warnateks(int warna);
-void printStats(infoLevel level, sprite player, clock_t Start, clock_t End, sprite bot[], arrayQueue queueLubang, tUser user);
+void printStats(infoLevel level, spriteInfo player, clock_t Start, clock_t End, spriteInfo bot[], arrayQueue queueLubang, tUser user);
 
-void* loadSprite(const char* dir, int sizeX, int sizeY);
+void* loadSprite(const char* dir, int width, int height);
 blockSprite loadBlockSprites();
 
-void eraseDrawing(sprite* player);
-void eraseBotArray(sprite bot[], int n);
+void eraseDrawing(spriteInfo* player);
+void eraseBotArray(spriteInfo bot[], int n);
 
 void sortFileHighScore();
+spriteAnim loadSpriteAnim(char c);
+
 #endif
