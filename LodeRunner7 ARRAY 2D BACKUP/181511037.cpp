@@ -1,77 +1,77 @@
 #include "181511037.h"
 #include "181511057.h"
 
-void drawDown(int arr[BARIS][KOLOM], int kolom, int baris, int n, blockSprite block){ //menggambar matriks sebanyak 2 block ke bawah.
+void drawDown(tElmtGrid arr[BARIS][KOLOM], int kolom, int baris, int n, blockSprite block){ //menggambar matriks sebanyak 2 block ke bawah.
     for(int i=0;i<n;i++){
         //penggambaran
-        if(arr[baris + i][kolom] == 1){
+        if(arr[baris + i][kolom].info == 1){
             putimage(MATRIX_ELEMENT_SIZE*kolom, MATRIX_ELEMENT_SIZE*(baris+i), block.brick, OR_PUT);
-        }else if(arr[baris + i][kolom] == 2){
+        }else if(arr[baris + i][kolom].info == 2){
             putimage(MATRIX_ELEMENT_SIZE*kolom, MATRIX_ELEMENT_SIZE*(baris+i), block.ladder, OR_PUT);
-        }else if(arr[baris + i][kolom] == 3){
+        }else if(arr[baris + i][kolom].info == 3){
             putimage(MATRIX_ELEMENT_SIZE*kolom, MATRIX_ELEMENT_SIZE*(baris+i), block.rope, OR_PUT);
-        }else if(arr[baris + i][kolom] == 4){
+        }else if(arr[baris + i][kolom].info == 4){
             putimage(MATRIX_ELEMENT_SIZE*kolom, MATRIX_ELEMENT_SIZE*(baris+i), block.coin, OR_PUT);
-        }else if(arr[baris + i][kolom] == 5){
+        }else if(arr[baris + i][kolom].info == 5){
             putimage(MATRIX_ELEMENT_SIZE*kolom, MATRIX_ELEMENT_SIZE*(baris+i), block.exit, OR_PUT);
-        }else if(arr[baris + i][kolom] == 6){
+        }else if(arr[baris + i][kolom].info == 6){
             putimage(MATRIX_ELEMENT_SIZE*kolom, MATRIX_ELEMENT_SIZE*(baris+i), block.bedrock, OR_PUT);
         }
     }
 }
 
-void drawUp(int arr[BARIS][KOLOM], int kolom, int baris, int n, blockSprite block){ //menggambar matriks sebanyak 2 block ke bawah.
+void drawUp(tElmtGrid arr[BARIS][KOLOM], int kolom, int baris, int n, blockSprite block){ //menggambar matriks sebanyak 2 block ke bawah.
     for(int i=0;i<n;i++){
         //penggambaran
-        if(arr[baris - i][kolom] == 1){
+        if(arr[baris - i][kolom].info == 1){
             putimage(MATRIX_ELEMENT_SIZE*kolom, MATRIX_ELEMENT_SIZE*(baris-i), block.brick, OR_PUT);
-        }else if(arr[baris - i][kolom] == 2){
+        }else if(arr[baris - i][kolom].info == 2){
             putimage(MATRIX_ELEMENT_SIZE*kolom, MATRIX_ELEMENT_SIZE*(baris-i), block.ladder, OR_PUT);
-        }else if(arr[baris - i][kolom] == 3){
+        }else if(arr[baris - i][kolom].info == 3){
             putimage(MATRIX_ELEMENT_SIZE*kolom, MATRIX_ELEMENT_SIZE*(baris-i), block.rope, OR_PUT);
-        }else if(arr[baris - i][kolom] == 4){
+        }else if(arr[baris - i][kolom].info == 4){
             putimage(MATRIX_ELEMENT_SIZE*kolom, MATRIX_ELEMENT_SIZE*(baris-i), block.coin, OR_PUT);
-        }else if(arr[baris - i][kolom] == 5){
+        }else if(arr[baris - i][kolom].info == 5){
             putimage(MATRIX_ELEMENT_SIZE*kolom, MATRIX_ELEMENT_SIZE*(baris-i), block.exit, OR_PUT);
-        }else if(arr[baris - i][kolom] == 6){
+        }else if(arr[baris - i][kolom].info == 6){
             putimage(MATRIX_ELEMENT_SIZE*kolom, MATRIX_ELEMENT_SIZE*(baris-i), block.bedrock, OR_PUT);
         }
     }
 }
 
-void drawRight(int arr[BARIS][KOLOM], int kolom, int baris, int n, blockSprite block){ //menggambar matriks sebanyak 2 block ke bawah.
+void drawRight(tElmtGrid arr[BARIS][KOLOM], int kolom, int baris, int n, blockSprite block){ //menggambar matriks sebanyak 2 block ke bawah.
     for(int i=0;i<n;i++){
         //penggambaran
-        if(arr[baris][kolom+i] == 1){
+        if(arr[baris][kolom+i].info == 1){
             putimage(MATRIX_ELEMENT_SIZE*(kolom+i), MATRIX_ELEMENT_SIZE*baris, block.brick, OR_PUT);
-        }else if(arr[baris][kolom+i] == 2){
+        }else if(arr[baris][kolom+i].info == 2){
             putimage(MATRIX_ELEMENT_SIZE*(kolom+i), MATRIX_ELEMENT_SIZE*baris, block.ladder, OR_PUT);
-        }else if(arr[baris][kolom+i] == 3){
+        }else if(arr[baris][kolom+i].info == 3){
             putimage(MATRIX_ELEMENT_SIZE*(kolom+i), MATRIX_ELEMENT_SIZE*baris, block.rope, OR_PUT);
-        }else if(arr[baris][kolom+i] == 4){
+        }else if(arr[baris][kolom+i].info == 4){
             putimage(MATRIX_ELEMENT_SIZE*(kolom+i), MATRIX_ELEMENT_SIZE*baris, block.coin, OR_PUT);
-        }else if(arr[baris][kolom+i] == 5){
+        }else if(arr[baris][kolom+i].info == 5){
             putimage(MATRIX_ELEMENT_SIZE*(kolom+i), MATRIX_ELEMENT_SIZE*baris, block.exit, OR_PUT);
-        }else if(arr[baris][kolom+i] == 6){
+        }else if(arr[baris][kolom+i].info == 6){
             putimage(MATRIX_ELEMENT_SIZE*(kolom+i), MATRIX_ELEMENT_SIZE*baris, block.bedrock, OR_PUT);
         }
     }
 }
 
-void drawLeft(int arr[BARIS][KOLOM], int kolom, int baris, int n, blockSprite block){ //menggambar matriks sebanyak 2 block ke bawah.
+void drawLeft(tElmtGrid arr[BARIS][KOLOM], int kolom, int baris, int n, blockSprite block){ //menggambar matriks sebanyak 2 block ke bawah.
     for(int i=0;i<n;i++){
         //penggambaran
-        if(arr[baris][kolom-i] == 1){
+        if(arr[baris][kolom-i].info == 1){
             putimage(MATRIX_ELEMENT_SIZE*(kolom-i), MATRIX_ELEMENT_SIZE*baris, block.brick, OR_PUT);
-        }else if(arr[baris][kolom-i] == 2){
+        }else if(arr[baris][kolom-i].info == 2){
             putimage(MATRIX_ELEMENT_SIZE*(kolom-i), MATRIX_ELEMENT_SIZE*baris, block.ladder, OR_PUT);
-        }else if(arr[baris][kolom-i] == 3){
+        }else if(arr[baris][kolom-i].info == 3){
             putimage(MATRIX_ELEMENT_SIZE*(kolom-i), MATRIX_ELEMENT_SIZE*baris, block.rope, OR_PUT);
-        }else if(arr[baris][kolom-i] == 4){
+        }else if(arr[baris][kolom-i].info == 4){
             putimage(MATRIX_ELEMENT_SIZE*(kolom-i), MATRIX_ELEMENT_SIZE*baris, block.coin, OR_PUT);
-        }else if(arr[baris][kolom-i] == 5){
+        }else if(arr[baris][kolom-i].info == 5){
             putimage(MATRIX_ELEMENT_SIZE*(kolom-i), MATRIX_ELEMENT_SIZE*baris, block.exit, OR_PUT);
-        }else if(arr[baris][kolom-i] == 6){
+        }else if(arr[baris][kolom-i].info == 6){
             putimage(MATRIX_ELEMENT_SIZE*(kolom-i), MATRIX_ELEMENT_SIZE*baris, block.bedrock, OR_PUT);
         }
     }

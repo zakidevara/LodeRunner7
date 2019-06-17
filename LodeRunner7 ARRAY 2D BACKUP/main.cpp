@@ -8,7 +8,7 @@
 
 
 void keluarPintuExit(infoLevel* level, blockSprite block){
-    level->arr[level->exitPos.baris][level->exitPos.kolom] = 5;
+    level->arr[level->exitPos.baris][level->exitPos.kolom].info = 5;
 
     //gambar pintu exit di posisi exitPos di kedua page
     setviewport((level->exitPos.kolom)*MATRIX_ELEMENT_SIZE, (level->exitPos.baris)*MATRIX_ELEMENT_SIZE, (level->exitPos.kolom + 1)*MATRIX_ELEMENT_SIZE, (level->exitPos.baris + 1)*MATRIX_ELEMENT_SIZE, 1);
@@ -47,7 +47,7 @@ void permainan(){
     clock_t wktmulai,wktselesai;            // mencatat waktu mulai dan waktu selesai dalam satu stage
     double wkttotal;                        // mencatat durasi penyelesaian stage
 
-    arrayQueue queueLubang;                 // queue untuk bata yang dilubangi
+    QueueLubang qLubang;                 // queue untuk bata yang dilubangi
 
     tUser user;                             // Data user yang sedang memainkan game
 
@@ -57,6 +57,8 @@ void permainan(){
 
     spriteAnim playerAnim;
     spriteAnim botAnim;
+
+    bool Bot_Speed = false;
 
     /* ------------------------------------------------------------------------ */
 
@@ -75,10 +77,6 @@ void permainan(){
     botAnim = loadSpriteAnim('B');
 
     while(!null(headLvl)){
-        /* -------------- Inisiasi Queue Lubang -------------- */
-        queueLubang = inisiasi_queue();
-
-
         /* -------------- Assign Posisi Awal Player dan Bot -------------- */
         player.pm = headLvl->info.playerPos;
         player.koor = getKoordinat(player.pm);
@@ -87,16 +85,12 @@ void permainan(){
             bot[i].pm = headLvl->info.botPos[i];
             bot[i].koor = getKoordinat(bot[i].pm);
         }
-        /* ------------------------------------------------------------ */
-
 
         //PlaySound(TEXT("audio/101-opening.wav"), NULL, SND_ASYNC);
         /* -------------- Inisiasi Page Double Buffering & Penggambaran Kondisi Awal Level -------------- */
         setactivepage(0);
         cleardevice();
         drawStage(headLvl->info.arr, player.koor, bot, headLvl->info.jmlBot, block, botAnim, playerAnim);
-        tampil_skor(user.score);
-        tampil_level(headLvl->info.lv);
 
         setactivepage(1);
         cleardevice();
@@ -115,7 +109,7 @@ void permainan(){
         while(true){
             // Proses jika player mengambil koin
             if(lagiNgambilKoin(headLvl->info.arr, player.pm.baris, player.pm.kolom)){
-                headLvl->info.arr[player.pm.baris][player.pm.kolom] = 0;
+                headLvl->info.arr[player.pm.baris][player.pm.kolom].info = 0;
                 hitung_skor(&(user.score));
             }
 
@@ -126,10 +120,15 @@ void permainan(){
             tampil_skor(user.score);
 
             tampil_durasi_permainan(hitung_Waktu(wktmulai, clock()));
-            tampil_lives(user.lives);
+            tampil_lives(player.lives);
 
             // Baca Input User
-            if(isFalling(headLvl->info.arr, player.pm.baris, player.pm.kolom) && !isSliding(headLvl->info.arr, player.pm.baris, player.pm.kolom)){
+            if(isTrapped(headLvl->info.arr, player.pm.baris, player.pm.kolom, 'P')){
+                player.movement = NULL;
+                player.koor.X =  player.pm.kolom*MATRIX_ELEMENT_SIZE;
+                player.koor.Y =  player.pm.baris*MATRIX_ELEMENT_SIZE;
+                headLvl->info.arr[player.pm.baris][player.pm.kolom].info = 9;
+            }else if(isFalling(headLvl->info.arr, player.pm.baris, player.pm.kolom) && !isSliding(headLvl->info.arr, player.pm.baris, player.pm.kolom)){
                 //jika sedang jatuh maka player.movement dianggap bernilai 'S', atau sama dengan sedang bergerak ke bawah
                 player.movement = FALL;
             }else{
@@ -139,29 +138,43 @@ void permainan(){
             }
 
             // Memproses pergerakan yang diinput user
-            playerMovement(headLvl->info.arr, &queueLubang, &player);
+            playerMovement(headLvl->info.arr, &qLubang, &player);
 
-            //Proses pergerakan bot[0]
-            if(isFalling(headLvl->info.arr,bot[0].pm.baris, bot[0].pm.kolom) && !isSliding(headLvl->info.arr, bot[0].pm.baris, bot[0].pm.kolom)){
-                //jika sedang jatuh maka bot[0].movement dianggap bernilai 'S', atau sama dengan sedang bergerak ke bawah
-                bot[0].movement = FALL;
-            }else{
-                bot[0].movement = 'D';
+            //Proses pergerakan bot
+            if(Bot_Speed){
+                for(int i = 0; i < headLvl->info.jmlBot; i++){
+                    //generate movement bot
+
+                    if(isTrapped(headLvl->info.arr, bot[i].pm.baris, bot[i].pm.kolom, 'B')){
+                        bot[i].movement = NULL;
+                        bot[i].koor.X =  bot[i].pm.kolom*MATRIX_ELEMENT_SIZE;
+                        bot[i].koor.Y =  bot[i].pm.baris*MATRIX_ELEMENT_SIZE;
+                        headLvl->info.arr[bot[i].pm.baris][bot[i].pm.kolom].info = 9;
+                    }else if(headLvl->info.arr[bot[i].pm.baris][bot[i].pm.kolom].info == 1){
+                        bot[i].movement = KEY_UP;
+                    }else if(isFalling(headLvl->info.arr,bot[i].pm.baris, bot[i].pm.kolom) && !isSliding(headLvl->info.arr, bot[i].pm.baris, bot[i].pm.kolom)){
+                        //jika sedang jatuh maka bot[i].movement dianggap bernilai 'S', atau sama dengan sedang bergerak ke bawah
+                        bot[i].movement = FALL;
+                    }else if(!isSamePos(bot[i].pm, player.pm)){
+                        bot[i].movement = A_Star(headLvl->info.arr, bot[i].pm, player.pm, i, bot, headLvl->info.jmlBot);
+                    }
+
+                }
+                for(int i = 0; i < headLvl->info.jmlBot; i++) playerMovement(headLvl->info.arr, &qLubang, &bot[i]);
             }
-            playerMovement(headLvl->info.arr, &queueLubang, &bot[0]);
 
             // Print stats semua variabel yang ada jika statMode = true
-            if(statMode) printStats(headLvl->info, player, wktmulai, clock(), bot, queueLubang, user);
+            if(statMode) printStats(headLvl->info, player, wktmulai, clock(), bot, qLubang, user);
 
             // Pengembalian lubang yg dibom
-            if(queueLubang.Count > 0){ // apabila ada lubang di dalam map
-                isi_kembali_lubang(headLvl->info.arr, &queueLubang, clock(), block);
+            if(qLubang.Front != NULL){ // apabila ada lubang di dalam map
+                isi_kembali_lubang(headLvl->info.arr, &qLubang, clock(), block);
             }
 
             // Update posisi sprite dalam matriks sesuai koordinatnya
             player.pm = getPosisiMatriks(player.koor);
             for(int i = 0; i < headLvl->info.jmlBot; i++){
-                bot[i].pm = getPosisiMatriks(bot[i].koor);
+                bot[i].pm = getPosisiMatriksBot(bot[i].koor);
             }
 
             // Penghapusan gambar player dan bot sebelumnya
@@ -182,8 +195,10 @@ void permainan(){
             // Reset nilai player.movement
             player.movement = NULL;
 
+            Bot_Speed = !Bot_Speed;
+
             // Cek apa semua koin sudah terkumpul
-            if(!adakoin(headLvl->info.arr) && (headLvl->info.arr[headLvl->info.exitPos.baris][headLvl->info.exitPos.kolom] != 5)) keluarPintuExit(&(headLvl->info), block);
+            if(!adakoin(headLvl->info.arr) && (headLvl->info.arr[headLvl->info.exitPos.baris][headLvl->info.exitPos.kolom].info != 5)) keluarPintuExit(&(headLvl->info), block);
 
             // Cek apabila player sudah ada di pintu exit
             if(done(headLvl->info.arr, player.pm.baris, player.pm.kolom))
@@ -194,9 +209,11 @@ void permainan(){
                 tampilan_exit(wkttotal,user.score);
                 sub_head(&headLvl);
                 break;
-            }else if(ismeetbot(headLvl->info.arr, player, &(user.lives), bot, headLvl->info.jmlBot) || isinbrick(headLvl->info.arr, player.pm, &(user.lives))){
-                break;
             }
+//            else if(ismeetbot(headLvl->info.arr, player, &(user.lives), bot, headLvl->info.jmlBot) || isinbrick(headLvl->info.arr, player.pm, &(user.lives))){
+//                break;
+//            }
+
         }
 
         //PlaySound(NULL,NULL,0);

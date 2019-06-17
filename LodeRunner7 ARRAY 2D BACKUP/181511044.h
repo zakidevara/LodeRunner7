@@ -21,6 +21,6 @@ int hitung_skor_akhir(int skor, double durasi);
 
 void tampil_skor_akhir(int skor);
 
-bool lagiNgambilKoin(int arr[BARIS][KOLOM], int baris, int kolom );
+bool lagiNgambilKoin(tElmtGrid arr[BARIS][KOLOM], int baris, int kolom );
 
 #endif //  1815110044_H

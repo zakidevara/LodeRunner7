@@ -14,8 +14,8 @@ void tampil_skor(int skor)
     setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
 
     sprintf(skoor,"%d", skor);
-    outtextxy(WINDOWS_WIDTH-50,WINDOWS_HEIGHT-50,skoor);
-    outtextxy(WINDOWS_WIDTH-150,WINDOWS_HEIGHT-50,"SCORE:");
+    outtextxy(WINDOWS_WIDTH-50,WINDOWS_HEIGHT-40,skoor);
+    outtextxy(WINDOWS_WIDTH-150,WINDOWS_HEIGHT-40,"SCORE:");
 }
 
 void waktu_Awal(clock_t* wktAwal)
@@ -73,8 +73,8 @@ void tampil_skor_akhir(int skor)
     outtextxy(WINDOWS_WIDTH-300,WINDOWS_HEIGHT-225,tamSkorAkhir);
 }
 
-bool lagiNgambilKoin(int arr[BARIS][KOLOM], int baris, int kolom ){
-    if(arr[baris][kolom] == 4){
+bool lagiNgambilKoin(tElmtGrid arr[BARIS][KOLOM], int baris, int kolom ){
+    if(arr[baris][kolom].info == 4){
         return true;
     }else{
         return false;

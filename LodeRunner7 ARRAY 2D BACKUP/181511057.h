@@ -6,66 +6,89 @@
 #define ZAKI057_H
 
 #include "main.h"
+#include "linked57.h"
 #include "181511028.h"
 #include "181511037.h"
 #include "181511003.h"
 #include "181511044.h"
+#include <float.h>
 
+/* ---------------------------- Load Gambar Sprite ---------------------------- */
+void* loadSprite(const char* dir, int width, int height);
+// return variabel yang akan menampung gambar
 
-/*---------------------------- Load/Animasi Sprite ----------------------------*/
+blockSprite loadBlockSprites();
+// Load sprite untuk objek - objek dalam map
+
+spriteAnim loadSpriteAnim(char c);
+// Load gambar animasi untuk sprite player dan bot
+// parameter input : c -> 'P' == animasi player, 'B' == animasi bot
+
+/* ---------------------------- Gambar Animasi Sprite ---------------------------- */
 void drawAnimRunningRight(int x,int y, int* urutan, spriteAnim anim);
-// Animasi karakter utama berlari ke kanan
+// Gambar Animasi karakter utama berlari ke kanan
 
 void drawAnimRunningLeft(int x,int y, int* urutan, spriteAnim anim);
-// Animasi karakter utama berlari ke kiri
+// Gambar Animasi karakter utama berlari ke kiri
 
 void drawAnimClimbRopeRight(int x,int y, int* urutan, spriteAnim anim);
-// Animasi karakter utama memanjat tali ke kanan
+// Gambar Animasi karakter utama memanjat tali ke kanan
 
 void drawAnimClimbRopeLeft(int x,int y, int* urutan, spriteAnim anim);
-// Animasi karakter utama memanjat tali ke kiri
+// Gambar Animasi karakter utama memanjat tali ke kiri
 
 void drawAnimClimbLadder(int x,int y, int* urutan, spriteAnim anim);
-// Animasi karakter utama saat memanjat tangga
+// Gambar Animasi karakter utama saat memanjat tangga
 
 void drawAnimBombRight(int x,int y, spriteAnim anim);
-// Animasi karakter utama saat melempar bom ke arah kanan
+// Gambar Animasi karakter utama saat melempar bom ke arah kanan
 
 void drawAnimBombLeft(int x,int y, spriteAnim anim);
-// Animasi karakter utama saat melempar bom ke arah kiri
+// Gambar Animasi karakter utama saat melempar bom ke arah kiri
 
 
 /*---------------------------- Animasi Bata ----------------------------*/
 void bataDestroyed(int x1,int y1,int x2, int y2, int urutan);
-// Animasi bata saat dihancurkan/dibom
+// Gambar Animasi bata saat dihancurkan/dibom
 
 void returnBata(int x1,int y1,int x2, int y2, int* urutan);
-// Animasi bata saat kembali lagi
+// Gambar Animasi bata saat kembali lagi
 
 
 /*---------------------------- Operasi Penggambaran ----------------------------*/
-void drawStage(int arr[BARIS][KOLOM], koordinat player, spriteInfo bot[], int nBot, blockSprite block, spriteAnim animBot, spriteAnim animPlayer);
-// Menggambar kondisi awal suatu level
+void drawStage(tElmtGrid arr[BARIS][KOLOM], koordinat player, spriteInfo bot[], int nBot, blockSprite block, spriteAnim animBot, spriteAnim animPlayer);
+// Gambar kondisi awal suatu level
 
-void drawMovement(int arr[BARIS][KOLOM], spriteInfo* player, blockSprite block, spriteAnim anim);
-// Menggambar pergerakan karakter utama
+void drawMovement(tElmtGrid arr[BARIS][KOLOM], spriteInfo* player, blockSprite block, spriteAnim anim);
+// Gambar pergerakan sprite
 
+void drawBotArray(tElmtGrid arr[BARIS][KOLOM], spriteInfo bot[], int nBot, blockSprite block, spriteAnim anim);
+// Menggambar pergerakan semua sprite bot yang ada
 
-void drawBotArray(int arr[BARIS][KOLOM], spriteInfo bot[], int nBot, blockSprite block, spriteAnim anim);
-// Menggambar pergerakan semua bot yang ada dalam level
+void eraseDrawing(spriteInfo* player);
+// Menghapus gambar sprite
+
+void eraseBotArray(spriteInfo bot[], int n);
+// Menghapus gambar seluruh sprite bot
 
 void loading();
 // Menggambar tampilan loading
 
 void tampil_level(int level);
-// Menampilkan level yang sedang dimainkan
+// Menampilkan angka level yang sedang dimainkan
 
-void resetAnimasiBom(int arr[BARIS][KOLOM], int barisPlayer, int kolomPlayer, int* urutan, int* urutanBom, int movement, koordinat player, blockSprite block);
+void tampil_durasi_permainan(double durasi);
+// Menampilkan durasi penyelesaian level
+
+void tampil_lives(int lives);
+// Menampilkan jumlah nyawa yang tersisa
+
+void resetAnimasiBom(tElmtGrid arr[BARIS][KOLOM], int barisPlayer, int kolomPlayer, int* urutan, int* urutanBom, int movement, koordinat player, blockSprite block);
 // Reset animasi bom ketika aksi melempar bom dicancel
 
 
 /*---------------------------- Operasi Pengecekan ----------------------------*/
-bool isNabrak(int arr[BARIS][KOLOM], int X, int Y, int arah);
+bool isNabrak(tElmtGrid arr[BARIS][KOLOM], int X, int Y, int arah);
 // Pengecekan sisi kiri dan kanan player, jika ada tembok return true dan jika tidak ada return false
 // arah = -1 kalau ke kiri dan arah = 1 kalau ke kanan
 
@@ -80,24 +103,21 @@ bool isLagiBom(int movement);
 lubang assign_Lubang(int baris, int kolom, clock_t waktuAwal);
 // Operasi assign nilai parameter pada variabel bertipe data lubang
 
-lubang free_Lubang();
-// Assign semua subvariabel record lubang ke NULL
-
-arrayQueue inisiasi_queue();
-// Assign nilai awal queue
-
-void enqueue(arrayQueue* P, lubang Z);
-// Insert data pada queue paling belakang
-
-lubang dequeue(arrayQueue* P);
-// Menghapus data pada queue paling depan, return nilai data yang dihapus
-
-void isi_kembali_lubang(int arr[BARIS][KOLOM], arrayQueue* P, clock_t wkt_sekarang, blockSprite block);
+void isi_kembali_lubang(tElmtGrid arr[BARIS][KOLOM], QueueLubang* P, clock_t wkt_sekarang, blockSprite block);
 // Pengecekan durasi pada queue paling depan
 // Apabila sudah melebihi 7 detik, maka jalankan operasi dequeue dan lubangnya dikembalikan menjadi bata
 
 
-/*---------------------------- Operasi untuk Membaca dan Assign Design Level ----------------------------*/
+/*---------------------------- Operasi Pengecekan ----------------------------*/
+bool isNabrak(tElmtGrid arr[BARIS][KOLOM], int X, int Y, int arah);
+// Pengecekan sisi kiri dan kanan player, jika ada tembok return true dan jika tidak ada return false
+// arah = -1 kalau ke kiri dan arah = 1 kalau ke kanan
+
+char cekInput(char movement, bool* statMode);
+// Cek input yang
+
+
+/* ---------------------------- Operasi untuk Membaca dan Assign Design Level ---------------------------- */
 infoLevel readFileLevel(char file[]);
 // Membaca info level yang ada di file[], return nilainya
 // contoh pemanggilan modul : readFileLevel("level1.dat");
@@ -105,16 +125,21 @@ infoLevel readFileLevel(char file[]);
 infoLevel generateLevel(int level);
 // Membaca file level sesuai dengan parameter yang dimasukkan
 
+void sortFileHighScore();
+// Sort file highscore secara descending berdasarkan scorenya
 
-/*---------------------------- Operasi Konversi Koordinat dan Posisi Matriks ----------------------------*/
+
+/* ---------------------------- Operasi Konversi Koordinat dan Posisi Matriks ---------------------------- */
 posisiMatriks getPosisiMatriks(koordinat koor);
 // return posisi pada matriks berdasarkan koordinat yang dimasukkan ke parameter
+
+posisiMatriks getPosisiMatriksBot(koordinat koor);
 
 koordinat getKoordinat(posisiMatriks pos);
 // return koordinat pada layar berdasarkan posisi matriks yang dimasukkan ke parameter
 
 
-/*---------------------------- Operasi untuk Fitur Highscore ----------------------------*/
+/* ---------------------------- Operasi untuk Fitur Highscore ---------------------------- */
 void writeFileHighScore(tUser user);
 // Mengupdate/Menulis data score pada file highscore.dat
 
@@ -124,18 +149,31 @@ void readFileHighScore();
 void inputNama(char inputbuf[], int nchars);
 // Input string dalam graphics.h
 
+
+/* ---------------------------- Debugging ---------------------------- */
 void warnateks(int warna);
-void printStats(infoLevel level, spriteInfo player, clock_t Start, clock_t End, spriteInfo bot[], arrayQueue queueLubang, tUser user);
+// Memberi warna pada teks di console
 
-void* loadSprite(const char* dir, int width, int height);
-blockSprite loadBlockSprites();
+void printStats(infoLevel level, spriteInfo player, clock_t Start, clock_t End, spriteInfo bot[], QueueLubang qLubang, tUser user);
+// print keadaan semua variabel di console
 
-void eraseDrawing(spriteInfo* player);
-void eraseBotArray(spriteInfo bot[], int n);
 
-void sortFileHighScore();
-spriteAnim loadSpriteAnim(char c);
+/* ---------------------------- A* Path-Finding Manhattan ---------------------------- */
+void generateGrid(tElmtGrid arr[BARIS][KOLOM], int botIndex, spriteInfo bot[], int jmlBot);
+// Mengisi nilai awal grid sebelum dilakukan pencarian path
 
-void tampil_durasi_permainan(double durasi);
-void tampil_lives(int lives);
+char A_Star(tElmtGrid grid[BARIS][KOLOM], posisiMatriks start, posisiMatriks end, int botIndex, spriteInfo bot[], int jmlBot);
+// Mencari path terpendek dari posisi start ke end dan return list dari pathnya
+
+bool isSamePos(posisiMatriks pos1, posisiMatriks pos2);
+// Cek jika kedua posisi sama atau tidak
+
+bool isValidPos(posisiMatriks pos);
+// cek apabila posisi masih ada dalam range grid atau tidak
+
+bool isTrapped(tElmtGrid arr[BARIS][KOLOM], int baris, int kolom, char spriteType);
+
 #endif
+
+
+

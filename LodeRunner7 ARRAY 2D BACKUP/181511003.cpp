@@ -1,38 +1,38 @@
 #include "181511003.h"
 
 
-bool isStanding(int arr[BARIS][KOLOM], int baris, int kolom){
-    if((arr[baris+1][kolom] == 1) || (arr[baris+1][kolom] == 2) || (arr[baris+1][kolom] == 6)){
+bool isStanding(tElmtGrid arr[BARIS][KOLOM], int baris, int kolom){
+    if((arr[baris+1][kolom].info == 1) || (arr[baris+1][kolom].info == 2) || (arr[baris+1][kolom].info == 6) || (arr[baris+1][kolom].info == 9)){
         return true;
     }else{
         return false;
     }
 }
 
-bool isClimbing(int arr[BARIS][KOLOM], int baris, int kolom){
-    if((arr[baris][kolom] == 2)){
+bool isClimbing(tElmtGrid arr[BARIS][KOLOM], int baris, int kolom){
+    if((arr[baris][kolom].info == 2)){
         return true;
     }else{
         return false;
     }
 }
 
-bool isSliding(int arr[BARIS][KOLOM], int baris, int kolom){
-    if(arr[baris][kolom] == 3){
+bool isSliding(tElmtGrid arr[BARIS][KOLOM], int baris, int kolom){
+    if(arr[baris][kolom].info == 3){
         return true;
     }else{
         return false;
     }
 }
-bool isFalling(int arr[BARIS][KOLOM], int baris, int kolom){
-    if((arr[baris+1][kolom] == 0) || (arr[baris+1][kolom] == 3) || (arr[baris+1][kolom] == 7) || (arr[baris+1][kolom] == 4)){
+bool isFalling(tElmtGrid arr[BARIS][KOLOM], int baris, int kolom){
+    if(((arr[baris+1][kolom].info == 0) || (arr[baris+1][kolom].info == 3) || (arr[baris+1][kolom].info == 7) || (arr[baris+1][kolom].info == 4) || (arr[baris+1][kolom].info == 8)) && (arr[baris][kolom].info != 2)){
         return true;
     }else{
         return false;
     }
 }
 
-void playerMovement(int arr[BARIS][KOLOM], arrayQueue* P, spriteInfo* player){ //memindahkan posisi player dalam matriks sesuai movement yang dipilih oleh user
+void playerMovement(tElmtGrid arr[BARIS][KOLOM], QueueLubang* P, spriteInfo* player){ //memindahkan posisi player dalam matriks sesuai movement yang dipilih oleh user
     lubang Z;
     int BarisAtasPlayer=((*player).koor.Y-10)/MATRIX_ELEMENT_SIZE;
 	switch((*player).movement){
@@ -90,16 +90,16 @@ void playerMovement(int arr[BARIS][KOLOM], arrayQueue* P, spriteInfo* player){ /
             break;
             case 'X' :
             //case 'M' :
-            	if(((arr[(*player).pm.baris+1][(*player).pm.kolom+1] == 1)||(arr[(*player).pm.baris+1][(*player).pm.kolom+1] == 7)) && (arr[(*player).pm.baris][(*player).pm.kolom+1] == 0)){
+            	if(((arr[(*player).pm.baris+1][(*player).pm.kolom+1].info == 1)||(arr[(*player).pm.baris+1][(*player).pm.kolom+1].info == 7)) && ((arr[(*player).pm.baris][(*player).pm.kolom+1].info == 0) || (arr[(*player).pm.baris][(*player).pm.kolom+1].info == 8))){
             		((*player).urutanBom)++;
             		player->urutanAnimasi = 0;
 
             		if((*player).urutanBom > -1){
-                        arr[(*player).pm.baris+1][(*player).pm.kolom+1] = 7;
+                        arr[(*player).pm.baris+1][(*player).pm.kolom+1].info = 7;
                         if((*player).urutanBom == 4){
-                            arr[(*player).pm.baris+1][(*player).pm.kolom+1] = 0;
+                            arr[(*player).pm.baris+1][(*player).pm.kolom+1].info = 8;
                             Z = assign_Lubang((*player).pm.baris+1, (*player).pm.kolom+1, clock());
-                            enqueue(P, Z);
+                            P->enqueue(Z);
                         }
                     }
             	}else{
@@ -108,16 +108,16 @@ void playerMovement(int arr[BARIS][KOLOM], arrayQueue* P, spriteInfo* player){ /
 				break;
             case 'Z' :
 			case 'N' :
-				if(((arr[(*player).pm.baris+1][(*player).pm.kolom-1] == 1)||(arr[(*player).pm.baris+1][(*player).pm.kolom-1] == 7)) && (arr[(*player).pm.baris][(*player).pm.kolom-1] == 0)){
+				if(((arr[(*player).pm.baris+1][(*player).pm.kolom-1].info == 1)||(arr[(*player).pm.baris+1][(*player).pm.kolom-1].info== 7)) && ((arr[(*player).pm.baris][(*player).pm.kolom-1].info == 0) || (arr[(*player).pm.baris][(*player).pm.kolom-1].info == 8))){
                     ((*player).urutanBom)++;
                     player->urutanAnimasi = 8;
 
                     if((*player).urutanBom>-1){
-                        arr[(*player).pm.baris+1][(*player).pm.kolom-1] = 7;
+                        arr[(*player).pm.baris+1][(*player).pm.kolom-1].info = 7;
                         if((*player).urutanBom == 4){
-                            arr[(*player).pm.baris+1][(*player).pm.kolom-1] = 0;
+                            arr[(*player).pm.baris+1][(*player).pm.kolom-1].info = 8;
                             Z = assign_Lubang((*player).pm.baris +1, (*player).pm.kolom-1, clock());
-                            enqueue(P, Z);
+                            P->enqueue(Z);
                         }
                     }
 
