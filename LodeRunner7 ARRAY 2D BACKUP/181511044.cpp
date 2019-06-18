@@ -73,8 +73,8 @@ void tampil_skor_akhir(int skor)
     outtextxy(WINDOWS_WIDTH-300,WINDOWS_HEIGHT-225,tamSkorAkhir);
 }
 
-bool lagiNgambilKoin(tElmtGrid arr[BARIS][KOLOM], int baris, int kolom ){
-    if(arr[baris][kolom].info == 4){
+bool lagiNgambilKoin(int arr[BARIS][KOLOM], int baris, int kolom ){
+    if(arr[baris][kolom] == 4){
         return true;
     }else{
         return false;

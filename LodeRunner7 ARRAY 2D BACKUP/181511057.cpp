@@ -135,7 +135,7 @@ void returnBata(int x1,int y1,int x2, int y2, int* urutan){
 
 
 /*---------------------------- Operasi Penggambaran ----------------------------*/
-void drawMovement(tElmtGrid arr[BARIS][KOLOM], spriteInfo* player, blockSprite block, spriteAnim anim){
+void drawMovement(int arr[BARIS][KOLOM], spriteInfo* player, blockSprite block, spriteAnim anim){
     switch((*player).movement){
     case KEY_LEFT :
     case 'A' :
@@ -145,7 +145,7 @@ void drawMovement(tElmtGrid arr[BARIS][KOLOM], spriteInfo* player, blockSprite b
             drawRight(arr, (*player).pm.kolom-1,(*player).pm.baris+1,3, block);
 
             //gambar ulang karakter utama
-            if(isSliding(arr, (*player).pm.baris, (*player).pm.kolom)){
+            if(isSliding(arr, player->koor.X, player->koor.Y)){
                 drawAnimClimbRopeLeft(player->koor.X, player->koor.Y, &(player->urutanAnimasi), anim);
             }else{
                 drawAnimRunningLeft(player->koor.X, player->koor.Y, &(player->urutanAnimasi), anim);
@@ -156,7 +156,7 @@ void drawMovement(tElmtGrid arr[BARIS][KOLOM], spriteInfo* player, blockSprite b
             drawLeft(arr, (*player).pm.kolom+1, (*player).pm.baris,4, block);
             drawLeft(arr, (*player).pm.kolom+1, (*player).pm.baris-1,3, block);
             drawLeft(arr, (*player).pm.kolom+1, (*player).pm.baris+1,3, block);
-            if(isSliding(arr, (*player).pm.baris, (*player).pm.kolom)){
+            if(isSliding(arr,  player->koor.X, player->koor.Y)){
                 drawAnimClimbRopeRight(player->koor.X, player->koor.Y, &(player->urutanAnimasi), anim);
             }else{
                 drawAnimRunningRight(player->koor.X, player->koor.Y, &(player->urutanAnimasi), anim);
@@ -175,7 +175,7 @@ void drawMovement(tElmtGrid arr[BARIS][KOLOM], spriteInfo* player, blockSprite b
             drawUp(arr, (*player).pm.kolom, (*player).pm.baris+1,4, block);
             drawUp(arr, (*player).pm.kolom+1, (*player).pm.baris+1,3, block);
             drawUp(arr, (*player).pm.kolom-1, (*player).pm.baris+1,3, block);
-            if(isClimbing(arr, (*player).pm.baris, (*player).pm.kolom)){
+            if(isClimbing(arr,  player->koor.X, player->koor.Y)){
                 drawAnimClimbLadder(player->koor.X, player->koor.Y, &(player->urutanAnimasi), anim);
             }else{
                 drawAnimRunningRight(player->koor.X, player->koor.Y, &(player->urutanAnimasi), anim);
@@ -215,10 +215,10 @@ void drawMovement(tElmtGrid arr[BARIS][KOLOM], spriteInfo* player, blockSprite b
             drawUp(arr, (*player).pm.kolom+1, (*player).pm.baris+1,3, block);
             drawUp(arr, (*player).pm.kolom-1, (*player).pm.baris+1,3, block);
             int urutan = 0;
-            if(isClimbing(arr, player->pm.baris, player->pm.kolom)){
+            if(isClimbing(arr, player->koor.X, player->koor.Y)){
                 urutan = player->urutanAnimasi;
                 drawAnimClimbLadder(player->koor.X, player->koor.Y, &urutan , anim);
-            }else if(isSliding(arr, player->pm.baris, player->pm.kolom)){
+            }else if(isSliding(arr, player->koor.X, player->koor.Y)){
                 urutan = player->urutanAnimasi;
                 if(player->urutanAnimasi > 1){
                     drawAnimClimbRopeLeft(player->koor.X, player->koor.Y, &urutan , anim);
@@ -236,26 +236,26 @@ void drawMovement(tElmtGrid arr[BARIS][KOLOM], spriteInfo* player, blockSprite b
     }
 }
 
-void drawBotArray(tElmtGrid arr[BARIS][KOLOM], spriteInfo bot[], int nBot, blockSprite block, spriteAnim anim){
+void drawBotArray(int arr[BARIS][KOLOM], spriteInfo bot[], int nBot, blockSprite block, spriteAnim anim){
     for(int i = 0; i < nBot; i++) drawMovement(arr, &bot[i], block, anim);
 }
 
-void drawStage(tElmtGrid arr[BARIS][KOLOM], koordinat player, spriteInfo bot[], int nBot, blockSprite block, spriteAnim animBot, spriteAnim animPlayer){
+void drawStage(int arr[BARIS][KOLOM], koordinat player, spriteInfo bot[], int nBot, blockSprite block, spriteAnim animBot, spriteAnim animPlayer){
     int urutan = 0;
     for(int i=0; i<BARIS; i++){
         for(int j=0; j<KOLOM; j++){
             //penggambaran map
-            if(arr[i][j].info == 1){
+            if(arr[i][j] == 1){
                 putimage(MATRIX_ELEMENT_SIZE*j, MATRIX_ELEMENT_SIZE*i, block.brick, COPY_PUT);
-            }else if(arr[i][j].info == 2){
+            }else if(arr[i][j] == 2){
                 putimage(MATRIX_ELEMENT_SIZE*j, MATRIX_ELEMENT_SIZE*i, block.ladder, COPY_PUT);
-            }else if(arr[i][j].info == 3){
+            }else if(arr[i][j] == 3){
                 putimage(MATRIX_ELEMENT_SIZE*j, MATRIX_ELEMENT_SIZE*i, block.rope, COPY_PUT);
-            }else if(arr[i][j].info == 4){
+            }else if(arr[i][j] == 4){
                 putimage(MATRIX_ELEMENT_SIZE*j, MATRIX_ELEMENT_SIZE*i, block.coin, COPY_PUT);
-            }else if(arr[i][j].info == 5){
+            }else if(arr[i][j] == 5){
                 putimage(MATRIX_ELEMENT_SIZE*j, MATRIX_ELEMENT_SIZE*i, block.exit, COPY_PUT);
-            }else if(arr[i][j].info == 6){
+            }else if(arr[i][j] == 6){
                 putimage(MATRIX_ELEMENT_SIZE*j, MATRIX_ELEMENT_SIZE*i, block.bedrock, COPY_PUT);
             }
         }
@@ -290,11 +290,11 @@ void tampil_level(int level){
     outtextxy(20,WINDOWS_HEIGHT-40,"LEVEL:");
 }
 
-void resetAnimasiBom(tElmtGrid arr[BARIS][KOLOM], int barisPlayer, int kolomPlayer, int* urutan, int* urutanBom, int movement, koordinat player, blockSprite block){
+void resetAnimasiBom(int arr[BARIS][KOLOM], int barisPlayer, int kolomPlayer, int* urutan, int* urutanBom, int movement, koordinat player, blockSprite block){
     if(!isLagiBom(movement)){
         *urutanBom = -1;
-        if(arr[barisPlayer+1][kolomPlayer+1].info == 7){
-            arr[barisPlayer+1][kolomPlayer+1].info = 1;
+        if(arr[barisPlayer+1][kolomPlayer+1] == 7){
+            arr[barisPlayer+1][kolomPlayer+1] = 1;
                 setviewport((kolomPlayer+1)*MATRIX_ELEMENT_SIZE, (barisPlayer+1)*MATRIX_ELEMENT_SIZE, (kolomPlayer+2)*MATRIX_ELEMENT_SIZE, (barisPlayer+2)*MATRIX_ELEMENT_SIZE,1);
                 clearviewport();
                 setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
@@ -306,8 +306,8 @@ void resetAnimasiBom(tElmtGrid arr[BARIS][KOLOM], int barisPlayer, int kolomPlay
                 drawUp(arr,kolomPlayer+1,barisPlayer+1,1, block);
                 swapbuffers();
         }
-        if(arr[barisPlayer+1][kolomPlayer-1].info == 7){
-            arr[barisPlayer+1][kolomPlayer-1].info = 1;
+        if(arr[barisPlayer+1][kolomPlayer-1] == 7){
+            arr[barisPlayer+1][kolomPlayer-1] = 1;
             setviewport((kolomPlayer-1)*MATRIX_ELEMENT_SIZE, (barisPlayer+1)*MATRIX_ELEMENT_SIZE, (kolomPlayer)*MATRIX_ELEMENT_SIZE, (barisPlayer+2)*MATRIX_ELEMENT_SIZE,1);
             clearviewport();
             setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
@@ -324,7 +324,7 @@ void resetAnimasiBom(tElmtGrid arr[BARIS][KOLOM], int barisPlayer, int kolomPlay
 
 
 /*---------------------------- Operasi Pengecekan ----------------------------*/
-bool isNabrak(tElmtGrid arr[BARIS][KOLOM], int X, int Y, int arah){
+bool isNabrak(int arr[BARIS][KOLOM], int X, int Y, int arah){
 // Pengecekan sisi kiri dan kanan player, jika ada tembok return true dan jika tidak ada return false
 // arah = -1 kalau ke kiri dan arah = 1 kalau ke kanan
     int baris, kolom;
@@ -336,7 +336,7 @@ bool isNabrak(tElmtGrid arr[BARIS][KOLOM], int X, int Y, int arah){
         kolom = (X+(MATRIX_ELEMENT_SIZE-1))/MATRIX_ELEMENT_SIZE;
     }
 
-    return (arr[baris][kolom+arah].info == 1);
+    return (arr[baris][kolom+arah] == 1) || (arr[baris][kolom+arah] == 6);
 }
 
 char cekInput(char movement, bool* statMode){ //apabila nilai movement tidak sesuai dengan kontrol yang ditetapkan, maka assign movement = NULL
@@ -373,14 +373,14 @@ bool isLagiBom(int movement){ //cek apabila player sedang melempar bom atau tida
 /*---------------------------- Operasi untuk Queue Lubang ----------------------------*/
 
 
-void isi_kembali_lubang(tElmtGrid arr[BARIS][KOLOM], QueueLubang* P, clock_t wkt_sekarang, blockSprite block){
+void isi_kembali_lubang(int arr[BARIS][KOLOM], QueueLubang* P, clock_t wkt_sekarang, blockSprite block){
     lubang Z;
     double durasi = hitung_Waktu(P->Front->info.start, wkt_sekarang); //menghitung durasi = waktu sekarang - waktu lubang dibuat
     while( (durasi > 7) && (P->Front != NULL)){   // selagi durasi antrian paling depan sudah mencapai 7 detik
         //returnBata(Z.pos.kolom*MATRIX_ELEMENT_SIZE, Z.pos.baris*MATRIX_ELEMENT_SIZE, (Z.pos.kolom+1)*MATRIX_ELEMENT_SIZE, (Z.pos.baris+1)*MATRIX_ELEMENT_SIZE, &(Z.urutan));
 
         Z = P->dequeue();                        //keluarkan data lubang dari antrian dan tampung di variabel Z
-        arr[Z.pos.baris][Z.pos.kolom].info = 1;      //kembalikan lubang yang dikeluarkan dari antrian ke posisi semula
+        arr[Z.pos.baris][Z.pos.kolom] = 1;      //kembalikan lubang yang dikeluarkan dari antrian ke posisi semula
 
         //gambar bata yang sudah dikembalikan di posisi lubangnya di kedua page
         drawUp(arr,Z.pos.kolom,Z.pos.baris,1, block); swapbuffers();
@@ -561,7 +561,7 @@ void printStats(infoLevel level, spriteInfo player, clock_t Start, clock_t End, 
     printf("Map : \n");
     for(int i = 0; i < BARIS;i++){
         for(int j = 0; j < KOLOM; j++){
-            switch(level.arr[i][j].info){
+            switch(level.arr[i][j]){
             case 1 : warnateks(LIGHTRED);break;
             case 2 : warnateks(YELLOW);break;
             case 3 : warnateks(GREEN);break;
@@ -614,17 +614,17 @@ void printStats(infoLevel level, spriteInfo player, clock_t Start, clock_t End, 
     printf("Active Page : %d  Visual Page : %d", getactivepage(), getvisualpage());
 
     printf("\n\n");
-    for(int i = 0; i < BARIS; i++){
-        for(int j = 0; j < KOLOM; j++){
-            if(level.arr[i][j].blocked) {
-                warnateks(RED);
-            }else{
-                warnateks(GREEN);
-            }
-            printf("%d ", level.arr[i][j].blocked);
-        }
-        printf("\n");
-    }
+//    for(int i = 0; i < BARIS; i++){
+//        for(int j = 0; j < KOLOM; j++){
+//            if(level.arr[i][j].blocked) {
+//                warnateks(RED);
+//            }else{
+//                warnateks(GREEN);
+//            }
+//            printf("%d ", level.arr[i][j].blocked);
+//        }
+//        printf("\n");
+//    }
 
 }
 
@@ -851,51 +851,59 @@ void tampil_lives(int lives){
     outtextxy(WINDOWS_WIDTH-550,WINDOWS_HEIGHT-40,"LIVES:");
 }
 
-void generateGrid(tElmtGrid arr[BARIS][KOLOM], int botIndex, spriteInfo bot[], int jmlBot){
+void generateGrid(tElmtGrid grid[BARIS][KOLOM], int arr[BARIS][KOLOM], int botIndex, spriteInfo bot[], int jmlBot){
+
+    for(int i = 0; i < BARIS; i++){
+        for(int j = 0; j < KOLOM; j++){
+            grid[i][j].info = arr[i][j];
+        }
+    }
+
     for(int j = 0; j< KOLOM; j++){
         for(int i = 0; i < BARIS; i++){
-            arr[i][j].pos.kolom = j;
-            arr[i][j].pos.baris = i;
-            arr[i][j].f = FLT_MAX;
-            arr[i][j].g = FLT_MAX;
-            arr[i][j].h = FLT_MAX;
-            arr[i][j].parent.baris = -1;
-            arr[i][j].parent.kolom = -1;
-//            if(((isStanding(arr, i, j-1) && !isNabrak(arr, j*MATRIX_ELEMENT_SIZE, i*MATRIX_ELEMENT_SIZE, -1) && (j > 0)) || (isStanding(arr, i, j+1) && !isNabrak(arr, j*MATRIX_ELEMENT_SIZE, i*MATRIX_ELEMENT_SIZE, 1) && (j < KOLOM-1))) &&(isFalling(arr, i, j)) && (arr[i][j].info != 1)){
-//                arr[i][j].blocked = false;
+            grid[i][j].pos.kolom = j;
+            grid[i][j].pos.baris = i;
+            grid[i][j].f = FLT_MAX;
+            grid[i][j].g = FLT_MAX;
+            grid[i][j].h = FLT_MAX;
+            grid[i][j].parent.baris = -1;
+            grid[i][j].parent.kolom = -1;
+//            if(((isStanding(arr, i, j-1) && !isNabrak(arr, j*MATRIX_ELEMENT_SIZE, i*MATRIX_ELEMENT_SIZE, -1) && (j > 0)) || (isStanding(arr, i, j+1) && !isNabrak(arr, j*MATRIX_ELEMENT_SIZE, i*MATRIX_ELEMENT_SIZE, 1) && (j < KOLOM-1))) &&(isFalling(arr, i, j)) && (grid[i][j] != 1)){
+//                grid[i][j].blocked = false;
 //            }else
-            if((((arr[i+1][j].info == 0) || (arr[i+1][j].info == 4) || (arr[i+1][j].info == 3)) && (arr[i][j].info == 0)) || (arr[i][j].info == 1) || (arr[i][j].info == 6) || (arr[i][j].info == 9)){
-                arr[i][j].blocked = true;
+            if((((grid[i+1][j].info == 0) || (grid[i+1][j].info == 4) || (grid[i+1][j].info == 3)) && (grid[i][j].info == 0)) || (grid[i][j].info == 1) || (grid[i][j].info == 6) || (grid[i][j].info == 9)){
+                grid[i][j].blocked = true;
             }else{
-                arr[i][j].blocked = false;
+                grid[i][j].blocked = false;
             }
 
             for(int i = 0; i < jmlBot; i++){
-                if(i != botIndex) arr[bot[i].pm.baris][bot[i].pm.kolom].blocked = true;
+                if(i != botIndex) grid[bot[i].pm.baris][bot[i].pm.kolom].blocked = true;
             }
         }
     }
 }
 
-char A_Star(tElmtGrid grid[BARIS][KOLOM], posisiMatriks start, posisiMatriks end, int botIndex, spriteInfo bot[], int jmlBot){
-    // Mulai A Star Pathfinding Manhattan (4 Arah)
-    ListGrid openSet;
-    ListGrid closedSet;
+char A_Star(int arr[BARIS][KOLOM], posisiMatriks start, posisiMatriks end, int botIndex, spriteInfo bot[], int jmlBot){
+    // Mulai A Star Pathfinding (4 Arah)
+    tElmtGrid grid[BARIS][KOLOM];
+    ListGrid openSet;           // Menampung grid yang masih harus diperiksa
+    ListGrid closedSet;         // Menampung grid yang sudah beres diperiksa
     tElmtGrid cur;
     tElmtGrid curNeighbor;
     bool foundEnd = false;
 
     // Semua f, g, h di assign ke infinity (FLT_MAX)
-    // Semua parent diassign ke (-1, -1)
+    // Semua parent diassign ke (-1, -1) -> Tidak punya parent semua
     // Menentukan apakah path terhalangi (blocked) atau tidak
-    generateGrid(grid, botIndex, bot, jmlBot);
+    generateGrid(grid, arr, botIndex, bot, jmlBot);
 
     //inisiasi nilai awal grid start
     grid[start.baris][start.kolom].f = 0;
     grid[start.baris][start.kolom].g = 0;
     grid[start.baris][start.kolom].h = 0;
 
-    //push grid start ke openSet
+    //push grid start ke openSet secara terurut dari kecil sampai besar
     openSet.push_sorted(grid[start.baris][start.kolom]);
 
     while((openSet.head != NULL) && !foundEnd){
@@ -908,21 +916,21 @@ char A_Star(tElmtGrid grid[BARIS][KOLOM], posisiMatriks start, posisiMatriks end
 
         // Pengecekan 4 neighbor dari cur
         for(int i = 0; i < 4; i++){
-            posisiMatriks tempPos;
+            posisiMatriks tempPos; //temp menampung posisi neighbor yg diperiksa
             tempPos.baris = cur.pos.baris + dirY[i];
             tempPos.kolom = cur.pos.kolom + dirX[i];
-            if(isValidPos(tempPos)){
+            if(isValidPos(tempPos)){  //Periksa kalo posisi ini ada di dalam range matriks atau tidak
                 curNeighbor = grid[tempPos.baris][tempPos.kolom];
-                if(isSamePos(curNeighbor.pos, end)){
+                if(isSamePos(curNeighbor.pos, end)){  //kalo neighbor ini sama kayak posisi destinasi, pencarian berhenti
                     curNeighbor.parent = cur.pos;
                     grid[tempPos.baris][tempPos.kolom] = curNeighbor;
                     foundEnd = true; break;
-                }else if(!closedSet.isInList(curNeighbor) && !curNeighbor.blocked){
+                }else if(!closedSet.isInList(curNeighbor) && !curNeighbor.blocked){ // hitung nilai f kalo neighbor belum di closedlist dan neighbor bisa dilewati
                     gNew = cur.g + 1.0;
                     hNew = abs(curNeighbor.pos.kolom - end.kolom) + abs(curNeighbor.pos.baris - end.baris);
                     fNew = gNew + hNew;
 
-                    if(curNeighbor.f == FLT_MAX || curNeighbor.f > fNew){
+                    if(curNeighbor.f == FLT_MAX || curNeighbor.f > fNew){ // Update jika f yang baru lebih kecil daripada f neighbor yg lama
                         curNeighbor.f = fNew;
                         curNeighbor.g = gNew;
                         curNeighbor.h = hNew;
@@ -948,6 +956,7 @@ char A_Star(tElmtGrid grid[BARIS][KOLOM], posisiMatriks start, posisiMatriks end
         path.push(grid[temp.baris][temp.kolom]);
         temp = grid[temp.baris][temp.kolom].parent;
     }
+
 
     /* --- Menentukan Gerakan --- */
     // Menentukan gerakan yang harus diambil bot berdasarkan posisi path berikutnya
@@ -980,11 +989,13 @@ bool isValidPos(posisiMatriks pos){
     }
 }
 
-bool isTrapped(tElmtGrid arr[BARIS][KOLOM], int baris, int kolom, char spriteType){
+bool isTrapped(int arr[BARIS][KOLOM], int x, int y, char spriteType){
+    int baris = y/MATRIX_ELEMENT_SIZE;
+    int kolom = (x + MATRIX_ELEMENT_SIZE/2)/MATRIX_ELEMENT_SIZE;
     if(spriteType == 'B'){
-        return ((arr[baris][kolom].info == 8) || (arr[baris][kolom].info == 9));
+        return ((arr[baris][kolom] == 8) || (arr[baris][kolom] == 9));
     }else if(spriteType == 'P'){
-        return (((arr[baris][kolom].info == 8) || (arr[baris][kolom].info == 9)) && !isFalling(arr, baris, kolom) && isNabrak(arr, kolom*MATRIX_ELEMENT_SIZE, baris*MATRIX_ELEMENT_SIZE, 1) && isNabrak(arr, kolom*MATRIX_ELEMENT_SIZE, baris*MATRIX_ELEMENT_SIZE, -1));
+        return (((arr[baris][kolom] == 8) || (arr[baris][kolom] == 9)) && !isFalling(arr, x, y) && isNabrak(arr, x, y, 1) && isNabrak(arr, x, y, -1));
     }else{
         return false;
     }

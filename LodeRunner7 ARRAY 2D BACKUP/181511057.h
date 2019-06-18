@@ -56,13 +56,13 @@ void returnBata(int x1,int y1,int x2, int y2, int* urutan);
 
 
 /*---------------------------- Operasi Penggambaran ----------------------------*/
-void drawStage(tElmtGrid arr[BARIS][KOLOM], koordinat player, spriteInfo bot[], int nBot, blockSprite block, spriteAnim animBot, spriteAnim animPlayer);
+void drawStage(int arr[BARIS][KOLOM], koordinat player, spriteInfo bot[], int nBot, blockSprite block, spriteAnim animBot, spriteAnim animPlayer);
 // Gambar kondisi awal suatu level
 
-void drawMovement(tElmtGrid arr[BARIS][KOLOM], spriteInfo* player, blockSprite block, spriteAnim anim);
+void drawMovement(int arr[BARIS][KOLOM], spriteInfo* player, blockSprite block, spriteAnim anim);
 // Gambar pergerakan sprite
 
-void drawBotArray(tElmtGrid arr[BARIS][KOLOM], spriteInfo bot[], int nBot, blockSprite block, spriteAnim anim);
+void drawBotArray(int arr[BARIS][KOLOM], spriteInfo bot[], int nBot, blockSprite block, spriteAnim anim);
 // Menggambar pergerakan semua sprite bot yang ada
 
 void eraseDrawing(spriteInfo* player);
@@ -83,12 +83,12 @@ void tampil_durasi_permainan(double durasi);
 void tampil_lives(int lives);
 // Menampilkan jumlah nyawa yang tersisa
 
-void resetAnimasiBom(tElmtGrid arr[BARIS][KOLOM], int barisPlayer, int kolomPlayer, int* urutan, int* urutanBom, int movement, koordinat player, blockSprite block);
+void resetAnimasiBom(int arr[BARIS][KOLOM], int barisPlayer, int kolomPlayer, int* urutan, int* urutanBom, int movement, koordinat player, blockSprite block);
 // Reset animasi bom ketika aksi melempar bom dicancel
 
 
 /*---------------------------- Operasi Pengecekan ----------------------------*/
-bool isNabrak(tElmtGrid arr[BARIS][KOLOM], int X, int Y, int arah);
+bool isNabrak(int arr[BARIS][KOLOM], int X, int Y, int arah);
 // Pengecekan sisi kiri dan kanan player, jika ada tembok return true dan jika tidak ada return false
 // arah = -1 kalau ke kiri dan arah = 1 kalau ke kanan
 
@@ -103,13 +103,13 @@ bool isLagiBom(int movement);
 lubang assign_Lubang(int baris, int kolom, clock_t waktuAwal);
 // Operasi assign nilai parameter pada variabel bertipe data lubang
 
-void isi_kembali_lubang(tElmtGrid arr[BARIS][KOLOM], QueueLubang* P, clock_t wkt_sekarang, blockSprite block);
+void isi_kembali_lubang(int arr[BARIS][KOLOM], QueueLubang* P, clock_t wkt_sekarang, blockSprite block);
 // Pengecekan durasi pada queue paling depan
 // Apabila sudah melebihi 7 detik, maka jalankan operasi dequeue dan lubangnya dikembalikan menjadi bata
 
 
 /*---------------------------- Operasi Pengecekan ----------------------------*/
-bool isNabrak(tElmtGrid arr[BARIS][KOLOM], int X, int Y, int arah);
+bool isNabrak(int arr[BARIS][KOLOM], int X, int Y, int arah);
 // Pengecekan sisi kiri dan kanan player, jika ada tembok return true dan jika tidak ada return false
 // arah = -1 kalau ke kiri dan arah = 1 kalau ke kanan
 
@@ -159,10 +159,10 @@ void printStats(infoLevel level, spriteInfo player, clock_t Start, clock_t End, 
 
 
 /* ---------------------------- A* Path-Finding Manhattan ---------------------------- */
-void generateGrid(tElmtGrid arr[BARIS][KOLOM], int botIndex, spriteInfo bot[], int jmlBot);
+void generateGrid(tElmtGrid grid[BARIS][KOLOM], int arr[BARIS][KOLOM], int botIndex, spriteInfo bot[], int jmlBot);
 // Mengisi nilai awal grid sebelum dilakukan pencarian path
 
-char A_Star(tElmtGrid grid[BARIS][KOLOM], posisiMatriks start, posisiMatriks end, int botIndex, spriteInfo bot[], int jmlBot);
+char A_Star(int grid[BARIS][KOLOM], posisiMatriks start, posisiMatriks end, int botIndex, spriteInfo bot[], int jmlBot);
 // Mencari path terpendek dari posisi start ke end dan return list dari pathnya
 
 bool isSamePos(posisiMatriks pos1, posisiMatriks pos2);
@@ -171,7 +171,7 @@ bool isSamePos(posisiMatriks pos1, posisiMatriks pos2);
 bool isValidPos(posisiMatriks pos);
 // cek apabila posisi masih ada dalam range grid atau tidak
 
-bool isTrapped(tElmtGrid arr[BARIS][KOLOM], int baris, int kolom, char spriteType);
+bool isTrapped(int arr[BARIS][KOLOM], int x, int y, char spriteType);
 
 #endif
 

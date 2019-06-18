@@ -8,7 +8,7 @@
 
 
 void keluarPintuExit(infoLevel* level, blockSprite block){
-    level->arr[level->exitPos.baris][level->exitPos.kolom].info = 5;
+    level->arr[level->exitPos.baris][level->exitPos.kolom] = 5;
 
     //gambar pintu exit di posisi exitPos di kedua page
     setviewport((level->exitPos.kolom)*MATRIX_ELEMENT_SIZE, (level->exitPos.baris)*MATRIX_ELEMENT_SIZE, (level->exitPos.kolom + 1)*MATRIX_ELEMENT_SIZE, (level->exitPos.baris + 1)*MATRIX_ELEMENT_SIZE, 1);
@@ -109,7 +109,7 @@ void permainan(){
         while(true){
             // Proses jika player mengambil koin
             if(lagiNgambilKoin(headLvl->info.arr, player.pm.baris, player.pm.kolom)){
-                headLvl->info.arr[player.pm.baris][player.pm.kolom].info = 0;
+                headLvl->info.arr[player.pm.baris][player.pm.kolom] = 0;
                 hitung_skor(&(user.score));
             }
 
@@ -122,13 +122,14 @@ void permainan(){
             tampil_durasi_permainan(hitung_Waktu(wktmulai, clock()));
             tampil_lives(player.lives);
 
+
             // Baca Input User
-            if(isTrapped(headLvl->info.arr, player.pm.baris, player.pm.kolom, 'P')){
+            if(isTrapped(headLvl->info.arr, player.koor.X, player.koor.Y, 'P')){
                 player.movement = NULL;
                 player.koor.X =  player.pm.kolom*MATRIX_ELEMENT_SIZE;
                 player.koor.Y =  player.pm.baris*MATRIX_ELEMENT_SIZE;
-                headLvl->info.arr[player.pm.baris][player.pm.kolom].info = 9;
-            }else if(isFalling(headLvl->info.arr, player.pm.baris, player.pm.kolom) && !isSliding(headLvl->info.arr, player.pm.baris, player.pm.kolom)){
+                headLvl->info.arr[player.pm.baris][player.pm.kolom] = 9;
+            }else if(isFalling(headLvl->info.arr, player.koor.X, player.koor.Y) && !isSliding(headLvl->info.arr, player.koor.X, player.koor.Y)){
                 //jika sedang jatuh maka player.movement dianggap bernilai 'S', atau sama dengan sedang bergerak ke bawah
                 player.movement = FALL;
             }else{
@@ -145,19 +146,22 @@ void permainan(){
                 for(int i = 0; i < headLvl->info.jmlBot; i++){
                     //generate movement bot
 
-                    if(isTrapped(headLvl->info.arr, bot[i].pm.baris, bot[i].pm.kolom, 'B')){
+                    if(isTrapped(headLvl->info.arr, bot[i].koor.X, bot[i].koor.Y, 'B')){
                         bot[i].movement = NULL;
                         bot[i].koor.X =  bot[i].pm.kolom*MATRIX_ELEMENT_SIZE;
                         bot[i].koor.Y =  bot[i].pm.baris*MATRIX_ELEMENT_SIZE;
-                        headLvl->info.arr[bot[i].pm.baris][bot[i].pm.kolom].info = 9;
-                    }else if(headLvl->info.arr[bot[i].pm.baris][bot[i].pm.kolom].info == 1){
+                        headLvl->info.arr[bot[i].pm.baris][bot[i].pm.kolom] = 9;
+                    }else if(headLvl->info.arr[bot[i].pm.baris][bot[i].pm.kolom] == 1){
                         bot[i].movement = KEY_UP;
-                    }else if(isFalling(headLvl->info.arr,bot[i].pm.baris, bot[i].pm.kolom) && !isSliding(headLvl->info.arr, bot[i].pm.baris, bot[i].pm.kolom)){
+                    }else if(isFalling(headLvl->info.arr, bot[i].koor.X, bot[i].koor.Y) && !isSliding(headLvl->info.arr, bot[i].koor.X, bot[i].koor.Y)){
                         //jika sedang jatuh maka bot[i].movement dianggap bernilai 'S', atau sama dengan sedang bergerak ke bawah
                         bot[i].movement = FALL;
                     }else if(!isSamePos(bot[i].pm, player.pm)){
+
                         bot[i].movement = A_Star(headLvl->info.arr, bot[i].pm, player.pm, i, bot, headLvl->info.jmlBot);
+
                     }
+
 
                 }
                 for(int i = 0; i < headLvl->info.jmlBot; i++) playerMovement(headLvl->info.arr, &qLubang, &bot[i]);
@@ -198,7 +202,7 @@ void permainan(){
             Bot_Speed = !Bot_Speed;
 
             // Cek apa semua koin sudah terkumpul
-            if(!adakoin(headLvl->info.arr) && (headLvl->info.arr[headLvl->info.exitPos.baris][headLvl->info.exitPos.kolom].info != 5)) keluarPintuExit(&(headLvl->info), block);
+            if(!adakoin(headLvl->info.arr) && (headLvl->info.arr[headLvl->info.exitPos.baris][headLvl->info.exitPos.kolom] != 5)) keluarPintuExit(&(headLvl->info), block);
 
             // Cek apabila player sudah ada di pintu exit
             if(done(headLvl->info.arr, player.pm.baris, player.pm.kolom))

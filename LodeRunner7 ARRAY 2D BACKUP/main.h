@@ -67,14 +67,6 @@ typedef struct{
     int urutan = -1;
 }lubang;            //data satu lubang hasil dilempar bom
 
-//typedef struct{
-//    lubang dt_lubang[20];
-//    int Count;
-//    int MaxSize;
-//    int Front;
-//    int Back;
-//}arrayQueue;            //queue alokasi statis untuk menampung data lubang
-
 struct tElmtQueueLubang{
     lubang info;
     tElmtQueueLubang* next;
@@ -142,7 +134,7 @@ typedef struct{
 
 typedef struct{
     int lv;
-    tElmtGrid arr[BARIS][KOLOM];
+    int arr[BARIS][KOLOM];
     posisiMatriks exitPos;
     posisiMatriks playerPos;
     posisiMatriks botPos[5];
