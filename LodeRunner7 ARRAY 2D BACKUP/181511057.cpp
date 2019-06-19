@@ -237,11 +237,11 @@ void drawMovement(int arr[BARIS][KOLOM], spriteInfo* player, blockSprite block, 
     }
 }
 
-void drawBotArray(int arr[BARIS][KOLOM], spriteInfo bot[], int nBot, blockSprite block, spriteAnim anim){
-    for(int i = 0; i < nBot; i++) drawMovement(arr, &bot[i], block, anim);
+void drawAllBot(int arr[BARIS][KOLOM], ListSprite bot, blockSprite block, spriteAnim anim){
+    for(tElmtListSprite* cur = bot.head; cur != NULL; cur = cur->next) drawMovement(arr, &(cur->info), block, anim);
 }
 
-void drawStage(int arr[BARIS][KOLOM], koordinat player, spriteInfo bot[], int nBot, blockSprite block, spriteAnim animBot, spriteAnim animPlayer){
+void drawStage(int arr[BARIS][KOLOM], koordinat player, ListSprite bot, blockSprite block, spriteAnim animBot, spriteAnim animPlayer){
     int urutan = 0;
     for(int i=0; i<BARIS; i++){
         for(int j=0; j<KOLOM; j++){
@@ -263,7 +263,7 @@ void drawStage(int arr[BARIS][KOLOM], koordinat player, spriteInfo bot[], int nB
     }
 
     //penggambaran bot
-    drawBotArray(arr, bot, nBot, block, animBot);
+    drawAllBot(arr, bot, block, animBot);
 
     //penggambaran player
     drawAnimRunningRight(player.X, player.Y, &urutan, animPlayer);
@@ -443,7 +443,9 @@ infoLevel readFileLevel(char file[]){
         fscanf(pf, "%d %d\n", &(level.playerPos.baris), &(level.playerPos.kolom));
         fscanf(pf, "%d\n", &(level.jmlBot));
         for(int i = 0; i < level.jmlBot; i++){
-            fscanf(pf, "%d %d\n", &(level.botPos[i].baris), &(level.botPos[i].kolom));
+            posisiMatriks temp;
+            fscanf(pf, "%d %d\n", &(temp.baris), &(temp.kolom));
+            push(&level.botPos, temp);
         }
     }
     fclose(pf);
@@ -607,8 +609,10 @@ void printStats(infoLevel level, spriteInfo player, clock_t Start, clock_t End, 
     }
     printf("Pintu Exit : %d %d\n", level.exitPos);
     printf("Posisi Player : %d %d\n", level.playerPos);
-    for(int i = 0; i < level.jmlBot; i++){
-        printf("Posisi Bot %d : %d %d\n", i+1, level.botPos[i]);
+    int count = 1;
+    for(tElmtListPosMatriks* i = level.botPos.head; i != NULL; i = i->next){
+        printf("Posisi Bot %d : %d %d\n", count, i->info);
+        count++;
     }
     printf("Durasi : %lf\n", (End - Start)/(double) CLOCKS_PER_SEC);
 
@@ -755,8 +759,8 @@ void eraseDrawing(spriteInfo* player){
     }
 }
 
-void eraseBotArray(spriteInfo bot[], int n){
-    for(int i = 0; i < n; i++) eraseDrawing(&bot[i]);
+void eraseAllBotDrawing(ListSprite bot){
+    for(tElmtListSprite* cur = bot.head; cur != NULL; cur = cur->next) eraseDrawing(&(cur->info));
 }
 
 void sortFileHighScore(){
@@ -876,14 +880,13 @@ void tampil_lives(int lives){
     outtextxy(WINDOWS_WIDTH-550,WINDOWS_HEIGHT-40,"LIVES:");
 }
 
-void generateGrid(tElmtGrid grid[BARIS][KOLOM], int arr[BARIS][KOLOM], int botIndex, spriteInfo bot[], int jmlBot){
+void generateGrid(tElmtGrid grid[BARIS][KOLOM], int arr[BARIS][KOLOM], posisiMatriks curBot, ListSprite bot){
 
     for(int i = 0; i < BARIS; i++){
         for(int j = 0; j < KOLOM; j++){
             grid[i][j].info = arr[i][j];
         }
     }
-
     for(int j = 0; j< KOLOM; j++){
         for(int i = 0; i < BARIS; i++){
             grid[i][j].pos.kolom = j;
@@ -899,14 +902,16 @@ void generateGrid(tElmtGrid grid[BARIS][KOLOM], int arr[BARIS][KOLOM], int botIn
                 grid[i][j].blocked = false;
             }
 
-            for(int i = 0; i < jmlBot; i++){
-                if(i != botIndex) grid[bot[i].pm.baris][bot[i].pm.kolom].blocked = true;
+            for(tElmtListSprite* cur = bot.head; cur != NULL; cur = cur->next){
+                if(!isSamePos(cur->info.pm, curBot)) grid[cur->info.pm.baris][cur->info.pm.kolom].blocked = true;
             }
         }
     }
+
+
 }
 
-char A_Star(int arr[BARIS][KOLOM], posisiMatriks start, posisiMatriks end, int botIndex, spriteInfo bot[], int jmlBot){
+char A_Star(int arr[BARIS][KOLOM], posisiMatriks start, posisiMatriks end, ListSprite bot){
     // Mulai A Star Pathfinding (4 Arah)
     tElmtGrid grid[BARIS][KOLOM];
     ListGrid openSet;           // Menampung grid yang masih harus diperiksa
@@ -918,7 +923,7 @@ char A_Star(int arr[BARIS][KOLOM], posisiMatriks start, posisiMatriks end, int b
     // Semua f, g, h di assign ke infinity (FLT_MAX)
     // Semua parent diassign ke (-1, -1) -> Tidak punya parent semua
     // Menentukan apakah path terhalangi (blocked) atau tidak
-    generateGrid(grid, arr, botIndex, bot, jmlBot);
+    generateGrid(grid, arr, start, bot);
 
     //inisiasi nilai awal grid start
     grid[start.baris][start.kolom].f = 0;
@@ -972,23 +977,22 @@ char A_Star(int arr[BARIS][KOLOM], posisiMatriks start, posisiMatriks end, int b
     /* --- Pencarian Path --- */
     // Keluar dari loop karena posisi endnya udah ketemu yaitu curNeighbor
     // Untuk nyari pathnya, ditrace dari posisi curNeighbor ke parentnya sampe parentnya udah ga ada lagi
-    ListGrid path;
+    ListPosMatriks path;
     posisiMatriks temp = curNeighbor.pos;
     while(isValidPos(grid[temp.baris][temp.kolom].parent)){
-        push(&path, grid[temp.baris][temp.kolom]);
+        push(&path, temp);
         temp = grid[temp.baris][temp.kolom].parent;
     }
-
 
     /* --- Menentukan Gerakan --- */
     // Menentukan gerakan yang harus diambil bot berdasarkan posisi path berikutnya
     if(path.head == NULL){
         return NULL;
-    }else if(path.head->info.pos.kolom > start.kolom){
+    }else if(path.head->info.kolom > start.kolom){
         return KEY_RIGHT;
-    }else if (path.head->info.pos.kolom < start.kolom){
+    }else if (path.head->info.kolom < start.kolom){
         return KEY_LEFT;
-    }else if(path.head->info.pos.baris > start.baris){
+    }else if(path.head->info.baris > start.baris){
         return KEY_DOWN;
     }else{
         return KEY_UP;
@@ -1094,3 +1098,86 @@ bool isInList(ListGrid L, tElmtGrid elm){
     return false;
 }
 
+/* ----- List Sprite ----- */
+tElmtListSprite* Create_Node(spriteInfo info){
+    tElmtListSprite* pNew;
+    pNew = (tElmtListSprite*) malloc(sizeof(tElmtListSprite));
+    pNew->info = info;
+    pNew->next = NULL;
+    return pNew;
+}
+
+void push(ListSprite* L, spriteInfo elm){
+    if(L->head == NULL){
+        L->head = Create_Node(elm);
+    }else{
+        tElmtListSprite* pNew;
+        pNew = Create_Node(elm);
+        pNew->next = L->head;
+        L->head = pNew;
+    }
+}
+
+spriteInfo pop(ListSprite* L, spriteInfo elm){
+    tElmtListSprite* temp = L->head; spriteInfo X;
+    while(temp != NULL){
+        if((elm.pm.kolom == temp->info.pm.kolom) && (elm.pm.baris == temp->info.pm.baris)){
+            X = temp->info;
+            if(L->head == temp){
+                L->head = temp->next;
+                temp->next = NULL;
+            }else{
+                tElmtListSprite* pBfr = L->head;
+                while(pBfr->next != temp) pBfr = pBfr->next;
+                pBfr->next = temp->next;
+                temp->next = NULL;
+            }
+            free(temp);
+            return X;
+        }
+        temp = temp->next;
+    }
+    return X;
+}
+
+/* ----- List PosMatriks ----- */
+tElmtListPosMatriks* Create_Node(posisiMatriks info){
+    tElmtListPosMatriks* pNew;
+    pNew = (tElmtListPosMatriks*) malloc(sizeof(tElmtListPosMatriks));
+    pNew->info = info;
+    pNew->next = NULL;
+    return pNew;
+}
+
+void push(ListPosMatriks* L, posisiMatriks elm){
+    if(L->head == NULL){
+        L->head = Create_Node(elm);
+    }else{
+        tElmtListPosMatriks* pNew;
+        pNew = Create_Node(elm);
+        pNew->next = L->head;
+        L->head = pNew;
+    }
+}
+
+posisiMatriks pop(ListPosMatriks* L, posisiMatriks elm){
+    tElmtListPosMatriks* temp = L->head; posisiMatriks X;
+    while(temp != NULL){
+        if((elm.kolom == temp->info.kolom) && (elm.baris == temp->info.baris)){
+            X = temp->info;
+            if(L->head == temp){
+                L->head = temp->next;
+                temp->next = NULL;
+            }else{
+                tElmtListPosMatriks* pBfr = L->head;
+                while(pBfr->next != temp) pBfr = pBfr->next;
+                pBfr->next = temp->next;
+                temp->next = NULL;
+            }
+            free(temp);
+            return X;
+        }
+        temp = temp->next;
+    }
+    return X;
+}

@@ -33,16 +33,27 @@ typedef struct{
     int kolom;
 }posisiMatriks; //posisi sprite dalam matriks
 
+
+/* ----- List PosMatriks ----- */
+struct tElmtListPosMatriks{
+    posisiMatriks info;
+    tElmtListPosMatriks* next;
+};
+
+typedef struct{
+    tElmtListPosMatriks* head = NULL;
+}ListPosMatriks;
+
+
 /* ---------------------------- Struktur Data Level ---------------------------- */
 typedef struct{
     int lv;
     int arr[BARIS][KOLOM];
     posisiMatriks exitPos;
     posisiMatriks playerPos;
-    posisiMatriks botPos[5];
+    ListPosMatriks botPos;
     int jmlBot;
 }infoLevel;            //info satu level
-
 
 /* ---------------------------- Struktur Data Sprite ---------------------------- */
 typedef struct{
@@ -53,6 +64,8 @@ typedef struct{
     int urutanBom = -1;
     int lives = 3;
 }spriteInfo;                //struktur data suatu sprite
+
+
 
 typedef struct{
     void* brick;
@@ -76,12 +89,6 @@ typedef struct{
     char nama[50];
     int score = 0;
 }tUser;
-
-
-
-
-
-
 
 void tampilan_exit(double wkttotal, int score);
 void permainan();

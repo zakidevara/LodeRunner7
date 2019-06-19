@@ -1,6 +1,7 @@
 #include "181511037.h"
 #include "181511057.h"
 
+
 void drawDown(int arr[BARIS][KOLOM], int kolom, int baris, int n, blockSprite block){ //menggambar matriks sebanyak 2 block ke bawah.
     for(int i=0;i<n;i++){
         //penggambaran
@@ -81,8 +82,6 @@ void drawLeft(int arr[BARIS][KOLOM], int kolom, int baris, int n, blockSprite bl
 
 void menutama()
 {
-
-
     int mousex,mousey;
     char pil;
 
@@ -116,6 +115,7 @@ void menutama()
     outtextxy(565,420,"T");
     setvisualpage(0);
 
+    //PlaySound(TEXT("audio/Title.wav"), NULL, SND_ASYNC);
     while(1){
 
         if(ismouseclick(WM_LBUTTONDOWN)){
@@ -123,6 +123,7 @@ void menutama()
 
             //menu play
             if ((mousex > 217) && (mousex < 248)&& (mousey > 298) && (mousey < 463)){
+                //PlaySound(NULL,NULL,0);
                 permainan();
                 break;
             //menu hi score
@@ -132,6 +133,7 @@ void menutama()
                 break;
             //menu exit
             }else if ((mousex > 562) && (mousex < 594)&& (mousey > 298) && (mousey < 463)){
+                PlaySound(NULL,NULL,0);
                 setactivepage(1);
                 cleardevice();
                 settextstyle(SANS_SERIF_FONT,HORIZ_DIR,6);
