@@ -3,6 +3,7 @@
 /* NIM          : 181511057                 */
 
 #include "181511057.h"
+#include "181511003.h"
 
 /*---------------------------- Load/Animasi Sprite ----------------------------*/
 void drawAnimRunningRight(int x, int y, int* urutan, spriteAnim anim){
@@ -372,6 +373,39 @@ bool isLagiBom(int movement){ //cek apabila player sedang melempar bom atau tida
 
 /*---------------------------- Operasi untuk Queue Lubang ----------------------------*/
 
+tElmtQueueLubang* Create_Node(lubang info){
+    tElmtQueueLubang* pNew;
+    pNew = (tElmtQueueLubang*) malloc(sizeof(tElmtQueueLubang));
+    pNew->info = info;
+    pNew->next = NULL;
+    return pNew;
+}
+
+void enqueue(QueueLubang* Q, lubang info){
+    if(Q->Back == NULL){
+        Q->Back = Create_Node(info);
+        Q->Front = Q->Back;
+    }else{
+        tElmtQueueLubang* pNew = Create_Node(info);
+        Q->Back->next = pNew;
+        Q->Back = pNew;
+    }
+}
+
+lubang dequeue(QueueLubang* Q){
+    if(Q->Front != NULL){
+        lubang temp;
+        tElmtQueueLubang* pDel = Q->Front;
+
+        Q->Front = Q->Front->next;
+        if(Q->Front == NULL) Q->Back = NULL;
+
+        pDel->next = NULL;
+        temp = pDel->info;
+        free(pDel);
+        return temp;
+    }
+}
 
 void isi_kembali_lubang(int arr[BARIS][KOLOM], QueueLubang* P, clock_t wkt_sekarang, blockSprite block){
     lubang Z;
@@ -379,7 +413,7 @@ void isi_kembali_lubang(int arr[BARIS][KOLOM], QueueLubang* P, clock_t wkt_sekar
     while( (durasi > 7) && (P->Front != NULL)){   // selagi durasi antrian paling depan sudah mencapai 7 detik
         //returnBata(Z.pos.kolom*MATRIX_ELEMENT_SIZE, Z.pos.baris*MATRIX_ELEMENT_SIZE, (Z.pos.kolom+1)*MATRIX_ELEMENT_SIZE, (Z.pos.baris+1)*MATRIX_ELEMENT_SIZE, &(Z.urutan));
 
-        Z = P->dequeue();                        //keluarkan data lubang dari antrian dan tampung di variabel Z
+        Z = dequeue(P);                       //keluarkan data lubang dari antrian dan tampung di variabel Z
         arr[Z.pos.baris][Z.pos.kolom] = 1;      //kembalikan lubang yang dikeluarkan dari antrian ke posisi semula
 
         //gambar bata yang sudah dikembalikan di posisi lubangnya di kedua page
@@ -904,11 +938,11 @@ char A_Star(int arr[BARIS][KOLOM], posisiMatriks start, posisiMatriks end, int b
     grid[start.baris][start.kolom].h = 0;
 
     //push grid start ke openSet secara terurut dari kecil sampai besar
-    openSet.push_sorted(grid[start.baris][start.kolom]);
+    push_sorted(&openSet, grid[start.baris][start.kolom]);
 
     while((openSet.head != NULL) && !foundEnd){
         //cari yang f nya paling kecil di openSet lalu pop
-        cur = openSet.pop(openSet.head->info);
+        cur = pop(&openSet, openSet.head->info);
 
         double gNew, hNew, fNew;
         int dirX[] = {0,0, -1, 1};
@@ -925,7 +959,7 @@ char A_Star(int arr[BARIS][KOLOM], posisiMatriks start, posisiMatriks end, int b
                     curNeighbor.parent = cur.pos;
                     grid[tempPos.baris][tempPos.kolom] = curNeighbor;
                     foundEnd = true; break;
-                }else if(!closedSet.isInList(curNeighbor) && !curNeighbor.blocked){ // hitung nilai f kalo neighbor belum di closedlist dan neighbor bisa dilewati
+                }else if(!isInList(closedSet, curNeighbor) && !curNeighbor.blocked){ // hitung nilai f kalo neighbor belum di closedlist dan neighbor bisa dilewati
                     gNew = cur.g + 1.0;
                     hNew = abs(curNeighbor.pos.kolom - end.kolom) + abs(curNeighbor.pos.baris - end.baris);
                     fNew = gNew + hNew;
@@ -936,7 +970,7 @@ char A_Star(int arr[BARIS][KOLOM], posisiMatriks start, posisiMatriks end, int b
                         curNeighbor.h = hNew;
                         curNeighbor.parent = cur.pos;
                         grid[tempPos.baris][tempPos.kolom] = curNeighbor;
-                        openSet.push_sorted(curNeighbor);
+                        push_sorted(&openSet, curNeighbor);
 
                     }
 
@@ -944,7 +978,7 @@ char A_Star(int arr[BARIS][KOLOM], posisiMatriks start, posisiMatriks end, int b
             }
         }
         // cur dimasukkan ke closed set karena sudah di evaluasi
-        closedSet.push(cur);
+        push(&closedSet, cur);
     }
 
     /* --- Pencarian Path --- */
@@ -953,7 +987,7 @@ char A_Star(int arr[BARIS][KOLOM], posisiMatriks start, posisiMatriks end, int b
     ListGrid path;
     posisiMatriks temp = curNeighbor.pos;
     while(isValidPos(grid[temp.baris][temp.kolom].parent)){
-        path.push(grid[temp.baris][temp.kolom]);
+        push(&path, grid[temp.baris][temp.kolom]);
         temp = grid[temp.baris][temp.kolom].parent;
     }
 
@@ -1000,3 +1034,75 @@ bool isTrapped(int arr[BARIS][KOLOM], int x, int y, char spriteType){
         return false;
     }
 }
+
+/* ----- Operasi Linked List Grid ----- */
+tElmtListGrid* Create_Node(tElmtGrid info){
+        tElmtListGrid* pNew;
+        pNew = (tElmtListGrid*) malloc(sizeof(tElmtListGrid));
+        pNew->info = info;
+        pNew->next = NULL;
+        return pNew;
+}
+
+void push(ListGrid* L, tElmtGrid elm){
+    if(L->head == NULL){
+        L->head = Create_Node(elm);
+    }else{
+        tElmtListGrid* pNew;
+        pNew = Create_Node(elm);
+        pNew->next = L->head;
+        L->head = pNew;
+    }
+}
+
+void push_sorted(ListGrid* L, tElmtGrid elm){
+    if(L->head == NULL){
+        L->head = Create_Node(elm);
+    }else{
+        tElmtListGrid* pNew;
+        pNew = Create_Node(elm);
+        if(L->head->info.f >= pNew->info.f){
+            pNew->next = L->head;
+            L->head = pNew;
+        }else{
+            tElmtListGrid* temp = L->head;
+            while((temp->next != NULL) && (temp->next->info.f < pNew->info.f)) temp = temp->next;
+            pNew->next = temp->next;
+            temp->next = pNew;
+        }
+    }
+}
+
+tElmtGrid pop(ListGrid* L, tElmtGrid elm){
+    tElmtListGrid* temp = L->head; tElmtGrid X;
+    while(temp != NULL){
+        if((elm.pos.kolom == temp->info.pos.kolom) && (elm.pos.baris == temp->info.pos.baris)){
+            X = temp->info;
+            if(L->head == temp){
+                L->head = temp->next;
+                temp->next = NULL;
+            }else{
+                tElmtListGrid* pBfr = L->head;
+                while(pBfr->next != temp) pBfr = pBfr->next;
+                pBfr->next = temp->next;
+                temp->next = NULL;
+            }
+            free(temp);
+            return X;
+        }
+        temp = temp->next;
+    }
+    return X;
+}
+
+bool isInList(ListGrid L, tElmtGrid elm){
+    tElmtListGrid* temp = L.head;
+    while(temp != NULL){
+        if((temp->info.pos.kolom == elm.pos.kolom) && (temp->info.pos.baris == elm.pos.baris))
+            if(temp->info.f >= elm.f)
+                return true;
+        temp = temp->next;
+    }
+    return false;
+}
+

@@ -43,15 +43,15 @@ bool isFalling(int arr[BARIS][KOLOM], int x, int y){
     }
 }
 
-void playerMovement(int arr[BARIS][KOLOM], QueueLubang* P, spriteInfo* player){ //memindahkan posisi player dalam matriks sesuai movement yang dipilih oleh user
+void playerMovement(int arr[BARIS][KOLOM], QueueLubang* P, spriteInfo* player, int speed){ //memindahkan posisi player dalam matriks sesuai movement yang dipilih oleh user
     lubang Z;
 	switch((*player).movement){
             case KEY_UP :
             case 'W' :
             (*player).urutanBom=-1;
-            if(((*player).koor.Y-10 >= 0) && ((isClimbing(arr, player->koor.X, player->koor.Y)  && !isFalling(arr, player->koor.X, player->koor.Y-10) ) || (arr[player->pm.baris][player->pm.kolom] == 1))){
+            if(((*player).koor.Y - speed >= 0) && ((isClimbing(arr, player->koor.X, player->koor.Y)  && !isFalling(arr, player->koor.X, player->koor.Y - speed) ) || (arr[player->pm.baris][player->pm.kolom] == 1))){
                 (*player).koor.X = ((*player).pm.kolom)*MATRIX_ELEMENT_SIZE;
-                (*player).koor.Y = (*player).koor.Y - 10;
+                (*player).koor.Y = (*player).koor.Y - speed;
 			}else{
                 (*player).movement = NULL;
 			}
@@ -59,13 +59,13 @@ void playerMovement(int arr[BARIS][KOLOM], QueueLubang* P, spriteInfo* player){ 
             case KEY_DOWN :
             case 'S' :
             (*player).urutanBom=-1;
-            if(((*player).koor.Y + 10 < GAME_HEIGHT)  && ((arr[player->pm.baris+1][player->pm.kolom] == 2) ||(isClimbing(arr, player->koor.X, player->koor.Y) && !isStanding(arr, player->koor.X, player->koor.Y)) ||
+            if(((*player).koor.Y + speed < GAME_HEIGHT)  && ((arr[player->pm.baris+1][player->pm.kolom] == 2) ||(isClimbing(arr, player->koor.X, player->koor.Y) && !isStanding(arr, player->koor.X, player->koor.Y)) ||
             (isSliding(arr, player->koor.X, player->koor.Y) && !isStanding(arr, player->koor.X, player->koor.Y)) || isFalling(arr, player->koor.X, player->koor.Y))){
                 if(isSliding(arr,(*player).pm.baris,(*player).pm.kolom)){
                     (*player).koor.Y = (*player).koor.Y + MATRIX_ELEMENT_SIZE;
                 }else{
                     (*player).koor.X = ((*player).pm.kolom)*MATRIX_ELEMENT_SIZE;
-                    (*player).koor.Y = (*player).koor.Y + 10;
+                    (*player).koor.Y = (*player).koor.Y + speed;
                 }
             }else{
                 (*player).movement = NULL;
@@ -79,7 +79,7 @@ void playerMovement(int arr[BARIS][KOLOM], QueueLubang* P, spriteInfo* player){ 
                 if((isStanding(arr, player->koor.X, player->koor.Y) && !isClimbing(arr, player->koor.X, player->koor.Y)) || isSliding(arr, player->koor.X, player->koor.Y)){
                     (*player).koor.Y = ((*player).pm.baris)*MATRIX_ELEMENT_SIZE;
                 }
-                (*player).koor.X = (*player).koor.X + 10;
+                (*player).koor.X = (*player).koor.X + speed;
             }else{
                 (*player).movement = NULL;
 			}
@@ -92,7 +92,7 @@ void playerMovement(int arr[BARIS][KOLOM], QueueLubang* P, spriteInfo* player){ 
                 if((isStanding(arr, player->koor.X, player->koor.Y) && !isClimbing(arr, player->koor.X, player->koor.Y)) || isSliding(arr, player->koor.X, player->koor.Y)){
                     (*player).koor.Y = ((*player).pm.baris)*MATRIX_ELEMENT_SIZE;
                 }
-                (*player).koor.X = (*player).koor.X - 10;
+                (*player).koor.X = (*player).koor.X - speed;
             }else{
                 (*player).movement = NULL;
 			}
@@ -108,7 +108,7 @@ void playerMovement(int arr[BARIS][KOLOM], QueueLubang* P, spriteInfo* player){ 
                         if((*player).urutanBom == 4){
                             arr[(*player).pm.baris+1][(*player).pm.kolom+1] = 8;
                             Z = assign_Lubang((*player).pm.baris+1, (*player).pm.kolom+1, clock());
-                            P->enqueue(Z);
+                            enqueue(P, Z);
                         }
                     }
             	}else{
@@ -126,7 +126,7 @@ void playerMovement(int arr[BARIS][KOLOM], QueueLubang* P, spriteInfo* player){ 
                         if((*player).urutanBom == 4){
                             arr[(*player).pm.baris+1][(*player).pm.kolom-1] = 8;
                             Z = assign_Lubang((*player).pm.baris +1, (*player).pm.kolom-1, clock());
-                            P->enqueue(Z);
+                            enqueue(P, Z);
                         }
                     }
 
@@ -138,7 +138,7 @@ void playerMovement(int arr[BARIS][KOLOM], QueueLubang* P, spriteInfo* player){ 
                 (*player).urutanBom=-1;
                 if((*player).koor.Y < GAME_HEIGHT){
                     (*player).koor.X = player->pm.kolom * MATRIX_ELEMENT_SIZE;
-                    (*player).koor.Y = (*player).koor.Y + 10;
+                    (*player).koor.Y = (*player).koor.Y + speed;
                 }else{
                     (*player).movement = NULL;
                 }

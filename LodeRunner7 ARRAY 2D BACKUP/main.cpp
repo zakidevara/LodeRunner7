@@ -58,7 +58,8 @@ void permainan(){
     spriteAnim playerAnim;
     spriteAnim botAnim;
 
-    bool Bot_Speed = false;
+    int playerSpeed = 10;
+    int botSpeed = 5;
 
     /* ------------------------------------------------------------------------ */
 
@@ -139,33 +140,32 @@ void permainan(){
             }
 
             // Memproses pergerakan yang diinput user
-            playerMovement(headLvl->info.arr, &qLubang, &player);
+            playerMovement(headLvl->info.arr, &qLubang, &player, playerSpeed);
 
             //Proses pergerakan bot
-            if(Bot_Speed){
-                for(int i = 0; i < headLvl->info.jmlBot; i++){
-                    //generate movement bot
+            for(int i = 0; i < headLvl->info.jmlBot; i++){
+                //generate movement bot
 
-                    if(isTrapped(headLvl->info.arr, bot[i].koor.X, bot[i].koor.Y, 'B')){
-                        bot[i].movement = NULL;
-                        bot[i].koor.X =  bot[i].pm.kolom*MATRIX_ELEMENT_SIZE;
-                        bot[i].koor.Y =  bot[i].pm.baris*MATRIX_ELEMENT_SIZE;
-                        headLvl->info.arr[bot[i].pm.baris][bot[i].pm.kolom] = 9;
-                    }else if(headLvl->info.arr[bot[i].pm.baris][bot[i].pm.kolom] == 1){
-                        bot[i].movement = KEY_UP;
-                    }else if(isFalling(headLvl->info.arr, bot[i].koor.X, bot[i].koor.Y) && !isSliding(headLvl->info.arr, bot[i].koor.X, bot[i].koor.Y)){
-                        //jika sedang jatuh maka bot[i].movement dianggap bernilai 'S', atau sama dengan sedang bergerak ke bawah
-                        bot[i].movement = FALL;
-                    }else if(!isSamePos(bot[i].pm, player.pm)){
+                if(isTrapped(headLvl->info.arr, bot[i].koor.X, bot[i].koor.Y, 'B')){
+                    bot[i].movement = NULL;
+                    bot[i].koor.X =  bot[i].pm.kolom*MATRIX_ELEMENT_SIZE;
+                    bot[i].koor.Y =  bot[i].pm.baris*MATRIX_ELEMENT_SIZE;
+                    headLvl->info.arr[bot[i].pm.baris][bot[i].pm.kolom] = 9;
+                }else if(headLvl->info.arr[bot[i].pm.baris][bot[i].pm.kolom] == 1){
+                    bot[i].movement = KEY_UP;
+                }else if(isFalling(headLvl->info.arr, bot[i].koor.X, bot[i].koor.Y) && !isSliding(headLvl->info.arr, bot[i].koor.X, bot[i].koor.Y)){
+                    //jika sedang jatuh maka bot[i].movement dianggap bernilai 'S', atau sama dengan sedang bergerak ke bawah
+                    bot[i].movement = FALL;
+                }else if(!isSamePos(bot[i].pm, player.pm)){
 
-                        bot[i].movement = A_Star(headLvl->info.arr, bot[i].pm, player.pm, i, bot, headLvl->info.jmlBot);
-
-                    }
-
+                    bot[i].movement = A_Star(headLvl->info.arr, bot[i].pm, player.pm, i, bot, headLvl->info.jmlBot);
 
                 }
-                for(int i = 0; i < headLvl->info.jmlBot; i++) playerMovement(headLvl->info.arr, &qLubang, &bot[i]);
+
+
             }
+            for(int i = 0; i < headLvl->info.jmlBot; i++) playerMovement(headLvl->info.arr, &qLubang, &bot[i], botSpeed);
+
 
             // Print stats semua variabel yang ada jika statMode = true
             if(statMode) printStats(headLvl->info, player, wktmulai, clock(), bot, qLubang, user);
@@ -199,7 +199,6 @@ void permainan(){
             // Reset nilai player.movement
             player.movement = NULL;
 
-            Bot_Speed = !Bot_Speed;
 
             // Cek apa semua koin sudah terkumpul
             if(!adakoin(headLvl->info.arr) && (headLvl->info.arr[headLvl->info.exitPos.baris][headLvl->info.exitPos.kolom] != 5)) keluarPintuExit(&(headLvl->info), block);

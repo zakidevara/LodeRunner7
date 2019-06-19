@@ -6,10 +6,8 @@
 #define ZAKI057_H
 
 #include "main.h"
-#include "linked57.h"
 #include "181511028.h"
 #include "181511037.h"
-#include "181511003.h"
 #include "181511044.h"
 #include <float.h>
 
@@ -99,7 +97,29 @@ bool isLagiBom(int movement);
 // Cek apabila user sedang melakukan aksi melempar bom
 
 
-/*---------------------------- Operasi untuk Queue Lubang ----------------------------*/
+/*---------------------------- Struktur Data & Operasi untuk Queue Lubang ----------------------------*/
+typedef struct{
+    posisiMatriks pos;
+    clock_t start;
+    int urutan = -1;
+}lubang;            //data satu lubang hasil dilempar bom
+
+struct tElmtQueueLubang{
+    lubang info;
+    tElmtQueueLubang* next;
+};
+
+typedef struct{
+    tElmtQueueLubang* Front = NULL;
+    tElmtQueueLubang* Back = NULL;
+}QueueLubang;
+
+tElmtQueueLubang* Create_Node(lubang info);
+
+void enqueue(QueueLubang* Q, lubang info);
+
+lubang dequeue(QueueLubang* Q);
+
 lubang assign_Lubang(int baris, int kolom, clock_t waktuAwal);
 // Operasi assign nilai parameter pada variabel bertipe data lubang
 
@@ -157,6 +177,35 @@ void warnateks(int warna);
 void printStats(infoLevel level, spriteInfo player, clock_t Start, clock_t End, spriteInfo bot[], QueueLubang qLubang, tUser user);
 // print keadaan semua variabel di console
 
+/* ---------------------------- Struktur Data & Operasi List Grid ---------------------------- */
+typedef struct{
+    int info;
+    posisiMatriks pos;
+    double f;
+    double g;
+    double h;
+    bool blocked;
+    posisiMatriks parent;
+}tElmtGrid;
+
+struct tElmtListGrid{
+    tElmtGrid info;
+    tElmtListGrid* next;
+};
+
+typedef struct{
+    tElmtListGrid* head = NULL;
+}ListGrid;
+
+tElmtListGrid* Create_Node(tElmtGrid info);
+
+void push(ListGrid* L, tElmtGrid elm);
+
+void push_sorted(ListGrid* L, tElmtGrid elm);
+
+tElmtGrid pop(ListGrid* L, tElmtGrid elm);
+
+bool isInList(ListGrid L, tElmtGrid elm);
 
 /* ---------------------------- A* Path-Finding Manhattan ---------------------------- */
 void generateGrid(tElmtGrid grid[BARIS][KOLOM], int arr[BARIS][KOLOM], int botIndex, spriteInfo bot[], int jmlBot);
