@@ -420,7 +420,7 @@
 1560887016 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 (versi paling baru)\181511004.h
 	"main.h"
 
-1560948113 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 (versi paling baru)\main.h
+1560949182 c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 (versi paling baru)\main.h
 	<stdio.h>
 	<graphics.h>
 	<conio.h>
@@ -460,20 +460,20 @@
 1560887017 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 (versi paling baru)\181511044.cpp
 	"181511044.h"
 
-1560947804 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 (versi paling baru)\181511003.cpp
+1560953302 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 (versi paling baru)\181511003.cpp
 	"181511003.h"
 
-1560948488 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 (versi paling baru)\181511057.cpp
+1560949898 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 (versi paling baru)\181511057.cpp
 	"181511057.h"
 	"181511003.h"
 
-1560946860 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 (versi paling baru)\main.cpp
+1560949678 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 (versi paling baru)\main.cpp
 	"main.h"
 	"181511057.h"
 	"181511003.h"
-	"181511044.h"
-	"181511037.h"
 	"181511028.h"
+	"181511037.h"
+	"181511044.h"
 	"181511004.h"
 
 1560294395 source:c:\users\zaki devara\documents\proyek perangkat lunak 2\loderunner7 (versi paling baru)\linked57.cpp

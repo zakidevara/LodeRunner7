@@ -329,7 +329,6 @@ bool isNabrak(int arr[BARIS][KOLOM], int X, int Y, int arah){
 // Pengecekan sisi kiri dan kanan player, jika ada tembok return true dan jika tidak ada return false
 // arah = -1 kalau ke kiri dan arah = 1 kalau ke kanan
     int baris, kolom;
-
     baris = (Y +(MATRIX_ELEMENT_SIZE/2))/MATRIX_ELEMENT_SIZE;
     if(arah == 1){
         kolom = X/MATRIX_ELEMENT_SIZE;
@@ -354,11 +353,7 @@ char cekInput(char movement, bool* statMode){ //apabila nilai movement tidak ses
     case KEY_RIGHT :
     case 'X' :
     case 'Z' : return movement;
-    case '`' :  if(!(*statMode)){
-                    *statMode = true;
-                }else{
-                    *statMode = false;
-                }
+    case '`' :  *statMode = !(*statMode);
                 return NULL;
     case 27 :  getch(); return NULL; //pause
     default : return NULL;
@@ -691,7 +686,7 @@ void eraseDrawing(spriteInfo* player){
             clearviewport();
             setviewport(((*player).pm.kolom-1)*MATRIX_ELEMENT_SIZE, ((*player).pm.baris-1)*MATRIX_ELEMENT_SIZE,((*player).pm.kolom+2)*MATRIX_ELEMENT_SIZE, ((*player).pm.baris+2)*MATRIX_ELEMENT_SIZE,1);
             clearviewport();
-            setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
+            setviewport(0,0, WINDOWS_WIDTH, WINDOWS_HEIGHT,1);
             break;
     case KEY_RIGHT :
     case 'D' :
@@ -699,7 +694,7 @@ void eraseDrawing(spriteInfo* player){
             clearviewport();
             setviewport((((*player).pm.kolom-1)*MATRIX_ELEMENT_SIZE), (((*player).pm.baris-1)*MATRIX_ELEMENT_SIZE),(((*player).pm.kolom+2)*MATRIX_ELEMENT_SIZE), (((*player).pm.baris+2)*MATRIX_ELEMENT_SIZE),1);
             clearviewport();
-            setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
+            setviewport(0,0, WINDOWS_WIDTH, WINDOWS_HEIGHT,1);
             break;
     case KEY_UP :
     case 'W' :
@@ -707,7 +702,7 @@ void eraseDrawing(spriteInfo* player){
             clearviewport();
             setviewport((( (*player).pm.kolom-1)*MATRIX_ELEMENT_SIZE), (( (*player).pm.baris-1)*MATRIX_ELEMENT_SIZE),(( (*player).pm.kolom+2)*MATRIX_ELEMENT_SIZE), (( (*player).pm.baris+2)*MATRIX_ELEMENT_SIZE),1);
             clearviewport();
-            setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
+            setviewport(0,0, WINDOWS_WIDTH, WINDOWS_HEIGHT,1);
             break;
     case FALL :
     case KEY_DOWN :
@@ -716,7 +711,7 @@ void eraseDrawing(spriteInfo* player){
             clearviewport();
             setviewport((( (*player).pm.kolom-1)*MATRIX_ELEMENT_SIZE), (( (*player).pm.baris-1)*MATRIX_ELEMENT_SIZE),(( (*player).pm.kolom+2)*MATRIX_ELEMENT_SIZE), (( (*player).pm.baris+2)*MATRIX_ELEMENT_SIZE),1);
             clearviewport();
-            setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
+            setviewport(0,0, WINDOWS_WIDTH, WINDOWS_HEIGHT,1);
             break;
     case 'X' :
     //case 'M' :
@@ -724,7 +719,7 @@ void eraseDrawing(spriteInfo* player){
             clearviewport();
             setviewport((*player).koor.X, (*player).koor.Y, (*player).koor.X+MATRIX_ELEMENT_SIZE, (*player).koor.Y+MATRIX_ELEMENT_SIZE,1);
             clearviewport();
-            setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
+            setviewport(0,0, WINDOWS_WIDTH, WINDOWS_HEIGHT,1);
 
             setviewport(( (*player).pm.kolom+1)*MATRIX_ELEMENT_SIZE, ((*player).pm.baris+1)*MATRIX_ELEMENT_SIZE, ((*player).pm.kolom+2)*MATRIX_ELEMENT_SIZE, ((*player).pm.baris+2)*MATRIX_ELEMENT_SIZE,1);
             clearviewport();
@@ -732,7 +727,7 @@ void eraseDrawing(spriteInfo* player){
             if((*player).urutanBom == 3){
                 setviewport(( (*player).pm.kolom+1)*MATRIX_ELEMENT_SIZE, ((*player).pm.baris+1)*MATRIX_ELEMENT_SIZE, ((*player).pm.kolom+2)*MATRIX_ELEMENT_SIZE, ((*player).pm.baris+2)*MATRIX_ELEMENT_SIZE,1);
                 clearviewport();
-                setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
+                setviewport(0,0, WINDOWS_WIDTH, WINDOWS_HEIGHT,1);
             }
             break;
     case 'Z' :
@@ -745,18 +740,18 @@ void eraseDrawing(spriteInfo* player){
 
             setviewport(( (*player).pm.kolom-1)*MATRIX_ELEMENT_SIZE, ((*player).pm.baris+1)*MATRIX_ELEMENT_SIZE, (*player).pm.kolom*MATRIX_ELEMENT_SIZE, ((*player).pm.baris+2)*MATRIX_ELEMENT_SIZE,1);
             clearviewport();
-            setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
+            setviewport(0,0, WINDOWS_WIDTH, WINDOWS_HEIGHT,1);
 
             if((*player).urutanBom == 3){
                 setviewport(( (*player).pm.kolom-1)*MATRIX_ELEMENT_SIZE, ((*player).pm.baris+1)*MATRIX_ELEMENT_SIZE, (*player).pm.kolom*MATRIX_ELEMENT_SIZE, ((*player).pm.baris+2)*MATRIX_ELEMENT_SIZE,1);
                 clearviewport();
-                setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
+                setviewport(0,0, WINDOWS_WIDTH, WINDOWS_HEIGHT,1);
             }
             break;
     default :
             setviewport(( ((*player).pm.kolom-1)*MATRIX_ELEMENT_SIZE), (( (*player).pm.baris-1)*MATRIX_ELEMENT_SIZE),(( (*player).pm.kolom+2)*MATRIX_ELEMENT_SIZE), (( (*player).pm.baris+2)*MATRIX_ELEMENT_SIZE),1);
             clearviewport();
-            setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
+            setviewport(0,0, WINDOWS_WIDTH, WINDOWS_HEIGHT,1);
     }
 }
 
@@ -852,18 +847,14 @@ spriteAnim loadSpriteAnim(char c){ // c == 'P' untuk load animasi player, 'B' un
         }
 
         // load climbLadder animation
-        temp.climbingLadder[0] = loadSprite("images/player/Player_ClimbLadder0.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
-        temp.climbingLadder[1] = loadSprite("images/player/Player_ClimbLadder1.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
+        temp.climbingLadder[0] = loadSprite("images/bot/Bot_ClimbLadder0.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
+        temp.climbingLadder[1] = loadSprite("images/bot/Bot_ClimbLadder1.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
 
         // load climb Rope animation
-        temp.climbingRope[0] = loadSprite("images/player/Player_ClimbRope_Right0.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
-        temp.climbingRope[1] = loadSprite("images/player/Player_ClimbRope_Right1.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
-        temp.climbingRope[2] = loadSprite("images/player/Player_ClimbRope_Left0.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
-        temp.climbingRope[3] = loadSprite("images/player/Player_ClimbRope_Left1.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
-
-        // load bombing animation
-        temp.bombing[0] = loadSprite("images/player/Player_ThrowBomb_Right0.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
-        temp.bombing[1] = loadSprite("images/player/Player_ThrowBomb_Left0.gif",MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
+        temp.climbingRope[0] = loadSprite("images/bot/Bot_ClimbRope_Right0.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
+        temp.climbingRope[1] = loadSprite("images/bot/Bot_ClimbRope_Right1.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
+        temp.climbingRope[2] = loadSprite("images/bot/Bot_ClimbRope_Left0.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
+        temp.climbingRope[3] = loadSprite("images/bot/Bot_ClimbRope_Left1.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
     }
     return temp;
 }
@@ -902,9 +893,6 @@ void generateGrid(tElmtGrid grid[BARIS][KOLOM], int arr[BARIS][KOLOM], int botIn
             grid[i][j].h = FLT_MAX;
             grid[i][j].parent.baris = -1;
             grid[i][j].parent.kolom = -1;
-//            if(((isStanding(arr, i, j-1) && !isNabrak(arr, j*MATRIX_ELEMENT_SIZE, i*MATRIX_ELEMENT_SIZE, -1) && (j > 0)) || (isStanding(arr, i, j+1) && !isNabrak(arr, j*MATRIX_ELEMENT_SIZE, i*MATRIX_ELEMENT_SIZE, 1) && (j < KOLOM-1))) &&(isFalling(arr, i, j)) && (grid[i][j] != 1)){
-//                grid[i][j].blocked = false;
-//            }else
             if((((grid[i+1][j].info == 0) || (grid[i+1][j].info == 4) || (grid[i+1][j].info == 3)) && (grid[i][j].info == 0)) || (grid[i][j].info == 1) || (grid[i][j].info == 6) || (grid[i][j].info == 9)){
                 grid[i][j].blocked = true;
             }else{

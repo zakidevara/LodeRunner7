@@ -1,9 +1,10 @@
 #include "main.h"
 #include "181511057.h"
 #include "181511003.h"
-#include "181511044.h"
-#include "181511037.h"
 #include "181511028.h"
+#include "181511037.h"
+#include "181511044.h"
+
 #include "181511004.h"
 
 
@@ -157,12 +158,8 @@ void permainan(){
                     //jika sedang jatuh maka bot[i].movement dianggap bernilai 'S', atau sama dengan sedang bergerak ke bawah
                     bot[i].movement = FALL;
                 }else if(!isSamePos(bot[i].pm, player.pm)){
-
                     bot[i].movement = A_Star(headLvl->info.arr, bot[i].pm, player.pm, i, bot, headLvl->info.jmlBot);
-
                 }
-
-
             }
             for(int i = 0; i < headLvl->info.jmlBot; i++) playerMovement(headLvl->info.arr, &qLubang, &bot[i], botSpeed);
 

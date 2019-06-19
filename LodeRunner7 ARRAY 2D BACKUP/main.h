@@ -71,11 +71,6 @@ typedef struct{
 }spriteAnim;
 
 
-
-
-
-
-
 /* ---------------------------- Struktur Data User ---------------------------- */
 typedef struct{
     char nama[50];
