@@ -23,4 +23,8 @@ void tampil_skor_akhir(int skor);
 
 bool lagiNgambilKoin(int arr[BARIS][KOLOM], int baris, int kolom );
 
+void koinBot(bool* coin, int arr[BARIS][KOLOM], int baris, int kolom);
+
+void resetBot(posisiMatriks* sekarang, posisiMatriks awal, int* nyawa);
+
 #endif //  1815110044_H

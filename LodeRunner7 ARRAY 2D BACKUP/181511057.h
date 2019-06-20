@@ -22,23 +22,6 @@ spriteAnim loadSpriteAnim(char c);
 // Load gambar animasi untuk sprite player dan bot
 // parameter input : c -> 'P' == animasi player, 'B' == animasi bot
 
-/* ----- List Sprite ----- */
-struct tElmtListSprite{
-    spriteInfo info;
-    tElmtListSprite* next;
-};
-
-typedef struct{
-    tElmtListSprite* head = NULL;
-}ListSprite;
-
-tElmtListSprite* Create_Node(spriteInfo info);
-
-void push(ListSprite* L, spriteInfo elm);
-
-spriteInfo pop(ListSprite* L, spriteInfo elm);
-
-
 /* ---------------------------- Gambar Animasi Sprite ---------------------------- */
 void drawAnimRunningRight(int x,int y, int* urutan, spriteAnim anim);
 // Gambar Animasi karakter utama berlari ke kanan
@@ -71,19 +54,19 @@ void returnBata(int x1,int y1,int x2, int y2, int* urutan);
 
 
 /*---------------------------- Operasi Penggambaran ----------------------------*/
-void drawStage(int arr[BARIS][KOLOM], koordinat player, ListSprite bot, blockSprite block, spriteAnim animBot, spriteAnim animPlayer);
+void drawStage(int arr[BARIS][KOLOM], koordinat player, spriteInfo bot[], int nBot, blockSprite block, spriteAnim animBot, spriteAnim animPlayer);
 // Gambar kondisi awal suatu level
 
 void drawMovement(int arr[BARIS][KOLOM], spriteInfo* player, blockSprite block, spriteAnim anim);
 // Gambar pergerakan sprite
 
-void drawAllBot(int arr[BARIS][KOLOM], ListSprite bot, blockSprite block, spriteAnim anim);
+void drawBotArray(int arr[BARIS][KOLOM], spriteInfo bot[], int nBot, blockSprite block, spriteAnim anim);
 // Menggambar pergerakan semua sprite bot yang ada
 
 void eraseDrawing(spriteInfo* player);
 // Menghapus gambar sprite
 
-void eraseAllBotDrawing(ListSprite bot);
+void eraseBotArray(spriteInfo bot[], int n);
 // Menghapus gambar seluruh sprite bot
 
 void loading();
@@ -225,10 +208,10 @@ tElmtGrid pop(ListGrid* L, tElmtGrid elm);
 bool isInList(ListGrid L, tElmtGrid elm);
 
 /* ---------------------------- A* Path-Finding Manhattan ---------------------------- */
-void generateGrid(tElmtGrid grid[BARIS][KOLOM], int arr[BARIS][KOLOM], posisiMatriks curBot, ListSprite bot);
+void generateGrid(tElmtGrid grid[BARIS][KOLOM], int arr[BARIS][KOLOM], int botIndex, spriteInfo bot[], int jmlBot);
 // Mengisi nilai awal grid sebelum dilakukan pencarian path
 
-char A_Star(int arr[BARIS][KOLOM], posisiMatriks start, posisiMatriks end, ListSprite bot);
+char A_Star(int grid[BARIS][KOLOM], posisiMatriks start, posisiMatriks end, int botIndex, spriteInfo bot[], int jmlBot);
 // Mencari path terpendek dari posisi start ke end dan return list dari pathnya
 
 bool isSamePos(posisiMatriks pos1, posisiMatriks pos2);
@@ -238,17 +221,6 @@ bool isValidPos(posisiMatriks pos);
 // cek apabila posisi masih ada dalam range grid atau tidak
 
 bool isTrapped(int arr[BARIS][KOLOM], int x, int y, char spriteType);
-
-
-
-/* ----- List PosMatriks ----- */
-tElmtListPosMatriks* Create_Node(posisiMatriks info);
-
-void push(ListPosMatriks* L, posisiMatriks elm);
-
-posisiMatriks pop(ListPosMatriks* L, posisiMatriks elm);
-
-
 
 #endif
 
