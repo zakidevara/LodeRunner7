@@ -14,5 +14,11 @@ void drawLeft(int arr[BARIS][KOLOM], int kolom, int baris, int n, blockSprite bl
 
 void menutama();
 
+void soundGetCoin(int op);
+
+
+void soundMenuBGM(int op);
+void soundBGM(int op);
+void soundFalling(int op);
 
 #endif

@@ -7,6 +7,7 @@
 #include <ctime>
 #include <windows.h>
 #include <mmsystem.h>
+#pragma comment(lib, "winmm.lib")
 
 #define MATRIX_ELEMENT_SIZE 40
 #define BARIS 17
@@ -22,6 +23,9 @@
 #define MAX_LEVEL 5
 #define FALL 1
 
+
+#define PLAY 1
+#define STOP 0
 /* ---------------------------- Struktur Data Posisi ---------------------------- */
 typedef struct{
     int X;

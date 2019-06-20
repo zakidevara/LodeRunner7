@@ -22,7 +22,7 @@ void tampil_pause_menu(){
 
 
     rectangle(200, 150, WINDOWS_WIDTH-200, WINDOWS_HEIGHT-150);
-    settextstyle(2, 0, 8);
+    settextstyle(COMPLEX_FONT, 0, 8);
     outtextxy(450, 250, "GAME PAUSED");
     outtextxy(350, 350, "Press Any Key to Continue");
     setvisualpage(3);
@@ -111,10 +111,8 @@ void permainan(){
         for(int i = 0; i < headLvl->info.jmlBot; i++){
             bot[i].pm = headLvl->info.botPos[i];
             bot[i].koor = getKoordinat(bot[i].pm);
-            bot[i].lives = 3;
         }
 
-        //PlaySound(TEXT("audio/101-opening.wav"), NULL, SND_ASYNC);
         /* -------------- Inisiasi Page Double Buffering & Penggambaran Kondisi Awal Level -------------- */
         setactivepage(0);
         cleardevice();
@@ -123,8 +121,6 @@ void permainan(){
         setactivepage(1);
         cleardevice();
         drawStage(headLvl->info.arr, player.koor, bot, headLvl->info.jmlBot, block, botAnim, playerAnim);
-        tampil_skor(user.score);
-        tampil_level(headLvl->info.lv);
 
         setactivepage(0);
         setvisualpage(1);
@@ -134,10 +130,13 @@ void permainan(){
         /* -------------- Mulai Permainan -------------- */
         //Simpan Waktu Awal
         waktu_Awal(&wktmulai);
+
         while(true){
+            soundBGM(PLAY);
             // Proses jika player mengambil koin
             if(lagiNgambilKoin(headLvl->info.arr, player.pm.baris, player.pm.kolom)){
                 headLvl->info.arr[player.pm.baris][player.pm.kolom] = 0;
+                soundGetCoin(PLAY);
                 hitung_skor(&(user.score));
             }
             for(int i = 0; i < headLvl->info.jmlBot; i++)
@@ -148,18 +147,15 @@ void permainan(){
                     {
                         headLvl->info.arr[bot[i].pm.baris][bot[i].pm.kolom] = 0;
                         bot[i].coin = true;
-                        //PlaySound(TEXT("audio/get_coin.wav"), NULL, SND_ASYNC);
                     }
                 }
 
             }
 
-            // Menampilkan level yang sedang dimainkan
+            /* ----- Menampilkan Scorebar ----- */
+            eraseScorebar();
             tampil_level(headLvl->info.lv);
-
-            // Menampilkan score player
             tampil_skor(user.score);
-
             tampil_durasi_permainan(hitung_Waktu(wktmulai, clock()));
             tampil_lives(player.lives);
 
@@ -181,6 +177,7 @@ void permainan(){
 
             // Memproses pergerakan yang diinput user
             playerMovement(headLvl->info.arr, &qLubang, &player, playerSpeed);
+            //if(player.movement == FALL) soundFalling(PLAY);
 
             //Proses pergerakan bot
             for(int i = 0; i < headLvl->info.jmlBot; i++){
@@ -213,7 +210,10 @@ void permainan(){
                     bot[i].movement = A_Star(headLvl->info.arr, bot[i].pm, player.pm, i, bot, headLvl->info.jmlBot);
                 }
             }
-            for(int i = 0; i < headLvl->info.jmlBot; i++) playerMovement(headLvl->info.arr, &qLubang, &bot[i], botSpeed);
+            for(int i = 0; i < headLvl->info.jmlBot; i++){
+                playerMovement(headLvl->info.arr, &qLubang, &bot[i], botSpeed);
+                //if(bot[i].movement == FALL) soundFalling(PLAY);
+            }
 
 
             // Print stats semua variabel yang ada jika statMode = true
@@ -267,11 +267,9 @@ void permainan(){
             }
 
         }
-
-        //PlaySound(NULL,NULL,0);
     }
     /* ------------------- Permainan Selesai ------------------- */
-
+    soundBGM(STOP);
 
     /* ------------------- Input Nama dan Catat di Highscore ------------------- */
     inputNama(user.nama ,50);

@@ -23,7 +23,7 @@ bool isClimbing(int arr[BARIS][KOLOM], int x, int y){
 
 bool isSliding(int arr[BARIS][KOLOM], int x, int y){
     int baris2 = y/MATRIX_ELEMENT_SIZE;
-    int baris = (y + MATRIX_ELEMENT_SIZE-1)/MATRIX_ELEMENT_SIZE;
+    int baris = (y + MATRIX_ELEMENT_SIZE/2)/MATRIX_ELEMENT_SIZE;
     int kolom = (x + MATRIX_ELEMENT_SIZE/2)/MATRIX_ELEMENT_SIZE;
     if(arr[baris][kolom] == 3 && arr[baris2][kolom] == 3){
         return true;
@@ -61,8 +61,8 @@ void playerMovement(int arr[BARIS][KOLOM], QueueLubang* P, spriteInfo* player, i
             (*player).urutanBom=-1;
             if(((*player).koor.Y + speed < GAME_HEIGHT)  && ((arr[player->pm.baris+1][player->pm.kolom] == 2) ||(isClimbing(arr, player->koor.X, player->koor.Y) && !isStanding(arr, player->koor.X, player->koor.Y)) ||
             (isSliding(arr, player->koor.X, player->koor.Y) && !isStanding(arr, player->koor.X, player->koor.Y)) || isFalling(arr, player->koor.X, player->koor.Y))){
-                if(isSliding(arr,(*player).pm.baris,(*player).pm.kolom)){
-                    (*player).koor.Y = (*player).koor.Y + MATRIX_ELEMENT_SIZE;
+                if(isSliding(arr, player->koor.X, player->koor.Y)){
+                    (*player).koor.Y = (*player).koor.Y + MATRIX_ELEMENT_SIZE/2;
                 }else{
                     (*player).koor.X = ((*player).pm.kolom)*MATRIX_ELEMENT_SIZE;
                     (*player).koor.Y = (*player).koor.Y + speed;
@@ -74,8 +74,8 @@ void playerMovement(int arr[BARIS][KOLOM], QueueLubang* P, spriteInfo* player, i
             case KEY_RIGHT :
             case 'D' :
             (*player).urutanBom=-1;
-            if(((*player).koor.X < GAME_WIDTH-MATRIX_ELEMENT_SIZE) && !isNabrak(arr, (*player).koor.X, (*player).koor.Y, 1) && ((isStanding(arr, player->koor.X, player->koor.Y)==true)||
-                (isSliding(arr, player->koor.X, player->koor.Y)==true) || isClimbing(arr, player->koor.X, player->koor.Y))){
+            if(((*player).koor.X < GAME_WIDTH - MATRIX_ELEMENT_SIZE) && !isNabrak(arr, (*player).koor.X, (*player).koor.Y, 1) && ((isStanding(arr, player->koor.X, player->koor.Y) == true)||
+                (isSliding(arr, player->koor.X, player->koor.Y) == true) || isClimbing(arr, player->koor.X, player->koor.Y))){
                 if((isStanding(arr, player->koor.X, player->koor.Y) && !isClimbing(arr, player->koor.X, player->koor.Y)) || isSliding(arr, player->koor.X, player->koor.Y)){
                     (*player).koor.Y = ((*player).pm.baris)*MATRIX_ELEMENT_SIZE;
                 }
@@ -87,7 +87,7 @@ void playerMovement(int arr[BARIS][KOLOM], QueueLubang* P, spriteInfo* player, i
             case KEY_LEFT :
             case 'A' :
             (*player).urutanBom=-1;
-            if(((*player).koor.X > 0) && !isNabrak(arr, (*player).koor.X, (*player).koor.Y, -1) && ((isStanding(arr, player->koor.X, player->koor.Y)==true)||(isSliding(arr, player->koor.X, player->koor.Y)==true) ||
+            if(((*player).koor.X > 0) && !isNabrak(arr, player->koor.X, player->koor.Y, -1) && ((isStanding(arr, player->koor.X, player->koor.Y)==true)||(isSliding(arr, player->koor.X, player->koor.Y)==true) ||
                 isClimbing(arr, player->koor.X, player->koor.Y))){
                 if((isStanding(arr, player->koor.X, player->koor.Y) && !isClimbing(arr, player->koor.X, player->koor.Y)) || isSliding(arr, player->koor.X, player->koor.Y)){
                     (*player).koor.Y = ((*player).pm.baris)*MATRIX_ELEMENT_SIZE;

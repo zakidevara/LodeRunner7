@@ -69,6 +69,8 @@ void eraseDrawing(spriteInfo* player);
 void eraseBotArray(spriteInfo bot[], int n);
 // Menghapus gambar seluruh sprite bot
 
+void eraseScorebar();
+
 void loading();
 // Menggambar tampilan loading
 

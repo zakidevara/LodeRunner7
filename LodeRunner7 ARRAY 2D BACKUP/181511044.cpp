@@ -8,11 +8,6 @@ void hitung_skor(int* skor)
 void tampil_skor(int skor)
 {
     char skoor[6];
-
-    setviewport(WINDOWS_WIDTH-50,WINDOWS_HEIGHT-50, WINDOWS_WIDTH, WINDOWS_HEIGHT,1);
-    clearviewport();
-    setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
-
     sprintf(skoor,"%d", skor);
     outtextxy(WINDOWS_WIDTH-50,WINDOWS_HEIGHT-40,skoor);
     outtextxy(WINDOWS_WIDTH-150,WINDOWS_HEIGHT-40,"SCORE:");
@@ -74,9 +69,26 @@ void tampil_skor_akhir(int skor)
 }
 
 bool lagiNgambilKoin(int arr[BARIS][KOLOM], int baris, int kolom ){
-    if(arr[baris][kolom] == 4){
+
+    if(arr[baris][kolom] == 4)
+    {
         return true;
-    }else{
+    }
+    else
+    {
         return false;
     }
+}
+
+void koinBot(bool* coin, int arr[BARIS][KOLOM], int baris, int kolom)
+{
+    arr[baris-1][kolom] = 4;
+    *coin = false;
+}
+
+void resetBot(posisiMatriks* sekarang, posisiMatriks awal, int* nyawa)
+{
+    sekarang->baris = awal.baris;
+    sekarang->kolom = awal.kolom;
+    *nyawa = 3;
 }

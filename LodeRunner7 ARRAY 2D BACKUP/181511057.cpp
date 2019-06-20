@@ -279,12 +279,16 @@ void loading(){ // menampilkan tampilan loading selagi matriks digambar
     setvisualpage(3);
 }
 
+void eraseScorebar(){
+    setviewport(0,WINDOWS_HEIGHT - SCOREBAR, WINDOWS_WIDTH - 1, WINDOWS_HEIGHT - 1,1);
+    clearviewport();
+    setviewport(0,0, WINDOWS_WIDTH, WINDOWS_HEIGHT,1);
+}
+
 void tampil_level(int level){
     char levelStr[6];
 
-    setviewport(20,WINDOWS_HEIGHT-50, 150, WINDOWS_HEIGHT,1);
-    clearviewport();
-    setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
+
 
     sprintf(levelStr,"%d", level);
     outtextxy(100,WINDOWS_HEIGHT-40,levelStr);

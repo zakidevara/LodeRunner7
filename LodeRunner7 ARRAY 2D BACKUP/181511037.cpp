@@ -1,7 +1,6 @@
 #include "181511037.h"
 #include "181511057.h"
 
-
 void drawDown(int arr[BARIS][KOLOM], int kolom, int baris, int n, blockSprite block){ //menggambar matriks sebanyak 2 block ke bawah.
     for(int i=0;i<n;i++){
         //penggambaran
@@ -82,6 +81,8 @@ void drawLeft(int arr[BARIS][KOLOM], int kolom, int baris, int n, blockSprite bl
 
 void menutama()
 {
+
+
     int mousex,mousey;
     char pil;
 
@@ -115,15 +116,15 @@ void menutama()
     outtextxy(565,420,"T");
     setvisualpage(0);
 
-    //PlaySound(TEXT("audio/Title.wav"), NULL, SND_ASYNC);
-    while(1){
 
+    while(1){
+        soundMenuBGM(PLAY);
         if(ismouseclick(WM_LBUTTONDOWN)){
             getmouseclick(WM_LBUTTONDOWN, mousex, mousey);
 
             //menu play
             if ((mousex > 217) && (mousex < 248)&& (mousey > 298) && (mousey < 463)){
-                //PlaySound(NULL,NULL,0);
+                soundMenuBGM(STOP);
                 permainan();
                 break;
             //menu hi score
@@ -133,24 +134,46 @@ void menutama()
                 break;
             //menu exit
             }else if ((mousex > 562) && (mousex < 594)&& (mousey > 298) && (mousey < 463)){
-                PlaySound(NULL,NULL,0);
                 setactivepage(1);
                 cleardevice();
                 settextstyle(SANS_SERIF_FONT,HORIZ_DIR,6);
                 outtextxy(250,200,"Good Bye");
                 setvisualpage(1);
+                soundMenuBGM(STOP);
                 delay(1000);
                 exit(1);
             }
             mousex = 0;
             mousey = 0;
         }
-
-
-
-        //printf("mouse: %d, mousey: %d", mousex, mousey);
     }
 
 }
 
+void soundGetCoin(int op){
+    switch(op){
+        case 0 : mciSendString("close \"audio/get_coin.wav\"", NULL, 0, NULL); break;
+        case 1 : mciSendString("play \"audio/get_coin.wav\"", NULL, 0, NULL); break;
+    }
+}
 
+void soundMenuBGM(int op){
+    switch(op){
+        case 0 : mciSendString("close \"audio/MenuBGM.wav\"", NULL, 0, NULL); break;
+        case 1 : mciSendString("play \"audio/MenuBGM.wav\"", NULL, 0, NULL); break;
+    }
+}
+
+void soundBGM(int op){
+    switch(op){
+        case 0 : mciSendString("close \"audio/BGM.wav\"", NULL, 0, NULL); break;
+        case 1 : mciSendString("play \"audio/BGM.wav\"", NULL, 0, NULL); break;
+    }
+}
+
+void soundFalling(int op){
+    switch(op){
+        case 0 : mciSendString("close \"audio/falling2.wav\"", NULL, 0, NULL); break;
+        case 1 : mciSendString("play \"audio/falling2.wav\"", NULL, 0, NULL); break;
+    }
+}
