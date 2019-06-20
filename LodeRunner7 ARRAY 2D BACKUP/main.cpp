@@ -177,7 +177,7 @@ void permainan(){
 
             // Memproses pergerakan yang diinput user
             playerMovement(headLvl->info.arr, &qLubang, &player, playerSpeed);
-            //if(player.movement == FALL) soundFalling(PLAY);
+            if(player.movement == FALL) soundFalling(PLAY);
 
             //Proses pergerakan bot
             for(int i = 0; i < headLvl->info.jmlBot; i++){
@@ -212,7 +212,7 @@ void permainan(){
             }
             for(int i = 0; i < headLvl->info.jmlBot; i++){
                 playerMovement(headLvl->info.arr, &qLubang, &bot[i], botSpeed);
-                //if(bot[i].movement == FALL) soundFalling(PLAY);
+                if(bot[i].movement == FALL) soundFalling(PLAY);
             }
 
 

@@ -173,7 +173,7 @@ void soundBGM(int op){
 
 void soundFalling(int op){
     switch(op){
-        case 0 : mciSendString("close \"audio/falling2.wav\"", NULL, 0, NULL); break;
-        case 1 : mciSendString("play \"audio/falling2.wav\"", NULL, 0, NULL); break;
+        case 0 : mciSendString("close \"audio/falling.wav\"", NULL, 0, NULL); break;
+        case 1 : mciSendString("play \"audio/falling.wav\"", NULL, 0, NULL); break;
     }
 }
