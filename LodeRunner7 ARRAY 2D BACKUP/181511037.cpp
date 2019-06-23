@@ -116,13 +116,15 @@ void menutama()
     outtextxy(565,420,"T");
     setvisualpage(0);
 
-    while(1){
 
+    while(1){
+        soundMenuBGM(PLAY);
         if(ismouseclick(WM_LBUTTONDOWN)){
             getmouseclick(WM_LBUTTONDOWN, mousex, mousey);
 
             //menu play
             if ((mousex > 217) && (mousex < 248)&& (mousey > 298) && (mousey < 463)){
+                soundMenuBGM(STOP);
                 permainan();
                 break;
             //menu hi score
@@ -137,18 +139,41 @@ void menutama()
                 settextstyle(SANS_SERIF_FONT,HORIZ_DIR,6);
                 outtextxy(250,200,"Good Bye");
                 setvisualpage(1);
+                soundMenuBGM(STOP);
                 delay(1000);
                 exit(1);
             }
             mousex = 0;
             mousey = 0;
         }
-
-
-
-        //printf("mouse: %d, mousey: %d", mousex, mousey);
     }
 
 }
 
+void soundGetCoin(int op){
+    switch(op){
+        case 0 : mciSendString("close \"audio/get_coin.wav\"", NULL, 0, NULL); break;
+        case 1 : mciSendString("play \"audio/get_coin.wav\"", NULL, 0, NULL); break;
+    }
+}
 
+void soundMenuBGM(int op){
+    switch(op){
+        case 0 : mciSendString("close \"audio/MenuBGM.wav\"", NULL, 0, NULL); break;
+        case 1 : mciSendString("play \"audio/MenuBGM.wav\"", NULL, 0, NULL); break;
+    }
+}
+
+void soundBGM(int op){
+    switch(op){
+        case 0 : mciSendString("close \"audio/BGM.wav\"", NULL, 0, NULL); break;
+        case 1 : mciSendString("play \"audio/BGM.wav\"", NULL, 0, NULL); break;
+    }
+}
+
+void soundFalling(int op){
+    switch(op){
+        case 0 : mciSendString("close \"audio/falling.wav\"", NULL, 0, NULL); break;
+        case 1 : mciSendString("play \"audio/falling.wav\"", NULL, 0, NULL); break;
+    }
+}

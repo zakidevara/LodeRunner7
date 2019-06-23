@@ -3,6 +3,7 @@
 /* NIM          : 181511057                 */
 
 #include "181511057.h"
+#include "181511003.h"
 
 /*---------------------------- Load/Animasi Sprite ----------------------------*/
 void drawAnimRunningRight(int x, int y, int* urutan, spriteAnim anim){
@@ -145,7 +146,7 @@ void drawMovement(int arr[BARIS][KOLOM], spriteInfo* player, blockSprite block, 
             drawRight(arr, (*player).pm.kolom-1,(*player).pm.baris+1,3, block);
 
             //gambar ulang karakter utama
-            if(isSliding(arr, (*player).pm.baris, (*player).pm.kolom)){
+            if(isSliding(arr, player->koor.X, player->koor.Y)){
                 drawAnimClimbRopeLeft(player->koor.X, player->koor.Y, &(player->urutanAnimasi), anim);
             }else{
                 drawAnimRunningLeft(player->koor.X, player->koor.Y, &(player->urutanAnimasi), anim);
@@ -156,7 +157,7 @@ void drawMovement(int arr[BARIS][KOLOM], spriteInfo* player, blockSprite block, 
             drawLeft(arr, (*player).pm.kolom+1, (*player).pm.baris,4, block);
             drawLeft(arr, (*player).pm.kolom+1, (*player).pm.baris-1,3, block);
             drawLeft(arr, (*player).pm.kolom+1, (*player).pm.baris+1,3, block);
-            if(isSliding(arr, (*player).pm.baris, (*player).pm.kolom)){
+            if(isSliding(arr,  player->koor.X, player->koor.Y)){
                 drawAnimClimbRopeRight(player->koor.X, player->koor.Y, &(player->urutanAnimasi), anim);
             }else{
                 drawAnimRunningRight(player->koor.X, player->koor.Y, &(player->urutanAnimasi), anim);
@@ -175,7 +176,7 @@ void drawMovement(int arr[BARIS][KOLOM], spriteInfo* player, blockSprite block, 
             drawUp(arr, (*player).pm.kolom, (*player).pm.baris+1,4, block);
             drawUp(arr, (*player).pm.kolom+1, (*player).pm.baris+1,3, block);
             drawUp(arr, (*player).pm.kolom-1, (*player).pm.baris+1,3, block);
-            if(isClimbing(arr, (*player).pm.baris, (*player).pm.kolom)){
+            if(isClimbing(arr,  player->koor.X, player->koor.Y)){
                 drawAnimClimbLadder(player->koor.X, player->koor.Y, &(player->urutanAnimasi), anim);
             }else{
                 drawAnimRunningRight(player->koor.X, player->koor.Y, &(player->urutanAnimasi), anim);
@@ -215,10 +216,10 @@ void drawMovement(int arr[BARIS][KOLOM], spriteInfo* player, blockSprite block, 
             drawUp(arr, (*player).pm.kolom+1, (*player).pm.baris+1,3, block);
             drawUp(arr, (*player).pm.kolom-1, (*player).pm.baris+1,3, block);
             int urutan = 0;
-            if(isClimbing(arr, player->pm.baris, player->pm.kolom)){
+            if(isClimbing(arr, player->koor.X, player->koor.Y)){
                 urutan = player->urutanAnimasi;
                 drawAnimClimbLadder(player->koor.X, player->koor.Y, &urutan , anim);
-            }else if(isSliding(arr, player->pm.baris, player->pm.kolom)){
+            }else if(isSliding(arr, player->koor.X, player->koor.Y)){
                 urutan = player->urutanAnimasi;
                 if(player->urutanAnimasi > 1){
                     drawAnimClimbRopeLeft(player->koor.X, player->koor.Y, &urutan , anim);
@@ -268,7 +269,6 @@ void drawStage(int arr[BARIS][KOLOM], koordinat player, spriteInfo bot[], int nB
     drawAnimRunningRight(player.X, player.Y, &urutan, animPlayer);
 }
 
-
 void loading(){ // menampilkan tampilan loading selagi matriks digambar
     setactivepage(3);
     settextstyle(10, 0, 8);
@@ -279,23 +279,27 @@ void loading(){ // menampilkan tampilan loading selagi matriks digambar
     setvisualpage(3);
 }
 
+void eraseScorebar(){
+    setviewport(0,WINDOWS_HEIGHT - SCOREBAR, WINDOWS_WIDTH - 1, WINDOWS_HEIGHT - 1,1);
+    clearviewport();
+    setviewport(0,0, WINDOWS_WIDTH, WINDOWS_HEIGHT,1);
+}
+
 void tampil_level(int level){
     char levelStr[6];
 
-    setviewport(20,WINDOWS_HEIGHT-50, 150, WINDOWS_HEIGHT,1);
-    clearviewport();
-    setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
+
 
     sprintf(levelStr,"%d", level);
-    outtextxy(100,WINDOWS_HEIGHT-50,levelStr);
-    outtextxy(20,WINDOWS_HEIGHT-50,"LEVEL:");
+    outtextxy(100,WINDOWS_HEIGHT-40,levelStr);
+    outtextxy(20,WINDOWS_HEIGHT-40,"LEVEL:");
 }
 
 void resetAnimasiBom(int arr[BARIS][KOLOM], int barisPlayer, int kolomPlayer, int* urutan, int* urutanBom, int movement, koordinat player, blockSprite block){
     if(!isLagiBom(movement)){
         *urutanBom = -1;
-        if(arr[barisPlayer+1][kolomPlayer+1]==7){
-            arr[barisPlayer+1][kolomPlayer+1]=1;
+        if(arr[barisPlayer+1][kolomPlayer+1] == 7){
+            arr[barisPlayer+1][kolomPlayer+1] = 1;
                 setviewport((kolomPlayer+1)*MATRIX_ELEMENT_SIZE, (barisPlayer+1)*MATRIX_ELEMENT_SIZE, (kolomPlayer+2)*MATRIX_ELEMENT_SIZE, (barisPlayer+2)*MATRIX_ELEMENT_SIZE,1);
                 clearviewport();
                 setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
@@ -307,8 +311,8 @@ void resetAnimasiBom(int arr[BARIS][KOLOM], int barisPlayer, int kolomPlayer, in
                 drawUp(arr,kolomPlayer+1,barisPlayer+1,1, block);
                 swapbuffers();
         }
-        if(arr[barisPlayer+1][kolomPlayer-1]==7){
-            arr[barisPlayer+1][kolomPlayer-1]=1;
+        if(arr[barisPlayer+1][kolomPlayer-1] == 7){
+            arr[barisPlayer+1][kolomPlayer-1] = 1;
             setviewport((kolomPlayer-1)*MATRIX_ELEMENT_SIZE, (barisPlayer+1)*MATRIX_ELEMENT_SIZE, (kolomPlayer)*MATRIX_ELEMENT_SIZE, (barisPlayer+2)*MATRIX_ELEMENT_SIZE,1);
             clearviewport();
             setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
@@ -329,7 +333,6 @@ bool isNabrak(int arr[BARIS][KOLOM], int X, int Y, int arah){
 // Pengecekan sisi kiri dan kanan player, jika ada tembok return true dan jika tidak ada return false
 // arah = -1 kalau ke kiri dan arah = 1 kalau ke kanan
     int baris, kolom;
-
     baris = (Y +(MATRIX_ELEMENT_SIZE/2))/MATRIX_ELEMENT_SIZE;
     if(arah == 1){
         kolom = X/MATRIX_ELEMENT_SIZE;
@@ -337,7 +340,7 @@ bool isNabrak(int arr[BARIS][KOLOM], int X, int Y, int arah){
         kolom = (X+(MATRIX_ELEMENT_SIZE-1))/MATRIX_ELEMENT_SIZE;
     }
 
-    return (arr[baris][kolom+arah] == 1);
+    return (arr[baris][kolom+arah] == 1) || (arr[baris][kolom+arah] == 6);
 }
 
 char cekInput(char movement, bool* statMode){ //apabila nilai movement tidak sesuai dengan kontrol yang ditetapkan, maka assign movement = NULL
@@ -354,13 +357,9 @@ char cekInput(char movement, bool* statMode){ //apabila nilai movement tidak ses
     case KEY_RIGHT :
     case 'X' :
     case 'Z' : return movement;
-    case '`' :  if(!(*statMode)){
-                    *statMode = true;
-                }else{
-                    *statMode = false;
-                }
+    case '`' :  *statMode = !(*statMode);
                 return NULL;
-    case 27 :  getch(); return NULL; //pause
+    case 27 :  tampil_pause_menu(); return NULL; //pause
     default : return NULL;
 
     }
@@ -372,54 +371,56 @@ bool isLagiBom(int movement){ //cek apabila player sedang melempar bom atau tida
 
 
 /*---------------------------- Operasi untuk Queue Lubang ----------------------------*/
-arrayQueue inisiasi_queue(){ //Assign nilai awal pada struktur data queue
-    arrayQueue P;
-    (P).MaxSize = 20;
-    (P).Count = 0;
-    (P).Front = 0;
-    (P).Back = 0;
-    return P;
+
+tElmtQueueLubang* Create_Node(lubang info){
+    tElmtQueueLubang* pNew;
+    pNew = (tElmtQueueLubang*) malloc(sizeof(tElmtQueueLubang));
+    pNew->info = info;
+    pNew->next = NULL;
+    return pNew;
 }
 
-void enqueue(arrayQueue* P, lubang Z){ //memasukkan record lubang baru di antrian terakhir
-    if((*P).Count < (*P).MaxSize ){
-        (*P).dt_lubang[(*P).Back] = Z;
-        (*P).Back = ((*P).Back)+1;
-        if((*P).Back >= (*P).MaxSize){
-            (*P).Back = 0;
-        }
-        ((*P).Count)++;
+void enqueue(QueueLubang* Q, lubang info){
+    if(Q->Back == NULL){
+        Q->Back = Create_Node(info);
+        Q->Front = Q->Back;
+    }else{
+        tElmtQueueLubang* pNew = Create_Node(info);
+        Q->Back->next = pNew;
+        Q->Back = pNew;
     }
 }
 
-lubang dequeue(arrayQueue* P){ //mengeluarkan record lubang dari antrian paling depan dan return nilainya
-    lubang temp;
-    if((*P).Count != 0 ){
-        temp = (*P).dt_lubang[(*P).Front];
-        (*P).dt_lubang[(*P).Front] = free_Lubang();
-        (*P).Front = ((*P).Front)+1;
-        if((*P).Front >= (*P).MaxSize){
-            (*P).Front = 0;
-        }
-        ((*P).Count)--;
+lubang dequeue(QueueLubang* Q){
+    if(Q->Front != NULL){
+        lubang temp;
+        tElmtQueueLubang* pDel = Q->Front;
+
+        Q->Front = Q->Front->next;
+        if(Q->Front == NULL) Q->Back = NULL;
+
+        pDel->next = NULL;
+        temp = pDel->info;
+        free(pDel);
+        return temp;
     }
-    return temp;
 }
 
-void isi_kembali_lubang(int arr[BARIS][KOLOM], arrayQueue* P, clock_t wkt_sekarang, blockSprite block){
+void isi_kembali_lubang(int arr[BARIS][KOLOM], QueueLubang* P, clock_t wkt_sekarang, blockSprite block){
     lubang Z;
-    double durasi = hitung_Waktu(((*P).dt_lubang[(*P).Front].start), wkt_sekarang); //menghitung durasi = waktu sekarang - waktu lubang dibuat
-    while( (durasi > 7) && ((*P).Count > 0)){   // selagi durasi antrian paling depan sudah mencapai 7 detik
+    double durasi = hitung_Waktu(P->Front->info.start, wkt_sekarang); //menghitung durasi = waktu sekarang - waktu lubang dibuat
+    while( (durasi > 7) && (P->Front != NULL)){   // selagi durasi antrian paling depan sudah mencapai 7 detik
         //returnBata(Z.pos.kolom*MATRIX_ELEMENT_SIZE, Z.pos.baris*MATRIX_ELEMENT_SIZE, (Z.pos.kolom+1)*MATRIX_ELEMENT_SIZE, (Z.pos.baris+1)*MATRIX_ELEMENT_SIZE, &(Z.urutan));
-        Z = dequeue(P);                         //keluarkan data lubang dari antrian dan tampung di variabel Z
+
+        Z = dequeue(P);                       //keluarkan data lubang dari antrian dan tampung di variabel Z
         arr[Z.pos.baris][Z.pos.kolom] = 1;      //kembalikan lubang yang dikeluarkan dari antrian ke posisi semula
+
         //gambar bata yang sudah dikembalikan di posisi lubangnya di kedua page
-        drawUp(arr,Z.pos.kolom,Z.pos.baris,1, block);
-        swapbuffers();
-        drawUp(arr,Z.pos.kolom,Z.pos.baris,1, block);
-        swapbuffers();
+        drawUp(arr,Z.pos.kolom,Z.pos.baris,1, block); swapbuffers();
+        drawUp(arr,Z.pos.kolom,Z.pos.baris,1, block); swapbuffers();
+
         //hitung durasi lubang di antrian berikutnya
-        durasi = hitung_Waktu(((*P).dt_lubang[(*P).Front].start), wkt_sekarang);
+        if(P->Front != NULL) durasi = hitung_Waktu(P->Front->info.start, wkt_sekarang);
     }
 }
 
@@ -428,15 +429,6 @@ lubang assign_Lubang(int baris, int kolom, clock_t waktuAwal){
     (Z).pos.baris = baris;
     (Z).pos.kolom = kolom;
     (Z).start = waktuAwal;
-    return Z;
-}
-
-lubang free_Lubang(){
-    //kosongkan nilai semua subvariabel record bertipe lubang
-    lubang Z;
-    (Z).pos.baris = NULL;
-    (Z).pos.kolom = NULL;
-    (Z).start = NULL;
     return Z;
 }
 
@@ -470,6 +462,13 @@ infoLevel generateLevel(int level){
         temp = readFileLevel("level/level1.dat");break;
     case 2 :
         temp = readFileLevel("level/level2.dat");break;
+    case 3 :
+        temp = readFileLevel("level/level3.dat");break;
+    case 4 :
+        temp = readFileLevel("level/level4.dat");break;
+    case 5 :
+        temp = readFileLevel("level/level5.dat");break;
+
     }
     temp.lv = level;
     return temp;
@@ -481,6 +480,13 @@ posisiMatriks getPosisiMatriks(koordinat koor){
     posisiMatriks pos;
     (pos).kolom = (koor.X+(MATRIX_ELEMENT_SIZE/2))/MATRIX_ELEMENT_SIZE;
     (pos).baris = (koor.Y)/MATRIX_ELEMENT_SIZE;
+    return pos;
+}
+
+posisiMatriks getPosisiMatriksBot(koordinat koor){
+    posisiMatriks pos;
+    (pos).kolom = (koor.X+(MATRIX_ELEMENT_SIZE/2))/MATRIX_ELEMENT_SIZE;
+    (pos).baris = (koor.Y+(MATRIX_ELEMENT_SIZE/2))/MATRIX_ELEMENT_SIZE;
     return pos;
 }
 
@@ -575,14 +581,13 @@ void inputNama(char inputbuf[],int nchars) {
 }
 
 
-void warnateks(int warna) //modul yang berfungsi untuk memberi warna ke karakter
-{
+void warnateks(int warna) {
 	HANDLE hConsole;
 	hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(hConsole, warna);
 }
 
-void printStats(infoLevel level, spriteInfo player, clock_t Start, clock_t End, spriteInfo bot[], arrayQueue queueLubang, tUser user){
+void printStats(infoLevel level, spriteInfo player, clock_t Start, clock_t End, spriteInfo bot[], QueueLubang qLubang, tUser user){
     system("cls");
     printf("--- LEVEL ---\n");
     printf("Level : %d\n", level.lv);
@@ -624,9 +629,12 @@ void printStats(infoLevel level, spriteInfo player, clock_t Start, clock_t End, 
     }
 
     printf("\n--- QUEUE LUBANG ---\n");
-    if(queueLubang.Count != 0){
-        for(int i = queueLubang.Front; i < queueLubang.Back; i++){
-            printf("Lubang %d : -Posisi : (%d, %d) -Durasi : %lf\n", i, queueLubang.dt_lubang[i].pos, (End - queueLubang.dt_lubang[i].start)/(double) CLOCKS_PER_SEC);
+    if(qLubang.Front != NULL){
+        tElmtQueueLubang* temp = qLubang.Front;
+        int i = 1;
+        while(temp != NULL){
+            printf("Lubang %d : -Posisi : (%d, %d) -Durasi : %lf\n", i, temp->info.pos, hitung_Waktu(temp->info.start, End));
+            temp = temp->next; i++;
         }
     }else{
         printf("Tidak ada lubang\n");
@@ -637,6 +645,19 @@ void printStats(infoLevel level, spriteInfo player, clock_t Start, clock_t End, 
 
     printf("\n--- PAGE BUFFER ---\n");
     printf("Active Page : %d  Visual Page : %d", getactivepage(), getvisualpage());
+
+    printf("\n\n");
+//    for(int i = 0; i < BARIS; i++){
+//        for(int j = 0; j < KOLOM; j++){
+//            if(level.arr[i][j].blocked) {
+//                warnateks(RED);
+//            }else{
+//                warnateks(GREEN);
+//            }
+//            printf("%d ", level.arr[i][j].blocked);
+//        }
+//        printf("\n");
+//    }
 
 }
 
@@ -651,7 +672,7 @@ void* loadSprite(const char* dir, int width, int height){
 
 blockSprite loadBlockSprites(){
     blockSprite temp;
-    temp.bedrock = loadSprite("images/bedrock_horizon.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
+    temp.bedrock = loadSprite("images/bedrock.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
     temp.brick = loadSprite("images/bata.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
     temp.ladder = loadSprite("images/ladder.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
     temp.coin = loadSprite("images/coin.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
@@ -669,7 +690,7 @@ void eraseDrawing(spriteInfo* player){
             clearviewport();
             setviewport(((*player).pm.kolom-1)*MATRIX_ELEMENT_SIZE, ((*player).pm.baris-1)*MATRIX_ELEMENT_SIZE,((*player).pm.kolom+2)*MATRIX_ELEMENT_SIZE, ((*player).pm.baris+2)*MATRIX_ELEMENT_SIZE,1);
             clearviewport();
-            setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
+            setviewport(0,0, WINDOWS_WIDTH, WINDOWS_HEIGHT,1);
             break;
     case KEY_RIGHT :
     case 'D' :
@@ -677,7 +698,7 @@ void eraseDrawing(spriteInfo* player){
             clearviewport();
             setviewport((((*player).pm.kolom-1)*MATRIX_ELEMENT_SIZE), (((*player).pm.baris-1)*MATRIX_ELEMENT_SIZE),(((*player).pm.kolom+2)*MATRIX_ELEMENT_SIZE), (((*player).pm.baris+2)*MATRIX_ELEMENT_SIZE),1);
             clearviewport();
-            setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
+            setviewport(0,0, WINDOWS_WIDTH, WINDOWS_HEIGHT,1);
             break;
     case KEY_UP :
     case 'W' :
@@ -685,7 +706,7 @@ void eraseDrawing(spriteInfo* player){
             clearviewport();
             setviewport((( (*player).pm.kolom-1)*MATRIX_ELEMENT_SIZE), (( (*player).pm.baris-1)*MATRIX_ELEMENT_SIZE),(( (*player).pm.kolom+2)*MATRIX_ELEMENT_SIZE), (( (*player).pm.baris+2)*MATRIX_ELEMENT_SIZE),1);
             clearviewport();
-            setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
+            setviewport(0,0, WINDOWS_WIDTH, WINDOWS_HEIGHT,1);
             break;
     case FALL :
     case KEY_DOWN :
@@ -694,7 +715,7 @@ void eraseDrawing(spriteInfo* player){
             clearviewport();
             setviewport((( (*player).pm.kolom-1)*MATRIX_ELEMENT_SIZE), (( (*player).pm.baris-1)*MATRIX_ELEMENT_SIZE),(( (*player).pm.kolom+2)*MATRIX_ELEMENT_SIZE), (( (*player).pm.baris+2)*MATRIX_ELEMENT_SIZE),1);
             clearviewport();
-            setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
+            setviewport(0,0, WINDOWS_WIDTH, WINDOWS_HEIGHT,1);
             break;
     case 'X' :
     //case 'M' :
@@ -702,7 +723,7 @@ void eraseDrawing(spriteInfo* player){
             clearviewport();
             setviewport((*player).koor.X, (*player).koor.Y, (*player).koor.X+MATRIX_ELEMENT_SIZE, (*player).koor.Y+MATRIX_ELEMENT_SIZE,1);
             clearviewport();
-            setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
+            setviewport(0,0, WINDOWS_WIDTH, WINDOWS_HEIGHT,1);
 
             setviewport(( (*player).pm.kolom+1)*MATRIX_ELEMENT_SIZE, ((*player).pm.baris+1)*MATRIX_ELEMENT_SIZE, ((*player).pm.kolom+2)*MATRIX_ELEMENT_SIZE, ((*player).pm.baris+2)*MATRIX_ELEMENT_SIZE,1);
             clearviewport();
@@ -710,7 +731,7 @@ void eraseDrawing(spriteInfo* player){
             if((*player).urutanBom == 3){
                 setviewport(( (*player).pm.kolom+1)*MATRIX_ELEMENT_SIZE, ((*player).pm.baris+1)*MATRIX_ELEMENT_SIZE, ((*player).pm.kolom+2)*MATRIX_ELEMENT_SIZE, ((*player).pm.baris+2)*MATRIX_ELEMENT_SIZE,1);
                 clearviewport();
-                setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
+                setviewport(0,0, WINDOWS_WIDTH, WINDOWS_HEIGHT,1);
             }
             break;
     case 'Z' :
@@ -723,18 +744,18 @@ void eraseDrawing(spriteInfo* player){
 
             setviewport(( (*player).pm.kolom-1)*MATRIX_ELEMENT_SIZE, ((*player).pm.baris+1)*MATRIX_ELEMENT_SIZE, (*player).pm.kolom*MATRIX_ELEMENT_SIZE, ((*player).pm.baris+2)*MATRIX_ELEMENT_SIZE,1);
             clearviewport();
-            setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
+            setviewport(0,0, WINDOWS_WIDTH, WINDOWS_HEIGHT,1);
 
             if((*player).urutanBom == 3){
                 setviewport(( (*player).pm.kolom-1)*MATRIX_ELEMENT_SIZE, ((*player).pm.baris+1)*MATRIX_ELEMENT_SIZE, (*player).pm.kolom*MATRIX_ELEMENT_SIZE, ((*player).pm.baris+2)*MATRIX_ELEMENT_SIZE,1);
                 clearviewport();
-                setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
+                setviewport(0,0, WINDOWS_WIDTH, WINDOWS_HEIGHT,1);
             }
             break;
     default :
             setviewport(( ((*player).pm.kolom-1)*MATRIX_ELEMENT_SIZE), (( (*player).pm.baris-1)*MATRIX_ELEMENT_SIZE),(( (*player).pm.kolom+2)*MATRIX_ELEMENT_SIZE), (( (*player).pm.baris+2)*MATRIX_ELEMENT_SIZE),1);
             clearviewport();
-            setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
+            setviewport(0,0, WINDOWS_WIDTH, WINDOWS_HEIGHT,1);
     }
 }
 
@@ -830,18 +851,14 @@ spriteAnim loadSpriteAnim(char c){ // c == 'P' untuk load animasi player, 'B' un
         }
 
         // load climbLadder animation
-        temp.climbingLadder[0] = loadSprite("images/player/Player_ClimbLadder0.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
-        temp.climbingLadder[1] = loadSprite("images/player/Player_ClimbLadder1.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
+        temp.climbingLadder[0] = loadSprite("images/bot/Bot_ClimbLadder0.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
+        temp.climbingLadder[1] = loadSprite("images/bot/Bot_ClimbLadder1.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
 
         // load climb Rope animation
-        temp.climbingRope[0] = loadSprite("images/player/Player_ClimbRope_Right0.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
-        temp.climbingRope[1] = loadSprite("images/player/Player_ClimbRope_Right1.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
-        temp.climbingRope[2] = loadSprite("images/player/Player_ClimbRope_Left0.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
-        temp.climbingRope[3] = loadSprite("images/player/Player_ClimbRope_Left1.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
-
-        // load bombing animation
-        temp.bombing[0] = loadSprite("images/player/Player_ThrowBomb_Right0.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
-        temp.bombing[1] = loadSprite("images/player/Player_ThrowBomb_Left0.gif",MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
+        temp.climbingRope[0] = loadSprite("images/bot/Bot_ClimbRope_Right0.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
+        temp.climbingRope[1] = loadSprite("images/bot/Bot_ClimbRope_Right1.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
+        temp.climbingRope[2] = loadSprite("images/bot/Bot_ClimbRope_Left0.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
+        temp.climbingRope[3] = loadSprite("images/bot/Bot_ClimbRope_Left1.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
     }
     return temp;
 }
@@ -850,8 +867,8 @@ void tampil_durasi_permainan(double durasi){
     char str[10];
 
     sprintf(str,"%0.1lf", durasi);
-    outtextxy(WINDOWS_WIDTH-250,WINDOWS_HEIGHT-50,str);
-    outtextxy(WINDOWS_WIDTH-350,WINDOWS_HEIGHT-50,"TIME:");
+    outtextxy(WINDOWS_WIDTH-250,WINDOWS_HEIGHT-40,str);
+    outtextxy(WINDOWS_WIDTH-350,WINDOWS_HEIGHT-40,"TIME:");
 }
 
 
@@ -859,6 +876,232 @@ void tampil_lives(int lives){
     char str[10];
 
     sprintf(str,"%d", lives);
-    outtextxy(WINDOWS_WIDTH-450,WINDOWS_HEIGHT-50,str);
-    outtextxy(WINDOWS_WIDTH-550,WINDOWS_HEIGHT-50,"LIVES:");
+    outtextxy(WINDOWS_WIDTH-450,WINDOWS_HEIGHT-40,str);
+    outtextxy(WINDOWS_WIDTH-550,WINDOWS_HEIGHT-40,"LIVES:");
 }
+
+void generateGrid(tElmtGrid grid[BARIS][KOLOM], int arr[BARIS][KOLOM], int botIndex, spriteInfo bot[], int jmlBot){
+
+    for(int i = 0; i < BARIS; i++){
+        for(int j = 0; j < KOLOM; j++){
+            grid[i][j].info = arr[i][j];
+        }
+    }
+
+    for(int j = 0; j< KOLOM; j++){
+        for(int i = 0; i < BARIS; i++){
+            grid[i][j].pos.kolom = j;
+            grid[i][j].pos.baris = i;
+            grid[i][j].f = FLT_MAX;
+            grid[i][j].g = FLT_MAX;
+            grid[i][j].h = FLT_MAX;
+            grid[i][j].parent.baris = -1;
+            grid[i][j].parent.kolom = -1;
+            if((((grid[i+1][j].info == 0) || (grid[i+1][j].info == 4) || (grid[i+1][j].info == 3)) && (grid[i][j].info == 0)) || (grid[i][j].info == 1) || (grid[i][j].info == 6) || (grid[i][j].info == 9)){
+                grid[i][j].blocked = true;
+            }else{
+                grid[i][j].blocked = false;
+            }
+
+            for(int i = 0; i < jmlBot; i++){
+                if(i != botIndex) grid[bot[i].pm.baris][bot[i].pm.kolom].blocked = true;
+            }
+        }
+    }
+}
+
+char A_Star(int arr[BARIS][KOLOM], posisiMatriks start, posisiMatriks end, int botIndex, spriteInfo bot[], int jmlBot){
+    // Mulai A Star Pathfinding (4 Arah)
+    tElmtGrid grid[BARIS][KOLOM];
+    ListGrid openSet;           // Menampung grid yang masih harus diperiksa
+    ListGrid closedSet;         // Menampung grid yang sudah beres diperiksa
+    tElmtGrid cur;
+    tElmtGrid curNeighbor;
+    bool foundEnd = false;
+
+    // Semua f, g, h di assign ke infinity (FLT_MAX)
+    // Semua parent diassign ke (-1, -1) -> Tidak punya parent semua
+    // Menentukan apakah path terhalangi (blocked) atau tidak
+    generateGrid(grid, arr, botIndex, bot, jmlBot);
+
+    //inisiasi nilai awal grid start
+    grid[start.baris][start.kolom].f = 0;
+    grid[start.baris][start.kolom].g = 0;
+    grid[start.baris][start.kolom].h = 0;
+
+    //push grid start ke openSet secara terurut dari kecil sampai besar
+    push_sorted(&openSet, grid[start.baris][start.kolom]);
+
+    while((openSet.head != NULL) && !foundEnd){
+        //cari yang f nya paling kecil di openSet lalu pop
+        cur = pop(&openSet, openSet.head->info);
+
+        double gNew, hNew, fNew;
+        int dirX[] = {0,0, -1, 1};
+        int dirY[] = {-1,1,0,0};
+
+        // Pengecekan 4 neighbor dari cur
+        for(int i = 0; i < 4; i++){
+            posisiMatriks tempPos; //temp menampung posisi neighbor yg diperiksa
+            tempPos.baris = cur.pos.baris + dirY[i];
+            tempPos.kolom = cur.pos.kolom + dirX[i];
+            if(isValidPos(tempPos)){  //Periksa kalo posisi ini ada di dalam range matriks atau tidak
+                curNeighbor = grid[tempPos.baris][tempPos.kolom];
+                if(isSamePos(curNeighbor.pos, end)){  //kalo neighbor ini sama kayak posisi destinasi, pencarian berhenti
+                    curNeighbor.parent = cur.pos;
+                    grid[tempPos.baris][tempPos.kolom] = curNeighbor;
+                    foundEnd = true; break;
+                }else if(!isInList(closedSet, curNeighbor) && !curNeighbor.blocked){ // hitung nilai f kalo neighbor belum di closedlist dan neighbor bisa dilewati
+                    gNew = cur.g + 1.0;
+                    hNew = abs(curNeighbor.pos.kolom - end.kolom) + abs(curNeighbor.pos.baris - end.baris);
+                    fNew = gNew + hNew;
+
+                    if(curNeighbor.f == FLT_MAX || curNeighbor.f > fNew){ // Update jika f yang baru lebih kecil daripada f neighbor yg lama
+                        curNeighbor.f = fNew;
+                        curNeighbor.g = gNew;
+                        curNeighbor.h = hNew;
+                        curNeighbor.parent = cur.pos;
+                        grid[tempPos.baris][tempPos.kolom] = curNeighbor;
+                        push_sorted(&openSet, curNeighbor);
+
+                    }
+
+                }
+            }
+        }
+        // cur dimasukkan ke closed set karena sudah di evaluasi
+        push(&closedSet, cur);
+    }
+
+    /* --- Pencarian Path --- */
+    // Keluar dari loop karena posisi endnya udah ketemu yaitu curNeighbor
+    // Untuk nyari pathnya, ditrace dari posisi curNeighbor ke parentnya sampe parentnya udah ga ada lagi
+    ListGrid path;
+    posisiMatriks temp = curNeighbor.pos;
+    while(isValidPos(grid[temp.baris][temp.kolom].parent)){
+        push(&path, grid[temp.baris][temp.kolom]);
+        temp = grid[temp.baris][temp.kolom].parent;
+    }
+
+
+    /* --- Menentukan Gerakan --- */
+    // Menentukan gerakan yang harus diambil bot berdasarkan posisi path berikutnya
+    char movement;
+    if(path.head == NULL){
+        movement = NULL;
+    }else if(path.head->info.pos.kolom > start.kolom){
+        movement = KEY_RIGHT;
+    }else if (path.head->info.pos.kolom < start.kolom){
+        movement = KEY_LEFT;
+    }else if(path.head->info.pos.baris > start.baris){
+        movement = KEY_DOWN;
+    }else{
+        movement = KEY_UP;
+    }
+
+    while(path.head != NULL) pop(&path, path.head->info);
+    while(openSet.head != NULL) pop(&openSet, openSet.head->info);
+    while(closedSet.head != NULL) pop(&closedSet, closedSet.head->info);
+
+    return movement;
+}
+
+bool isSamePos(posisiMatriks pos1, posisiMatriks pos2){
+    if((pos1.kolom == pos2.kolom) && (pos1.baris == pos2.baris)){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+bool isValidPos(posisiMatriks pos){
+    if((pos.baris >= 0) && (pos.baris < BARIS) && (pos.kolom >= 0) && (pos.kolom < KOLOM)){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+bool isTrapped(int arr[BARIS][KOLOM], int x, int y, char spriteType){
+    int baris = y/MATRIX_ELEMENT_SIZE;
+    int kolom = (x + MATRIX_ELEMENT_SIZE/2)/MATRIX_ELEMENT_SIZE;
+    if(spriteType == 'B'){
+        return ((arr[baris][kolom] == 8) || (arr[baris][kolom] == 9));
+    }else if(spriteType == 'P'){
+        return (((arr[baris][kolom] == 8) || (arr[baris][kolom] == 9)) && !isFalling(arr, x, y) && isNabrak(arr, x, y, 1) && isNabrak(arr, x, y, -1));
+    }else{
+        return false;
+    }
+}
+
+/* ----- Operasi Linked List Grid ----- */
+tElmtListGrid* Create_Node(tElmtGrid info){
+        tElmtListGrid* pNew;
+        pNew = (tElmtListGrid*) malloc(sizeof(tElmtListGrid));
+        pNew->info = info;
+        pNew->next = NULL;
+        return pNew;
+}
+
+void push(ListGrid* L, tElmtGrid elm){
+    if(L->head == NULL){
+        L->head = Create_Node(elm);
+    }else{
+        tElmtListGrid* pNew;
+        pNew = Create_Node(elm);
+        pNew->next = L->head;
+        L->head = pNew;
+    }
+}
+
+void push_sorted(ListGrid* L, tElmtGrid elm){
+    if(L->head == NULL){
+        L->head = Create_Node(elm);
+    }else{
+        tElmtListGrid* pNew;
+        pNew = Create_Node(elm);
+        if(L->head->info.f >= pNew->info.f){
+            pNew->next = L->head;
+            L->head = pNew;
+        }else{
+            tElmtListGrid* temp = L->head;
+            while((temp->next != NULL) && (temp->next->info.f < pNew->info.f)) temp = temp->next;
+            pNew->next = temp->next;
+            temp->next = pNew;
+        }
+    }
+}
+
+tElmtGrid pop(ListGrid* L, tElmtGrid elm){
+    tElmtListGrid* temp = L->head; tElmtGrid X;
+    while(temp != NULL){
+        if((elm.pos.kolom == temp->info.pos.kolom) && (elm.pos.baris == temp->info.pos.baris)){
+            X = temp->info;
+            if(L->head == temp){
+                L->head = temp->next;
+                temp->next = NULL;
+            }else{
+                tElmtListGrid* pBfr = L->head;
+                while(pBfr->next != temp) pBfr = pBfr->next;
+                pBfr->next = temp->next;
+                temp->next = NULL;
+            }
+            free(temp);
+            return X;
+        }
+        temp = temp->next;
+    }
+    return X;
+}
+
+bool isInList(ListGrid L, tElmtGrid elm){
+    tElmtListGrid* temp = L.head;
+    while(temp != NULL){
+        if((temp->info.pos.kolom == elm.pos.kolom) && (temp->info.pos.baris == elm.pos.baris))
+            if(temp->info.f >= elm.f)
+                return true;
+        temp = temp->next;
+    }
+    return false;
+}
+

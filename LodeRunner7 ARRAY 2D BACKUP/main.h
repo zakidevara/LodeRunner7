@@ -7,9 +7,10 @@
 #include <ctime>
 #include <windows.h>
 #include <mmsystem.h>
+#pragma comment(lib, "winmm.lib")
 
 #define MATRIX_ELEMENT_SIZE 40
-#define BARIS 16
+#define BARIS 17
 #define KOLOM 28
 
 #define SCOREBAR 50
@@ -19,9 +20,13 @@
 #define WINDOWS_HEIGHT GAME_HEIGHT+SCOREBAR
 #define WINDOWS_WIDTH  GAME_WIDTH
 
-#define MAX_LEVEL 2
+#define MAX_LEVEL 5
 #define FALL 1
 
+
+#define PLAY 1
+#define STOP 0
+/* ---------------------------- Struktur Data Posisi ---------------------------- */
 typedef struct{
     int X;
     int Y;
@@ -32,28 +37,7 @@ typedef struct{
     int kolom;
 }posisiMatriks; //posisi sprite dalam matriks
 
-typedef struct{
-    koordinat koor;
-    posisiMatriks pm;
-    char movement = NULL;
-    int urutanAnimasi = 1;
-    int urutanBom = -1;
-}spriteInfo;                //struktur data suatu sprite
-
-typedef struct{
-    posisiMatriks pos;
-    clock_t start;
-    int urutan = -1;
-}lubang;            //data satu lubang hasil dilempar bom
-
-typedef struct{
-    lubang dt_lubang[20];
-    int Count;
-    int MaxSize;
-    int Front;
-    int Back;
-}arrayQueue;            //queue alokasi statis untuk menampung data lubang
-
+/* ---------------------------- Struktur Data Level ---------------------------- */
 typedef struct{
     int lv;
     int arr[BARIS][KOLOM];
@@ -63,11 +47,17 @@ typedef struct{
     int jmlBot;
 }infoLevel;            //info satu level
 
+
+/* ---------------------------- Struktur Data Sprite ---------------------------- */
 typedef struct{
-    char nama[50];
-    int score = 0;
+    koordinat koor;
+    posisiMatriks pm;
+    char movement = NULL;
+    int urutanAnimasi = 1;
+    int urutanBom = -1;
     int lives = 3;
-}tUser;
+    bool coin = false;
+}spriteInfo;                //struktur data suatu sprite
 
 typedef struct{
     void* brick;
@@ -84,6 +74,19 @@ typedef struct{
     void* climbingRope[4];
     void* bombing[2];
 }spriteAnim;
+
+
+/* ---------------------------- Struktur Data User ---------------------------- */
+typedef struct{
+    char nama[50];
+    int score = 0;
+}tUser;
+
+
+
+
+
+void tampil_pause_menu();
 
 void tampilan_exit(double wkttotal, int score);
 void permainan();
