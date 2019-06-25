@@ -8,7 +8,7 @@
 #include "181511004.h"
 
 
-void tampil_pause_menu(){
+void tampil_pause_menu(clock_t start, clock_t* awalPermainan){
     void* temp = (void*) malloc(imagesize(0, 0, WINDOWS_WIDTH - 1, WINDOWS_HEIGHT - 1));
     int curPage = getactivepage();
     getimage(0, 0, WINDOWS_WIDTH - 1, WINDOWS_HEIGHT - 1, temp);
@@ -22,14 +22,17 @@ void tampil_pause_menu(){
 
 
     rectangle(200, 150, WINDOWS_WIDTH-200, WINDOWS_HEIGHT-150);
-    settextstyle(COMPLEX_FONT, 0, 8);
+    settextstyle(10, 0, 2);
     outtextxy(450, 250, "GAME PAUSED");
     outtextxy(350, 350, "Press Any Key to Continue");
     setvisualpage(3);
     getch();
+    clock_t waktuPause = clock() - start;
     setactivepage(curPage);
     setvisualpage(1-curPage);
     free(temp);
+
+    *awalPermainan = *awalPermainan + waktuPause;
 }
 
 
@@ -139,6 +142,7 @@ void permainan(){
                 soundGetCoin(PLAY);
                 hitung_skor(&(user.score));
             }
+            //Proses jika bot mengambil koin
             for(int i = 0; i < headLvl->info.jmlBot; i++)
             {
                 if(bot[i].coin == false)
@@ -171,7 +175,7 @@ void permainan(){
                 player.movement = FALL;
             }else{
                 while(kbhit()){
-                    player.movement = cekInput(toupper(getch()), &statMode);
+                    player.movement = cekInput(toupper(getch()), &statMode, &wktmulai);
                 }
             }
 
@@ -247,7 +251,6 @@ void permainan(){
 
             // Reset nilai player.movement
             player.movement = NULL;
-
 
             // Cek apa semua koin sudah terkumpul
             if(!adakoin(headLvl->info.arr) && (headLvl->info.arr[headLvl->info.exitPos.baris][headLvl->info.exitPos.kolom] != 5)) keluarPintuExit(&(headLvl->info), block);

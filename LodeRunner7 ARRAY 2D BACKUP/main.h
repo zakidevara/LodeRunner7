@@ -9,28 +9,36 @@
 #include <mmsystem.h>
 #pragma comment(lib, "winmm.lib")
 
+
+// Ukuran matriks map
 #define MATRIX_ELEMENT_SIZE 40
 #define BARIS 17
 #define KOLOM 28
 
+// Ukuran windows
 #define SCOREBAR 50
 #define GAME_HEIGHT BARIS*MATRIX_ELEMENT_SIZE
 #define GAME_WIDTH KOLOM*MATRIX_ELEMENT_SIZE
 
 #define WINDOWS_HEIGHT GAME_HEIGHT+SCOREBAR
-#define WINDOWS_WIDTH  GAME_WIDTH
+#define WINDOWS_WIDTH GAME_WIDTH
 
+// Jumlah level
 #define MAX_LEVEL 5
+
+// Movement
 #define FALL 1
 
-
+// Operasi sound effect & BGM
 #define PLAY 1
 #define STOP 0
+
+
 /* ---------------------------- Struktur Data Posisi ---------------------------- */
 typedef struct{
     int X;
     int Y;
-}koordinat;  //koordinat/posisi sprite dalam pixel
+}koordinat;  //koordinat/posisi sprite dalam satuan pixel
 
 typedef struct{
     int baris;
@@ -45,7 +53,7 @@ typedef struct{
     posisiMatriks playerPos;
     posisiMatriks botPos[5];
     int jmlBot;
-}infoLevel;            //info satu level
+}infoLevel;            //info satu level, berisi matriks map, posisi pintu exit, dan posisi awal player & bot
 
 
 /* ---------------------------- Struktur Data Sprite ---------------------------- */
@@ -57,7 +65,7 @@ typedef struct{
     int urutanBom = -1;
     int lives = 3;
     bool coin = false;
-}spriteInfo;                //struktur data suatu sprite
+}spriteInfo;                //struktur data sprite player & bot
 
 typedef struct{
     void* brick;
@@ -66,28 +74,25 @@ typedef struct{
     void* coin;
     void* exit;
     void* rope;
-}blockSprite;  // Sprite block
+}blockSprite;  // berisi gambar untuk block/objek dalam map
 
 typedef struct{
     void* running[16];
     void* climbingLadder[2];
     void* climbingRope[4];
     void* bombing[2];
-}spriteAnim;
+}spriteAnim;    // berisi gambar animasi sprite player & bot
 
 
 /* ---------------------------- Struktur Data User ---------------------------- */
 typedef struct{
     char nama[50];
     int score = 0;
-}tUser;
+}tUser;         //berisi nama dan skor dari pemain
 
 
 
-
-
-void tampil_pause_menu();
-
+void tampil_pause_menu(clock_t start, clock_t* awalPermainan);
 void tampilan_exit(double wkttotal, int score);
 void permainan();
 

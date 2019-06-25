@@ -9,6 +9,8 @@ void tampil_skor(int skor)
 {
     char skoor[6];
     sprintf(skoor,"%d", skor);
+
+    settextstyle(10, 0, 2);
     outtextxy(WINDOWS_WIDTH-50,WINDOWS_HEIGHT-40,skoor);
     outtextxy(WINDOWS_WIDTH-150,WINDOWS_HEIGHT-40,"SCORE:");
 }

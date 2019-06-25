@@ -92,7 +92,7 @@ bool isNabrak(int arr[BARIS][KOLOM], int X, int Y, int arah);
 // Pengecekan sisi kiri dan kanan player, jika ada tembok return true dan jika tidak ada return false
 // arah = -1 kalau ke kiri dan arah = 1 kalau ke kanan
 
-char cekInput(char movement, bool* statMode);
+char cekInput(char movement, bool* statMode, clock_t* waktuMulai);
 // Cek input yang dimasukkan, apabila tidak sesuai dengan kontrol yang sudah ditentukan return NULL
 
 bool isLagiBom(int movement);

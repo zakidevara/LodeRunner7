@@ -273,6 +273,7 @@ void loading(){ // menampilkan tampilan loading selagi matriks digambar
     setactivepage(3);
     settextstyle(10, 0, 8);
     outtextxy((WINDOWS_WIDTH/2)-250,(WINDOWS_HEIGHT/2)-450, "Lode Runner");
+
     settextstyle(10, 0, 2);
     outtextxy((WINDOWS_WIDTH/2)-75,((WINDOWS_HEIGHT-50)/2), "By Kelompok 7");
     outtextxy((WINDOWS_WIDTH/2)-150,((WINDOWS_HEIGHT-50)/2)+30, "Proyek Perangkat Lunak 2");
@@ -288,8 +289,7 @@ void eraseScorebar(){
 void tampil_level(int level){
     char levelStr[6];
 
-
-
+    settextstyle(10, 0, 2);
     sprintf(levelStr,"%d", level);
     outtextxy(100,WINDOWS_HEIGHT-40,levelStr);
     outtextxy(20,WINDOWS_HEIGHT-40,"LEVEL:");
@@ -333,17 +333,17 @@ bool isNabrak(int arr[BARIS][KOLOM], int X, int Y, int arah){
 // Pengecekan sisi kiri dan kanan player, jika ada tembok return true dan jika tidak ada return false
 // arah = -1 kalau ke kiri dan arah = 1 kalau ke kanan
     int baris, kolom;
-    baris = (Y +(MATRIX_ELEMENT_SIZE/2))/MATRIX_ELEMENT_SIZE;
+    baris = (Y + (MATRIX_ELEMENT_SIZE/2))/MATRIX_ELEMENT_SIZE;
     if(arah == 1){
         kolom = X/MATRIX_ELEMENT_SIZE;
     }else{
         kolom = (X+(MATRIX_ELEMENT_SIZE-1))/MATRIX_ELEMENT_SIZE;
     }
 
-    return (arr[baris][kolom+arah] == 1) || (arr[baris][kolom+arah] == 6);
+    return (arr[baris][kolom + arah] == 1) || (arr[baris][kolom + arah] == 6);
 }
 
-char cekInput(char movement, bool* statMode){ //apabila nilai movement tidak sesuai dengan kontrol yang ditetapkan, maka assign movement = NULL
+char cekInput(char movement, bool* statMode, clock_t* waktuMulai){ //apabila nilai movement tidak sesuai dengan kontrol yang ditetapkan, maka assign movement = NULL
     switch(movement){
     case 'W' :
     case 'S' :
@@ -359,14 +359,15 @@ char cekInput(char movement, bool* statMode){ //apabila nilai movement tidak ses
     case 'Z' : return movement;
     case '`' :  *statMode = !(*statMode);
                 return NULL;
-    case 27 :  tampil_pause_menu(); return NULL; //pause
+    case 27 :   tampil_pause_menu(clock(), waktuMulai);
+                return NULL; //pause
     default : return NULL;
 
     }
 }
 
 bool isLagiBom(int movement){ //cek apabila player sedang melempar bom atau tidak
-    return ((movement=='M')||(movement=='N')||(movement=='Z')||(movement=='X'));
+    return ((movement=='Z')||(movement=='X'));
 }
 
 
@@ -867,6 +868,7 @@ void tampil_durasi_permainan(double durasi){
     char str[10];
 
     sprintf(str,"%0.1lf", durasi);
+    settextstyle(10, 0, 2);
     outtextxy(WINDOWS_WIDTH-250,WINDOWS_HEIGHT-40,str);
     outtextxy(WINDOWS_WIDTH-350,WINDOWS_HEIGHT-40,"TIME:");
 }
@@ -876,6 +878,7 @@ void tampil_lives(int lives){
     char str[10];
 
     sprintf(str,"%d", lives);
+    settextstyle(10, 0, 2);
     outtextxy(WINDOWS_WIDTH-450,WINDOWS_HEIGHT-40,str);
     outtextxy(WINDOWS_WIDTH-550,WINDOWS_HEIGHT-40,"LIVES:");
 }
