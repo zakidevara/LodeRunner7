@@ -133,37 +133,9 @@ void permainan(){
         /* -------------- Mulai Permainan -------------- */
         //Simpan Waktu Awal
         waktu_Awal(&wktmulai);
-
+        settextstyle(10, 0, 2);
         while(true){
             soundBGM(PLAY);
-            // Proses jika player mengambil koin
-            if(lagiNgambilKoin(headLvl->info.arr, player.pm.baris, player.pm.kolom)){
-                headLvl->info.arr[player.pm.baris][player.pm.kolom] = 0;
-                soundGetCoin(PLAY);
-                hitung_skor(&(user.score));
-            }
-            //Proses jika bot mengambil koin
-            for(int i = 0; i < headLvl->info.jmlBot; i++)
-            {
-                if(bot[i].coin == false)
-                {
-                    if(lagiNgambilKoin(headLvl->info.arr, bot[i].pm.baris, bot[i].pm.kolom))
-                    {
-                        headLvl->info.arr[bot[i].pm.baris][bot[i].pm.kolom] = 0;
-                        bot[i].coin = true;
-                    }
-                }
-
-            }
-
-            /* ----- Menampilkan Scorebar ----- */
-            eraseScorebar();
-            tampil_level(headLvl->info.lv);
-            tampil_skor(user.score);
-            tampil_durasi_permainan(hitung_Waktu(wktmulai, clock()));
-            tampil_lives(player.lives);
-
-
             // Baca Input User
             if(isTrapped(headLvl->info.arr, player.koor.X, player.koor.Y, 'P')){
                 player.movement = NULL;
@@ -174,19 +146,14 @@ void permainan(){
                 //jika sedang jatuh maka player.movement dianggap bernilai 'S', atau sama dengan sedang bergerak ke bawah
                 player.movement = FALL;
             }else{
-                while(kbhit()){
+               while(kbhit()){
                     player.movement = cekInput(toupper(getch()), &statMode, &wktmulai);
-                }
+               }
             }
 
-            // Memproses pergerakan yang diinput user
-            playerMovement(headLvl->info.arr, &qLubang, &player, playerSpeed);
-            if(player.movement == FALL) soundFalling(PLAY);
-
-            //Proses pergerakan bot
+            //Input pergerakan bot
             for(int i = 0; i < headLvl->info.jmlBot; i++){
                 //generate movement bot
-
                 if(isTrapped(headLvl->info.arr, bot[i].koor.X, bot[i].koor.Y, 'B')){
                     bot[i].movement = NULL;
                     bot[i].koor.X =  bot[i].pm.kolom*MATRIX_ELEMENT_SIZE;
@@ -208,16 +175,50 @@ void permainan(){
                     }
 
                 }else if(isFalling(headLvl->info.arr, bot[i].koor.X, bot[i].koor.Y) && !isSliding(headLvl->info.arr, bot[i].koor.X, bot[i].koor.Y)){
-                    //jika sedang jatuh maka bot[i].movement dianggap bernilai 'S', atau sama dengan sedang bergerak ke bawah
                     bot[i].movement = FALL;
                 }else if(!isSamePos(bot[i].pm, player.pm)){
                     bot[i].movement = A_Star(headLvl->info.arr, bot[i].pm, player.pm, i, bot, headLvl->info.jmlBot);
                 }
             }
+
+             // Memproses pergerakan yang diinput user
+            playerMovement(headLvl->info.arr, &qLubang, &player, playerSpeed);
+            if(player.movement == FALL) soundFalling(PLAY);
+
             for(int i = 0; i < headLvl->info.jmlBot; i++){
                 playerMovement(headLvl->info.arr, &qLubang, &bot[i], botSpeed);
                 if(bot[i].movement == FALL) soundFalling(PLAY);
             }
+
+            // Update posisi sprite dalam matriks sesuai koordinatnya
+            player.pm = getPosisiMatriks(player.koor);
+            for(int i = 0; i < headLvl->info.jmlBot; i++){
+                bot[i].pm = getPosisiMatriksBot(bot[i].koor);
+            }
+
+            // Proses jika player mengambil koin
+            if(lagiNgambilKoin(headLvl->info.arr, player.pm.baris, player.pm.kolom)){
+                headLvl->info.arr[player.pm.baris][player.pm.kolom] = 0;
+                soundGetCoin(PLAY);
+                hitung_skor(&(user.score));
+            }
+
+            //Proses jika bot mengambil koin
+            for(int i = 0; i < headLvl->info.jmlBot; i++)
+            {
+                if(bot[i].coin == false)
+                {
+                    if(lagiNgambilKoin(headLvl->info.arr, bot[i].pm.baris, bot[i].pm.kolom))
+                    {
+                        headLvl->info.arr[bot[i].pm.baris][bot[i].pm.kolom] = 0;
+                        soundGetCoin(PLAY);
+                        bot[i].coin = true;
+                    }
+                }
+
+            }
+
+
 
 
             // Print stats semua variabel yang ada jika statMode = true
@@ -228,11 +229,12 @@ void permainan(){
                 isi_kembali_lubang(headLvl->info.arr, &qLubang, clock(), block);
             }
 
-            // Update posisi sprite dalam matriks sesuai koordinatnya
-            player.pm = getPosisiMatriks(player.koor);
-            for(int i = 0; i < headLvl->info.jmlBot; i++){
-                bot[i].pm = getPosisiMatriksBot(bot[i].koor);
-            }
+            /* ----- Menampilkan Scorebar ----- */
+            eraseScorebar();
+            tampil_level(headLvl->info.lv);
+            tampil_skor(user.score);
+            tampil_durasi_permainan(hitung_Waktu(wktmulai, clock()));
+            tampil_lives(player.lives);
 
             // Penghapusan gambar player dan bot sebelumnya
             eraseDrawing(&player);
@@ -241,10 +243,12 @@ void permainan(){
             // Penggambaran ulang player dan bot
             drawBotArray(headLvl->info.arr, bot, headLvl->info.jmlBot, block, botAnim);
             drawMovement(headLvl->info.arr, &player, block, playerAnim);
-            delay(50);
+
 
             // Reset animasi melempar bom jika player melakukan player.movement lain
             resetAnimasiBom(headLvl->info.arr, player.pm.baris, player.pm.kolom, &player.urutanAnimasi, &player.urutanBom, player.movement, player.koor, block);
+
+            delay(50);
 
             // Ganti page buffer yang digunakan
             swapbuffers();

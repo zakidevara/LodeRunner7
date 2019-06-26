@@ -289,7 +289,7 @@ void eraseScorebar(){
 void tampil_level(int level){
     char levelStr[6];
 
-    settextstyle(10, 0, 2);
+    //settextstyle(10, 0, 2);
     sprintf(levelStr,"%d", level);
     outtextxy(100,WINDOWS_HEIGHT-40,levelStr);
     outtextxy(20,WINDOWS_HEIGHT-40,"LEVEL:");
@@ -868,7 +868,7 @@ void tampil_durasi_permainan(double durasi){
     char str[10];
 
     sprintf(str,"%0.1lf", durasi);
-    settextstyle(10, 0, 2);
+    //settextstyle(10, 0, 2);
     outtextxy(WINDOWS_WIDTH-250,WINDOWS_HEIGHT-40,str);
     outtextxy(WINDOWS_WIDTH-350,WINDOWS_HEIGHT-40,"TIME:");
 }
@@ -878,7 +878,7 @@ void tampil_lives(int lives){
     char str[10];
 
     sprintf(str,"%d", lives);
-    settextstyle(10, 0, 2);
+    //settextstyle(10, 0, 2);
     outtextxy(WINDOWS_WIDTH-450,WINDOWS_HEIGHT-40,str);
     outtextxy(WINDOWS_WIDTH-550,WINDOWS_HEIGHT-40,"LIVES:");
 }
