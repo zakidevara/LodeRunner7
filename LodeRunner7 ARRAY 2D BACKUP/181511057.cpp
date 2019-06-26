@@ -343,7 +343,7 @@ bool isNabrak(int arr[BARIS][KOLOM], int X, int Y, int arah){
     return (arr[baris][kolom + arah] == 1) || (arr[baris][kolom + arah] == 6);
 }
 
-char cekInput(char movement, bool* statMode, clock_t* waktuMulai){ //apabila nilai movement tidak sesuai dengan kontrol yang ditetapkan, maka assign movement = NULL
+char cekInput(char movement, bool* statMode, clock_t* waktuMulai, QueueLubang* Q){ //apabila nilai movement tidak sesuai dengan kontrol yang ditetapkan, maka assign movement = NULL
     switch(movement){
     case 'W' :
     case 'S' :
@@ -359,14 +359,14 @@ char cekInput(char movement, bool* statMode, clock_t* waktuMulai){ //apabila nil
     case 'Z' : return movement;
     case '`' :  *statMode = !(*statMode);
                 return NULL;
-    case 27 :   tampil_pause_menu(clock(), waktuMulai);
+    case 27 :   tampil_pause_menu(clock(), waktuMulai, Q);
                 return NULL; //pause
     default : return NULL;
 
     }
 }
 
-bool isLagiBom(int movement){ //cek apabila player sedang melempar bom atau tidak
+bool isLagiBom(char movement){ //cek apabila player sedang melempar bom atau tidak
     return ((movement=='Z')||(movement=='X'));
 }
 
@@ -469,7 +469,10 @@ infoLevel generateLevel(int level){
         temp = readFileLevel("level/level4.dat");break;
     case 5 :
         temp = readFileLevel("level/level5.dat");break;
-
+    case 6 :
+        temp = readFileLevel("level/level6.dat");break;
+    case 7 :
+        temp = readFileLevel("level/level7.dat");break;
     }
     temp.lv = level;
     return temp;
@@ -535,6 +538,27 @@ void readFileHighScore(){
     getch();
 }
 
+void sortFileHighScore(){
+    FILE* hs;
+    tUser temp1, temp2;
+    int nSwap=1;
+    if((hs = fopen("highscore.dat", "rb+")) != NULL){
+        while(nSwap != 0){
+            nSwap = 0;
+            rewind(hs);
+            while((fread(&temp1, sizeof(tUser), 1, hs) == 1) && (fread(&temp2, sizeof(tUser), 1, hs))){
+                if(temp1.score < temp2.score){
+                    fseek(hs, (-2)*sizeof(tUser), SEEK_CUR);
+                    fwrite(&temp2, sizeof(tUser), 1, hs);
+                    fwrite(&temp1, sizeof(tUser), 1, hs);
+                    nSwap++;
+                }
+                fseek(hs, (-1)*sizeof(tUser), SEEK_CUR);
+            }
+        }
+    }
+}
+
 void writeFileHighScore(tUser user){
 
     FILE* hs;
@@ -544,16 +568,21 @@ void writeFileHighScore(tUser user){
     fclose(hs);
 }
 
-void inputNama(char inputbuf[],int nchars) {
+void inputNama(char inputbuf[],int nchars, int score) {
     int input_pos = 0;
     int the_end = 0;
     inputbuf[0] = '\0';
     char c;
+    char strScore[30];
+    sprintf(strScore, "SCORE    : %d", score);
+
     cleardevice();
     settextstyle(SANS_SERIF_FONT, 1, 4);
     do
     {
         outtextxy(40,40, "NAMA    : ");
+        outtextxy(40, 120, strScore);
+
         outtextxy (210,40, inputbuf);
         c = getch();
         switch(c){
@@ -648,17 +677,6 @@ void printStats(infoLevel level, spriteInfo player, clock_t Start, clock_t End, 
     printf("Active Page : %d  Visual Page : %d", getactivepage(), getvisualpage());
 
     printf("\n\n");
-//    for(int i = 0; i < BARIS; i++){
-//        for(int j = 0; j < KOLOM; j++){
-//            if(level.arr[i][j].blocked) {
-//                warnateks(RED);
-//            }else{
-//                warnateks(GREEN);
-//            }
-//            printf("%d ", level.arr[i][j].blocked);
-//        }
-//        printf("\n");
-//    }
 
 }
 
@@ -764,26 +782,7 @@ void eraseBotArray(spriteInfo bot[], int n){
     for(int i = 0; i < n; i++) eraseDrawing(&bot[i]);
 }
 
-void sortFileHighScore(){
-    FILE* hs;
-    tUser temp1, temp2;
-    int nSwap=1;
-    if((hs = fopen("highscore.dat", "rb+")) != NULL){
-        while(nSwap != 0){
-            nSwap = 0;
-            rewind(hs);
-            while((fread(&temp1, sizeof(tUser), 1, hs) == 1) && (fread(&temp2, sizeof(tUser), 1, hs))){
-                if(temp1.score < temp2.score){
-                    fseek(hs, (-2)*sizeof(tUser), SEEK_CUR);
-                    fwrite(&temp2, sizeof(tUser), 1, hs);
-                    fwrite(&temp1, sizeof(tUser), 1, hs);
-                    nSwap++;
-                }
-                fseek(hs, (-1)*sizeof(tUser), SEEK_CUR);
-            }
-        }
-    }
-}
+
 
 
 spriteAnim loadSpriteAnim(char c){ // c == 'P' untuk load animasi player, 'B' untuk load animasi bot
@@ -869,8 +868,9 @@ void tampil_durasi_permainan(double durasi){
 
     sprintf(str,"%0.1lf", durasi);
     //settextstyle(10, 0, 2);
-    outtextxy(WINDOWS_WIDTH-250,WINDOWS_HEIGHT-40,str);
+
     outtextxy(WINDOWS_WIDTH-350,WINDOWS_HEIGHT-40,"TIME:");
+    outtextxy(WINDOWS_WIDTH-250,WINDOWS_HEIGHT-40,str);
 }
 
 
@@ -879,8 +879,9 @@ void tampil_lives(int lives){
 
     sprintf(str,"%d", lives);
     //settextstyle(10, 0, 2);
-    outtextxy(WINDOWS_WIDTH-450,WINDOWS_HEIGHT-40,str);
+
     outtextxy(WINDOWS_WIDTH-550,WINDOWS_HEIGHT-40,"LIVES:");
+    outtextxy(WINDOWS_WIDTH-450,WINDOWS_HEIGHT-40,str);
 }
 
 void generateGrid(tElmtGrid grid[BARIS][KOLOM], int arr[BARIS][KOLOM], int botIndex, spriteInfo bot[], int jmlBot){
@@ -1108,3 +1109,37 @@ bool isInList(ListGrid L, tElmtGrid elm){
     return false;
 }
 
+
+void tampil_pause_menu(clock_t start, clock_t* awalPermainan, QueueLubang* Q){
+    void* temp = (void*) malloc(imagesize(0, 0, WINDOWS_WIDTH - 1, WINDOWS_HEIGHT - 1));
+    int curPage = getactivepage();
+    getimage(0, 0, WINDOWS_WIDTH - 1, WINDOWS_HEIGHT - 1, temp);
+    setactivepage(3);
+    cleardevice();
+    putimage(0, 0, temp, COPY_PUT);
+
+    setviewport(200, 150, WINDOWS_WIDTH-200, WINDOWS_HEIGHT-150, 1);
+    clearviewport();
+    setviewport(0, 0, WINDOWS_WIDTH, WINDOWS_HEIGHT, 1);
+
+
+    rectangle(200, 150, WINDOWS_WIDTH-200, WINDOWS_HEIGHT-150);
+    settextstyle(10, 0, 2);
+    outtextxy(500, 250, "GAME PAUSED");
+    //outtextxy(350, 350, "Press ESC key to EXIT");
+    outtextxy(400, 350, "Press any key to CONTINUE");
+    setvisualpage(3);
+
+    //if(getch() == 27) menutama();
+    getch();
+
+    clock_t waktuPause = clock() - start;
+
+    setactivepage(curPage);
+    setvisualpage(1-curPage);
+    free(temp);
+
+    for(tElmtQueueLubang* cur = Q->Front; cur != NULL; cur = cur->next) cur->info.start += waktuPause;
+    *awalPermainan = *awalPermainan + waktuPause;
+
+}

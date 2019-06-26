@@ -8,9 +8,12 @@ void hitung_skor(int* skor)
 void tampil_skor(int skor)
 {
     char skoor[6];
-    sprintf(skoor,"%d", skor);
 
-    //settextstyle(10, 0, 2);
+    setviewport(WINDOWS_WIDTH-50,WINDOWS_HEIGHT-50, WINDOWS_WIDTH, WINDOWS_HEIGHT,1);
+    clearviewport();
+    setviewport(0,0, WINDOWS_WIDTH,WINDOWS_HEIGHT,1);
+
+    sprintf(skoor,"%d", skor);
     outtextxy(WINDOWS_WIDTH-50,WINDOWS_HEIGHT-40,skoor);
     outtextxy(WINDOWS_WIDTH-150,WINDOWS_HEIGHT-40,"SCORE:");
 }
@@ -42,20 +45,36 @@ void tampil_Waktu(double durasi)
     outtextxy(WINDOWS_WIDTH-300,WINDOWS_HEIGHT-200,tamWaktu);
 }
 
-int hitung_skor_akhir(int skor, double durasi){
-    int total;
+int hitung_skor_akhir(int skor, double durasi, int nyawa)
+{
+    int total,htgnyawa;
 
     if(durasi >= 60)
     {
-        total = 0;
+        if(nyawa <= 0)
+        {
+            total = 0;
+        }
+        else
+        {
+            htgnyawa = nyawa*20;
+            total = 100-durasi;
+            total = total/2;
+            total = total + htgnyawa;
+        }
     }
     else
     {
-        total = 60-durasi;
-        total = total*2-10;
-        if(total <=0)
+        if(nyawa <= 0)
         {
-            total=0;
+            total = 0;
+        }
+        else
+        {
+            htgnyawa = nyawa*20;
+            total = 100-durasi;
+            total = total/2;
+            total = total + htgnyawa;
         }
     }
     return skor+total;
@@ -88,9 +107,21 @@ void koinBot(bool* coin, int arr[BARIS][KOLOM], int baris, int kolom)
     *coin = false;
 }
 
-void resetBot(posisiMatriks* sekarang, posisiMatriks awal, int* nyawa)
+void resetSprite(posisiMatriks* sekarang, posisiMatriks awal, int* nyawa)
 {
     sekarang->baris = awal.baris;
     sekarang->kolom = awal.kolom;
     *nyawa = 3;
+}
+
+bool ismeetbot(int arr[BARIS][KOLOM], spriteInfo player, spriteInfo bot[], int nBot)
+{
+	for(int i = 0; i < nBot; i++)
+    {
+        if ((player.pm.baris == bot[i].pm.baris) && (player.pm.kolom == bot[i].pm.kolom))
+        {
+            return true;
+        }
+	}
+	return false;
 }

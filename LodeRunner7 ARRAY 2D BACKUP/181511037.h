@@ -12,7 +12,7 @@ void drawRight(int arr[BARIS][KOLOM], int kolom, int baris, int n, blockSprite b
 
 void drawLeft(int arr[BARIS][KOLOM], int kolom, int baris, int n, blockSprite block);
 
-void menutama();
+
 
 void soundGetCoin(int op);
 

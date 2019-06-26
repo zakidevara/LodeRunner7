@@ -92,7 +92,7 @@ typedef struct{
 
 
 
-void tampil_pause_menu(clock_t start, clock_t* awalPermainan);
+
 void tampilan_exit(double wkttotal, int score);
 void permainan();
 

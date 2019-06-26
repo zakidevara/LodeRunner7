@@ -53,6 +53,37 @@ void returnBata(int x1,int y1,int x2, int y2, int* urutan);
 // Gambar Animasi bata saat kembali lagi
 
 
+/*---------------------------- Struktur Data & Operasi untuk Queue Lubang ----------------------------*/
+typedef struct{
+    posisiMatriks pos;
+    clock_t start;
+    int urutan = -1;
+}lubang;            //data satu lubang hasil dilempar bom
+
+struct tElmtQueueLubang{
+    lubang info;
+    tElmtQueueLubang* next;
+};      //Satu elemen list queue lubang
+
+typedef struct{
+    tElmtQueueLubang* Front = NULL;
+    tElmtQueueLubang* Back = NULL;
+}QueueLubang;
+
+tElmtQueueLubang* Create_Node(lubang info);
+
+void enqueue(QueueLubang* Q, lubang info);
+
+lubang dequeue(QueueLubang* Q);
+
+lubang assign_Lubang(int baris, int kolom, clock_t waktuAwal);
+// Operasi assign nilai parameter pada variabel bertipe data lubang
+
+void isi_kembali_lubang(int arr[BARIS][KOLOM], QueueLubang* P, clock_t wkt_sekarang, blockSprite block);
+// Pengecekan durasi pada queue paling depan
+// Apabila sudah melebihi 7 detik, maka jalankan operasi dequeue dan lubangnya dikembalikan menjadi bata
+
+
 /*---------------------------- Operasi Penggambaran ----------------------------*/
 void drawStage(int arr[BARIS][KOLOM], koordinat player, spriteInfo bot[], int nBot, blockSprite block, spriteAnim animBot, spriteAnim animPlayer);
 // Gambar kondisi awal suatu level
@@ -83,6 +114,8 @@ void tampil_durasi_permainan(double durasi);
 void tampil_lives(int lives);
 // Menampilkan jumlah nyawa yang tersisa
 
+void tampil_pause_menu(clock_t start, clock_t* awalPermainan, QueueLubang* Q);
+
 void resetAnimasiBom(int arr[BARIS][KOLOM], int barisPlayer, int kolomPlayer, int* urutan, int* urutanBom, int movement, koordinat player, blockSprite block);
 // Reset animasi bom ketika aksi melempar bom dicancel
 
@@ -92,52 +125,18 @@ bool isNabrak(int arr[BARIS][KOLOM], int X, int Y, int arah);
 // Pengecekan sisi kiri dan kanan player, jika ada tembok return true dan jika tidak ada return false
 // arah = -1 kalau ke kiri dan arah = 1 kalau ke kanan
 
-char cekInput(char movement, bool* statMode, clock_t* waktuMulai);
+char cekInput(char movement, bool* statMode, clock_t* waktuMulai, QueueLubang* Q);
 // Cek input yang dimasukkan, apabila tidak sesuai dengan kontrol yang sudah ditentukan return NULL
 
-bool isLagiBom(int movement);
-// Cek apabila user sedang melakukan aksi melempar bom
+bool isSamePos(posisiMatriks pos1, posisiMatriks pos2);
+// Cek jika kedua posisi sama atau tidak
 
+bool isValidPos(posisiMatriks pos);
+// cek apabila posisi masih ada dalam range grid atau tidak
 
-/*---------------------------- Struktur Data & Operasi untuk Queue Lubang ----------------------------*/
-typedef struct{
-    posisiMatriks pos;
-    clock_t start;
-    int urutan = -1;
-}lubang;            //data satu lubang hasil dilempar bom
+bool isTrapped(int arr[BARIS][KOLOM], int x, int y, char spriteType);
 
-struct tElmtQueueLubang{
-    lubang info;
-    tElmtQueueLubang* next;
-};
-
-typedef struct{
-    tElmtQueueLubang* Front = NULL;
-    tElmtQueueLubang* Back = NULL;
-}QueueLubang;
-
-tElmtQueueLubang* Create_Node(lubang info);
-
-void enqueue(QueueLubang* Q, lubang info);
-
-lubang dequeue(QueueLubang* Q);
-
-lubang assign_Lubang(int baris, int kolom, clock_t waktuAwal);
-// Operasi assign nilai parameter pada variabel bertipe data lubang
-
-void isi_kembali_lubang(int arr[BARIS][KOLOM], QueueLubang* P, clock_t wkt_sekarang, blockSprite block);
-// Pengecekan durasi pada queue paling depan
-// Apabila sudah melebihi 7 detik, maka jalankan operasi dequeue dan lubangnya dikembalikan menjadi bata
-
-
-/*---------------------------- Operasi Pengecekan ----------------------------*/
-bool isNabrak(int arr[BARIS][KOLOM], int X, int Y, int arah);
-// Pengecekan sisi kiri dan kanan player, jika ada tembok return true dan jika tidak ada return false
-// arah = -1 kalau ke kiri dan arah = 1 kalau ke kanan
-
-char cekInput(char movement, bool* statMode);
-// Cek input yang
-
+bool isLagiBom(char movement);
 
 /* ---------------------------- Operasi untuk Membaca dan Assign Design Level ---------------------------- */
 infoLevel readFileLevel(char file[]);
@@ -168,8 +167,8 @@ void writeFileHighScore(tUser user);
 void readFileHighScore();
 // Membaca file highscore.dat dan menampilkannya
 
-void inputNama(char inputbuf[], int nchars);
-// Input string dalam graphics.h
+void inputNama(char inputbuf[], int nchars, int score);
+// Input string dalam window graph
 
 
 /* ---------------------------- Debugging ---------------------------- */
@@ -216,13 +215,9 @@ void generateGrid(tElmtGrid grid[BARIS][KOLOM], int arr[BARIS][KOLOM], int botIn
 char A_Star(int grid[BARIS][KOLOM], posisiMatriks start, posisiMatriks end, int botIndex, spriteInfo bot[], int jmlBot);
 // Mencari path terpendek dari posisi start ke end dan return list dari pathnya
 
-bool isSamePos(posisiMatriks pos1, posisiMatriks pos2);
-// Cek jika kedua posisi sama atau tidak
 
-bool isValidPos(posisiMatriks pos);
-// cek apabila posisi masih ada dalam range grid atau tidak
 
-bool isTrapped(int arr[BARIS][KOLOM], int x, int y, char spriteType);
+
 
 #endif
 

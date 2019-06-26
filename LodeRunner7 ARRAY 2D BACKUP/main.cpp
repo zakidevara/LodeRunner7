@@ -8,32 +8,6 @@
 #include "181511004.h"
 
 
-void tampil_pause_menu(clock_t start, clock_t* awalPermainan){
-    void* temp = (void*) malloc(imagesize(0, 0, WINDOWS_WIDTH - 1, WINDOWS_HEIGHT - 1));
-    int curPage = getactivepage();
-    getimage(0, 0, WINDOWS_WIDTH - 1, WINDOWS_HEIGHT - 1, temp);
-    setactivepage(3);
-    cleardevice();
-    putimage(0, 0, temp, COPY_PUT);
-
-    setviewport(200, 150, WINDOWS_WIDTH-200, WINDOWS_HEIGHT-150, 1);
-    clearviewport();
-    setviewport(0, 0, WINDOWS_WIDTH, WINDOWS_HEIGHT, 1);
-
-
-    rectangle(200, 150, WINDOWS_WIDTH-200, WINDOWS_HEIGHT-150);
-    settextstyle(10, 0, 2);
-    outtextxy(450, 250, "GAME PAUSED");
-    outtextxy(350, 350, "Press Any Key to Continue");
-    setvisualpage(3);
-    getch();
-    clock_t waktuPause = clock() - start;
-    setactivepage(curPage);
-    setvisualpage(1-curPage);
-    free(temp);
-
-    *awalPermainan = *awalPermainan + waktuPause;
-}
 
 
 void keluarPintuExit(infoLevel* level, blockSprite block){
@@ -90,6 +64,8 @@ void permainan(){
     int playerSpeed = 10;
     int botSpeed = 5;
 
+    bool resetWaktu = true;
+
     /* ------------------------------------------------------------------------ */
 
 
@@ -106,6 +82,10 @@ void permainan(){
     playerAnim = loadSpriteAnim('P');
     botAnim = loadSpriteAnim('B');
 
+    player.pm.baris = 0;
+    player.pm.kolom = 0;
+
+    wktmulai = clock();
     while(!null(headLvl)){
         /* -------------- Assign Posisi Awal Player dan Bot -------------- */
         player.pm = headLvl->info.playerPos;
@@ -114,6 +94,7 @@ void permainan(){
         for(int i = 0; i < headLvl->info.jmlBot; i++){
             bot[i].pm = headLvl->info.botPos[i];
             bot[i].koor = getKoordinat(bot[i].pm);
+            bot[i].lives = 3;
         }
 
         /* -------------- Inisiasi Page Double Buffering & Penggambaran Kondisi Awal Level -------------- */
@@ -132,7 +113,9 @@ void permainan(){
 
         /* -------------- Mulai Permainan -------------- */
         //Simpan Waktu Awal
-        waktu_Awal(&wktmulai);
+        if(resetWaktu){
+            waktu_Awal(&wktmulai);
+        }
         settextstyle(10, 0, 2);
         while(true){
             soundBGM(PLAY);
@@ -147,7 +130,7 @@ void permainan(){
                 player.movement = FALL;
             }else{
                while(kbhit()){
-                    player.movement = cekInput(toupper(getch()), &statMode, &wktmulai);
+                    player.movement = cekInput(toupper(getch()), &statMode, &wktmulai, &qLubang);
                }
             }
 
@@ -170,11 +153,12 @@ void permainan(){
                     bot[i].koor = getKoordinat(bot[i].pm);
                     if(bot[i].lives <= 0)
                     {
-                        resetBot(&bot[i].pm, headLvl->info.botPos[i], &bot[i].lives);
+                        resetSprite(&bot[i].pm, headLvl->info.botPos[i], &bot[i].lives);
                         bot[i].koor = getKoordinat(bot[i].pm);
                     }
 
                 }else if(isFalling(headLvl->info.arr, bot[i].koor.X, bot[i].koor.Y) && !isSliding(headLvl->info.arr, bot[i].koor.X, bot[i].koor.Y)){
+                    //jika sedang jatuh maka bot[i].movement dianggap bernilai 'S', atau sama dengan sedang bergerak ke bawah
                     bot[i].movement = FALL;
                 }else if(!isSamePos(bot[i].pm, player.pm)){
                     bot[i].movement = A_Star(headLvl->info.arr, bot[i].pm, player.pm, i, bot, headLvl->info.jmlBot);
@@ -218,9 +202,6 @@ void permainan(){
 
             }
 
-
-
-
             // Print stats semua variabel yang ada jika statMode = true
             if(statMode) printStats(headLvl->info, player, wktmulai, clock(), bot, qLubang, user);
 
@@ -257,29 +238,42 @@ void permainan(){
             player.movement = NULL;
 
             // Cek apa semua koin sudah terkumpul
-            if(!adakoin(headLvl->info.arr) && (headLvl->info.arr[headLvl->info.exitPos.baris][headLvl->info.exitPos.kolom] != 5)) keluarPintuExit(&(headLvl->info), block);
+            if(!adakoin(headLvl->info.arr, bot, headLvl->info.jmlBot) && (headLvl->info.arr[headLvl->info.exitPos.baris][headLvl->info.exitPos.kolom] != 5)) keluarPintuExit(&(headLvl->info), block);
 
             // Cek apabila player sudah ada di pintu exit
-            if(done(headLvl->info.arr, player.pm.baris, player.pm.kolom))
+            if(ismeetbot(headLvl->info.arr, player, bot, headLvl->info.jmlBot) || isinbrick(headLvl->info.arr, player.koor) || done(headLvl->info.arr, player.pm.baris, player.pm.kolom))
             {
-                waktu_Akhir(&wktselesai);
-                wkttotal = hitung_Waktu(wktmulai, wktselesai);
-                user.score = hitung_skor_akhir(user.score, wkttotal);
-                tampilan_exit(wkttotal,user.score);
-                sub_head(&headLvl);
-                break;
-            }
-            else if(ismeetbot(headLvl->info.arr, player, &(player.lives), bot, headLvl->info.jmlBot) || isinbrick(headLvl->info.arr, player.pm, &(player.lives))){
-                break;
-            }
+                if(player.lives > 1 && !done(headLvl->info.arr, player.pm.baris, player.pm.kolom))
+                {
+                    resetWaktu = false;
+                    player.lives--;
+                    break;
+                }
+                else
+                {
 
+                    waktu_Akhir(&wktselesai);
+                    wkttotal = hitung_Waktu(wktmulai, wktselesai);
+                    user.score = hitung_skor_akhir(user.score, wkttotal, player.lives);
+                    tampilan_exit(wkttotal,user.score);
+                    if(done(headLvl->info.arr, player.pm.baris, player.pm.kolom)){
+                        player.lives++;
+                        sub_head(&headLvl);
+                    }else{
+                        player.lives--;
+                        while(headLvl != NULL) sub_head(&headLvl);
+                    }
+                    resetWaktu = true;
+                    break;
+                }
+            }
         }
     }
     /* ------------------- Permainan Selesai ------------------- */
     soundBGM(STOP);
 
     /* ------------------- Input Nama dan Catat di Highscore ------------------- */
-    inputNama(user.nama ,50);
+    inputNama(user.nama ,50, user.score);
     writeFileHighScore(user);
     /* ------------------------------------------------------------------------- */
 }
