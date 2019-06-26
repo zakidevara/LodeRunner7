@@ -254,13 +254,15 @@ void permainan(){
 
                     waktu_Akhir(&wktselesai);
                     wkttotal = hitung_Waktu(wktmulai, wktselesai);
-                    user.score = hitung_skor_akhir(user.score, wkttotal, player.lives);
-                    tampilan_exit(wkttotal,user.score);
                     if(done(headLvl->info.arr, player.pm.baris, player.pm.kolom)){
                         player.lives++;
+                        user.score = hitung_skor_akhir(user.score, wkttotal, player.lives);
+                        tampilan_exit(wkttotal,user.score);
                         sub_head(&headLvl);
                     }else{
                         player.lives--;
+                        user.score = hitung_skor_akhir(user.score, wkttotal, player.lives);
+                        tampilan_exit(wkttotal,user.score);
                         while(headLvl != NULL) sub_head(&headLvl);
                     }
                     resetWaktu = true;
