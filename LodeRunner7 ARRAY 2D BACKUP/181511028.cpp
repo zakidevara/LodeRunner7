@@ -165,22 +165,33 @@ load_level (pnode_t *lp, FILE *fp_read, long file_size)
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
-bool isinbrick(int arr[BARIS][KOLOM], posisiMatriks player, int *Nyawa)
+bool isinbrick(int arr[BARIS][KOLOM], koordinat player)
 {
-	bool isdied = arr[player.baris][player.kolom] == 1 ? true : false;
-	if (isdied)
-		(*Nyawa)--;
-	return isdied;
+    int baris = player.Y/MATRIX_ELEMENT_SIZE;
+    int baris2 = (player.Y + MATRIX_ELEMENT_SIZE - 1)/MATRIX_ELEMENT_SIZE;
+    int kolom = (player.X + MATRIX_ELEMENT_SIZE/2)/MATRIX_ELEMENT_SIZE;
+    if(arr[baris][kolom] == 1 && arr[baris2][kolom] == 1){
+        return true;
+    }
+	return false;
 }
 
-#define BOT 99
-bool ismeetbot(int arr[BARIS][KOLOM], spriteInfo player, int *Nyawa, spriteInfo bot[], int nBot)
-{
-	for(int i = 0; i < nBot; i++){
-        if ((player.pm.baris == bot[i].pm.baris) && (player.pm.kolom == bot[i].pm.kolom)){
-            (*Nyawa)--;
-            return true;
+infoLevel readFileLevel(char file[]){
+    infoLevel level;
+    FILE* pf;
+    if((pf = fopen(file,"rb")) != NULL){
+        for(int i = 0; i < BARIS; i++){
+            for(int j = 0; j < KOLOM; j++){
+                fscanf(pf,"%d ", &(level.arr[i][j]));
+            }
         }
-	}
-	return false;
+        fscanf(pf, "\n%d %d\n", &(level.exitPos.baris), &(level.exitPos.kolom));
+        fscanf(pf, "%d %d\n", &(level.playerPos.baris), &(level.playerPos.kolom));
+        fscanf(pf, "%d\n", &(level.jmlBot));
+        for(int i = 0; i < level.jmlBot; i++){
+            fscanf(pf, "%d %d\n", &(level.botPos[i].baris), &(level.botPos[i].kolom));
+        }
+    }
+    fclose(pf);
+    return level;
 }

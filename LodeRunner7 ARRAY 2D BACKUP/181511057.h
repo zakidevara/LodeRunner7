@@ -139,15 +139,11 @@ bool isTrapped(int arr[BARIS][KOLOM], int x, int y, char spriteType);
 bool isLagiBom(char movement);
 
 /* ---------------------------- Operasi untuk Membaca dan Assign Design Level ---------------------------- */
-infoLevel readFileLevel(char file[]);
-// Membaca info level yang ada di file[], return nilainya
-// contoh pemanggilan modul : readFileLevel("level1.dat");
+
 
 infoLevel generateLevel(int level);
 // Membaca file level sesuai dengan parameter yang dimasukkan
 
-void sortFileHighScore();
-// Sort file highscore secara descending berdasarkan scorenya
 
 
 /* ---------------------------- Operasi Konversi Koordinat dan Posisi Matriks ---------------------------- */
@@ -166,6 +162,10 @@ void writeFileHighScore(tUser user);
 
 void readFileHighScore();
 // Membaca file highscore.dat dan menampilkannya
+
+
+void sortFileHighScore();
+// Sort file highscore secara descending berdasarkan scorenya
 
 void inputNama(char inputbuf[], int nchars, int score);
 // Input string dalam window graph

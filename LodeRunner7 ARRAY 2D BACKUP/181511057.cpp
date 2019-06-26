@@ -435,25 +435,7 @@ lubang assign_Lubang(int baris, int kolom, clock_t waktuAwal){
 
 
 /*---------------------------- Operasi untuk Membaca dan Assign Design Level ----------------------------*/
-infoLevel readFileLevel(char file[]){
-    infoLevel level;
-    FILE* pf;
-    if((pf = fopen(file,"rb")) != NULL){
-        for(int i = 0; i < BARIS; i++){
-            for(int j = 0; j < KOLOM; j++){
-                fscanf(pf,"%d ", &(level.arr[i][j]));
-            }
-        }
-        fscanf(pf, "\n%d %d\n", &(level.exitPos.baris), &(level.exitPos.kolom));
-        fscanf(pf, "%d %d\n", &(level.playerPos.baris), &(level.playerPos.kolom));
-        fscanf(pf, "%d\n", &(level.jmlBot));
-        for(int i = 0; i < level.jmlBot; i++){
-            fscanf(pf, "%d %d\n", &(level.botPos[i].baris), &(level.botPos[i].kolom));
-        }
-    }
-    fclose(pf);
-    return level;
-}
+
 
 infoLevel generateLevel(int level){
     infoLevel temp;

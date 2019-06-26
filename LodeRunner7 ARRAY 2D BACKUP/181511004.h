@@ -4,6 +4,6 @@
 #include "main.h"
 
 bool done(int arr[BARIS][KOLOM], int baris, int kolom);
-bool adakoin(int arr[BARIS][KOLOM]);
+bool adakoin(int arr[BARIS][KOLOM], spriteInfo bot[], int jmlBot);
 
 #endif // 181511004_H

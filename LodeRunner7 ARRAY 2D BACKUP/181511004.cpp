@@ -11,8 +11,9 @@ bool done(int arr[BARIS][KOLOM], int baris, int kolom)
 	}
 }
 
-bool adakoin(int arr[BARIS][KOLOM])
+bool adakoin(int arr[BARIS][KOLOM], spriteInfo bot[], int jmlBot)
 {
+
 	for(int i=0; i<BARIS; i++)
 	{
 		for(int j=0; j<KOLOM; j++)
@@ -22,5 +23,9 @@ bool adakoin(int arr[BARIS][KOLOM])
 			}
 		}
 	}
+
+	for(int i = 0; i < jmlBot; i ++)
+        if(bot[i].coin) return true;
+
 	return false;
 }

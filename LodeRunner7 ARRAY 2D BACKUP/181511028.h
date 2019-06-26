@@ -40,7 +40,7 @@ long file_size (FILE* fp_read); // mencari ukuran file \* pointer file perlu rea
 void save_level (pnode_t lp, FILE *fp_write); // menyimpan node kedalam file
 
 void load_level (pnode_t *lp, FILE *fp_read, long file_size); // me-load data file kedalam list
-
+infoLevel readFileLevel(char file[]);
 /////////////////////////////////////////////////////////////////////////////////
 
 void drawRope(int x1,int y1,int x2, int y2);
