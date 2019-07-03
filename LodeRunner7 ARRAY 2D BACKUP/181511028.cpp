@@ -74,6 +74,8 @@ add_tail (pnode_t *lp)
     *lp = pnode ();
 }
 
+
+
 void
 sub_head (pnode_t *lp)
 {

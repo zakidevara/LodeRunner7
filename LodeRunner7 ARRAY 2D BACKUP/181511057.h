@@ -91,7 +91,7 @@ void drawStage(int arr[BARIS][KOLOM], koordinat player, spriteInfo bot[], int nB
 void drawMovement(int arr[BARIS][KOLOM], spriteInfo* player, blockSprite block, spriteAnim anim);
 // Gambar pergerakan sprite
 
-void drawBotArray(int arr[BARIS][KOLOM], spriteInfo bot[], int nBot, blockSprite block, spriteAnim anim);
+void drawBotArray(int arr[BARIS][KOLOM], spriteInfo bot[], int nBot, blockSprite block, spriteAnim anim, spriteAnim animWithCoin);
 // Menggambar pergerakan semua sprite bot yang ada
 
 void eraseDrawing(spriteInfo* player);

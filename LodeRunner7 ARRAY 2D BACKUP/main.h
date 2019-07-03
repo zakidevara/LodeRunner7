@@ -24,7 +24,7 @@
 #define WINDOWS_WIDTH GAME_WIDTH
 
 // Jumlah level
-#define MAX_LEVEL 5
+#define MAX_LEVEL 10
 
 // Movement
 #define FALL 1

@@ -60,6 +60,7 @@ void permainan(){
 
     spriteAnim playerAnim;
     spriteAnim botAnim;
+    spriteAnim botWithCoinAnim;
 
     int playerSpeed = 10;
     int botSpeed = 5;
@@ -81,6 +82,7 @@ void permainan(){
     setactivepage(0);
     playerAnim = loadSpriteAnim('P');
     botAnim = loadSpriteAnim('B');
+    botWithCoinAnim = loadSpriteAnim('C');
 
     player.pm.baris = 0;
     player.pm.kolom = 0;
@@ -222,7 +224,7 @@ void permainan(){
             eraseBotArray(bot, headLvl->info.jmlBot);
 
             // Penggambaran ulang player dan bot
-            drawBotArray(headLvl->info.arr, bot, headLvl->info.jmlBot, block, botAnim);
+            drawBotArray(headLvl->info.arr, bot, headLvl->info.jmlBot, block, botAnim, botWithCoinAnim);
             drawMovement(headLvl->info.arr, &player, block, playerAnim);
 
 

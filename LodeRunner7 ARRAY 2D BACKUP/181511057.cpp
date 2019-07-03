@@ -237,8 +237,15 @@ void drawMovement(int arr[BARIS][KOLOM], spriteInfo* player, blockSprite block, 
     }
 }
 
-void drawBotArray(int arr[BARIS][KOLOM], spriteInfo bot[], int nBot, blockSprite block, spriteAnim anim){
-    for(int i = 0; i < nBot; i++) drawMovement(arr, &bot[i], block, anim);
+void drawBotArray(int arr[BARIS][KOLOM], spriteInfo bot[], int nBot, blockSprite block, spriteAnim anim, spriteAnim animWithCoin){
+    for(int i = 0; i < nBot; i++) {
+        if(bot[i].coin)
+            drawMovement(arr, &bot[i], block, animWithCoin);
+        else{
+            drawMovement(arr, &bot[i], block, anim);
+        }
+
+    }
 }
 
 void drawStage(int arr[BARIS][KOLOM], koordinat player, spriteInfo bot[], int nBot, blockSprite block, spriteAnim animBot, spriteAnim animPlayer){
@@ -263,7 +270,7 @@ void drawStage(int arr[BARIS][KOLOM], koordinat player, spriteInfo bot[], int nB
     }
 
     //penggambaran bot
-    drawBotArray(arr, bot, nBot, block, animBot);
+    drawBotArray(arr, bot, nBot, block, animBot, animBot);
 
     //penggambaran player
     drawAnimRunningRight(player.X, player.Y, &urutan, animPlayer);
@@ -410,7 +417,7 @@ lubang dequeue(QueueLubang* Q){
 void isi_kembali_lubang(int arr[BARIS][KOLOM], QueueLubang* P, clock_t wkt_sekarang, blockSprite block){
     lubang Z;
     double durasi = hitung_Waktu(P->Front->info.start, wkt_sekarang); //menghitung durasi = waktu sekarang - waktu lubang dibuat
-    while( (durasi > 7) && (P->Front != NULL)){   // selagi durasi antrian paling depan sudah mencapai 7 detik
+    while( (durasi > 8) && (P->Front != NULL)){   // selagi durasi antrian paling depan sudah mencapai 7 detik
         //returnBata(Z.pos.kolom*MATRIX_ELEMENT_SIZE, Z.pos.baris*MATRIX_ELEMENT_SIZE, (Z.pos.kolom+1)*MATRIX_ELEMENT_SIZE, (Z.pos.baris+1)*MATRIX_ELEMENT_SIZE, &(Z.urutan));
 
         Z = dequeue(P);                       //keluarkan data lubang dari antrian dan tampung di variabel Z
@@ -455,6 +462,12 @@ infoLevel generateLevel(int level){
         temp = readFileLevel("level/level6.dat");break;
     case 7 :
         temp = readFileLevel("level/level7.dat");break;
+    case 8 :
+        temp = readFileLevel("level/level8.dat");break;
+    case 9 :
+        temp = readFileLevel("level/level9.dat");break;
+    case 10 :
+        temp = readFileLevel("level/level10.dat");break;
     }
     temp.lv = level;
     return temp;
@@ -841,6 +854,39 @@ spriteAnim loadSpriteAnim(char c){ // c == 'P' untuk load animasi player, 'B' un
         temp.climbingRope[1] = loadSprite("images/bot/Bot_ClimbRope_Right1.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
         temp.climbingRope[2] = loadSprite("images/bot/Bot_ClimbRope_Left0.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
         temp.climbingRope[3] = loadSprite("images/bot/Bot_ClimbRope_Left1.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
+    }else if(c == 'C'){ // load bot with coin
+        // load running animation
+        for(int i = 0; i < 16; i++){
+            switch(i){
+                case 0 : strcpy(str, "images/bot_with_coin/Bot_Right0.gif");break;
+                case 1 : strcpy(str, "images/bot_with_coin/Bot_Right1.gif");break;
+                case 2 : strcpy(str, "images/bot_with_coin/Bot_Right2.gif");break;
+                case 3 : strcpy(str, "images/bot_with_coin/Bot_Right3.gif");break;
+                case 4 : strcpy(str, "images/bot_with_coin/Bot_Right4.gif");break;
+                case 5 : strcpy(str, "images/bot_with_coin/Bot_Right5.gif");break;
+                case 6 : strcpy(str, "images/bot_with_coin/Bot_Right6.gif");break;
+                case 7 : strcpy(str, "images/bot_with_coin/Bot_Right7.gif");break;
+                case 8 : strcpy(str, "images/bot_with_coin/Bot_Left0.gif");break;
+                case 9 : strcpy(str, "images/bot_with_coin/Bot_Left1.gif");break;
+                case 10 : strcpy(str, "images/bot_with_coin/Bot_Left2.gif");break;
+                case 11 : strcpy(str, "images/bot_with_coin/Bot_Left3.gif");break;
+                case 12 : strcpy(str, "images/bot_with_coin/Bot_Left4.gif");break;
+                case 13 : strcpy(str, "images/bot_with_coin/Bot_Left5.gif");break;
+                case 14 : strcpy(str, "images/bot_with_coin/Bot_Left6.gif");break;
+                case 15 : strcpy(str, "images/bot_with_coin/Bot_Left7.gif");break;
+            }
+            temp.running[i] = loadSprite(str, MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
+        }
+
+        // load climbLadder animation
+        temp.climbingLadder[0] = loadSprite("images/bot_with_coin/Bot_ClimbLadder0.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
+        temp.climbingLadder[1] = loadSprite("images/bot_with_coin/Bot_ClimbLadder1.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
+
+        // load climb Rope animation
+        temp.climbingRope[0] = loadSprite("images/bot_with_coin/Bot_ClimbRope_Right0.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
+        temp.climbingRope[1] = loadSprite("images/bot_with_coin/Bot_ClimbRope_Right1.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
+        temp.climbingRope[2] = loadSprite("images/bot_with_coin/Bot_ClimbRope_Left0.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
+        temp.climbingRope[3] = loadSprite("images/bot_with_coin/Bot_ClimbRope_Left1.gif", MATRIX_ELEMENT_SIZE, MATRIX_ELEMENT_SIZE);
     }
     return temp;
 }
