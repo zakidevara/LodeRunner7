@@ -17,7 +17,7 @@ double hitung_Waktu(clock_t wktAwal, clock_t wktAkhir);
 
 void tampil_Waktu(double durasi);
 
-int hitung_skor_akhir(int skor, double durasi, int nyawa);
+int hitung_skor_akhir(int skor, double durasi, int nyawa, int level);
 
 void tampil_skor_akhir(int skor);
 

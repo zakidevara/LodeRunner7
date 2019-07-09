@@ -13,8 +13,9 @@ bool isStanding(int arr[BARIS][KOLOM], int x, int y){
 bool isClimbing(int arr[BARIS][KOLOM], int x, int y){
     int baris = (y )/MATRIX_ELEMENT_SIZE;
     int baris2 = (y + MATRIX_ELEMENT_SIZE)/MATRIX_ELEMENT_SIZE;
+    int baris3 = (y - 1)/MATRIX_ELEMENT_SIZE;
     int kolom = (x + MATRIX_ELEMENT_SIZE/2)/MATRIX_ELEMENT_SIZE;
-    if(((arr[baris][kolom] == 2) || (arr[baris2][kolom] == 2))) {
+    if(((arr[baris][kolom] == 2) || (arr[baris2][kolom] == 2)) && (arr[baris3][kolom] != 1)) {
         return true;
     }else{
         return false;
@@ -36,7 +37,7 @@ bool isFalling(int arr[BARIS][KOLOM], int x, int y){
     int baris2 = y/MATRIX_ELEMENT_SIZE;
     int baris = (y + MATRIX_ELEMENT_SIZE)/MATRIX_ELEMENT_SIZE;
     int kolom = (x + MATRIX_ELEMENT_SIZE/2)/MATRIX_ELEMENT_SIZE;
-    if(((arr[baris][kolom] == 0) || (arr[baris][kolom] == 3) || (arr[baris][kolom] == 7) || (arr[baris][kolom] == 4) || (arr[baris][kolom] == 8)) && (arr[baris2][kolom] != 2)){
+    if(((arr[baris][kolom] == 5) || (arr[baris][kolom] == 0) || (arr[baris][kolom] == 3) || (arr[baris][kolom] == 7) || (arr[baris][kolom] == 4) || (arr[baris][kolom] == 8))){
         return true;
     }else{
         return false;
@@ -145,3 +146,57 @@ void playerMovement(int arr[BARIS][KOLOM], QueueLubang* P, spriteInfo* player, i
                 break;
         }
 }
+
+void menutama()
+{
+    initwindow(WINDOWS_WIDTH, WINDOWS_HEIGHT, "Lode Runner", 0, 0, false, true);
+
+    int mousex,mousey;
+    char pil;
+
+
+    while(!ismouseclick(WM_LBUTTONDOWN)){
+        soundBGM(PLAY);
+        readimagefile("images/menu.jpg",0,0,WINDOWS_WIDTH-1,WINDOWS_HEIGHT-1);
+    }
+
+    while(1){
+        getmouseclick(WM_LBUTTONDOWN, mousex, mousey);
+        //menu play
+        if ((mousex > 990) && (mousex < 1120)&& (mousey > 420) && (mousey < 450)){
+            soundBGM(STOP);
+            permainan();
+            break;
+        }else if ((mousex > 950) && (mousex < 1120)&& (mousey > 490) && (mousey < 520)){//belum dimasukkan highscorenya;
+            sortFileHighScore();
+            readFileHighScore();
+            break;
+        }else if ((mousex > 890) && (mousex < 1120)&& (mousey > 590) && (mousey < 630)){
+            How_to_Play();
+            break;
+        }else if ((mousex > 790) && (mousex < 1120)&& (mousey > 670) && (mousey < 720)){
+            cleardevice();
+            readimagefile("images/goodbye.jpg",0,0,WINDOWS_WIDTH-1,WINDOWS_HEIGHT-1);
+            delay(1500);
+            soundBGM(STOP);
+            exit(1);
+        }
+    }
+
+}
+
+void How_to_Play()
+{
+    cleardevice();
+    readimagefile("images/HTP.jpg",0,0,WINDOWS_WIDTH-1,WINDOWS_HEIGHT-1);
+    int mousex,mousey;
+    while(1){
+        getmouseclick(WM_LBUTTONDOWN, mousex, mousey);
+
+        if ((mousex > 50) && (mousex < 220)&& (mousey > 650) && (mousey < 695)){
+            cleardevice();
+            break;
+        }
+    }
+}
+

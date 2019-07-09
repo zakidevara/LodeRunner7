@@ -44,13 +44,13 @@ void permainan(){
     /* ---------------------------- VARIABEL LOKAL ---------------------------- */
     pnode_t headLvl;                        // nilai matriks map dan posisi awal sprite dalam level
 
-    spriteInfo player;                          // sprite player
-    spriteInfo bot[5];                          // sprite bot
+    spriteInfo player;                          // info dari sprite player
+    spriteInfo bot[5];                          // info dari sprite bot
 
     clock_t wktmulai,wktselesai;            // mencatat waktu mulai dan waktu selesai dalam satu stage
     double wkttotal;                        // mencatat durasi penyelesaian stage
 
-    QueueLubang qLubang;                 // queue untuk bata yang dilubangi
+    QueueLubang qLubang;                    // queue untuk bata yang dilubangi
 
     tUser user;                             // Data user yang sedang memainkan game
 
@@ -58,22 +58,21 @@ void permainan(){
 
     blockSprite block = loadBlockSprites(); // Untuk menyimpan data gambar sprite block di memory
 
-    spriteAnim playerAnim;
-    spriteAnim botAnim;
-    spriteAnim botWithCoinAnim;
+    spriteAnim playerAnim;                  // gambar sprite player
+    spriteAnim botAnim;                     // gambar sprite bot
+    spriteAnim botWithCoinAnim;             // gambar sprite bot saat bawa coin
 
-    int playerSpeed = 10;
-    int botSpeed = 5;
+    int playerSpeed = 10;                   // kecepatan player saat bergerak
+    int botSpeed = 5;                       // kecepatan bot saat bergerak
 
-    bool resetWaktu = true;
+    bool resetWaktu = true;                 // reset timer
 
+    /* Variabel reset level*/
+    //infoLevel temp;
+    //int scoreTemp;
     /* ------------------------------------------------------------------------ */
 
-
-    /* -------------- Menampilkan Layar Loading -------------- */
     loading();
-
-
     /* -------------- Membuat Semua Level -------------- */
     headLvl = plist(MAX_LEVEL);
 
@@ -89,6 +88,8 @@ void permainan(){
 
     wktmulai = clock();
     while(!null(headLvl)){
+        //temp = headLvl->info; //untuk
+        //scoreTemp = user.score;
         /* -------------- Assign Posisi Awal Player dan Bot -------------- */
         player.pm = headLvl->info.playerPos;
         player.koor = getKoordinat(player.pm);
@@ -97,6 +98,7 @@ void permainan(){
             bot[i].pm = headLvl->info.botPos[i];
             bot[i].koor = getKoordinat(bot[i].pm);
             bot[i].lives = 3;
+            //bot[i].coin = false;
         }
 
         /* -------------- Inisiasi Page Double Buffering & Penggambaran Kondisi Awal Level -------------- */
@@ -122,14 +124,16 @@ void permainan(){
         while(true){
             soundBGM(PLAY);
             // Baca Input User
+
             if(isTrapped(headLvl->info.arr, player.koor.X, player.koor.Y, 'P')){
                 player.movement = NULL;
                 player.koor.X =  player.pm.kolom*MATRIX_ELEMENT_SIZE;
                 player.koor.Y =  player.pm.baris*MATRIX_ELEMENT_SIZE;
                 headLvl->info.arr[player.pm.baris][player.pm.kolom] = 9;
-            }else if(isFalling(headLvl->info.arr, player.koor.X, player.koor.Y) && !isSliding(headLvl->info.arr, player.koor.X, player.koor.Y)){
+            }else if(isFalling(headLvl->info.arr, player.koor.X, player.koor.Y) && !isSliding(headLvl->info.arr, player.koor.X, player.koor.Y) && !isClimbing(headLvl->info.arr, player.koor.X, player.koor.Y)){
                 //jika sedang jatuh maka player.movement dianggap bernilai 'S', atau sama dengan sedang bergerak ke bawah
                 player.movement = FALL;
+                printf("%d", player.movement);
             }else{
                while(kbhit()){
                     player.movement = cekInput(toupper(getch()), &statMode, &wktmulai, &qLubang);
@@ -159,7 +163,7 @@ void permainan(){
                         bot[i].koor = getKoordinat(bot[i].pm);
                     }
 
-                }else if(isFalling(headLvl->info.arr, bot[i].koor.X, bot[i].koor.Y) && !isSliding(headLvl->info.arr, bot[i].koor.X, bot[i].koor.Y)){
+                }else if(isFalling(headLvl->info.arr, bot[i].koor.X, bot[i].koor.Y) && !isSliding(headLvl->info.arr, bot[i].koor.X, bot[i].koor.Y) && !isClimbing(headLvl->info.arr, bot[i].koor.X, bot[i].koor.Y)){
                     //jika sedang jatuh maka bot[i].movement dianggap bernilai 'S', atau sama dengan sedang bergerak ke bawah
                     bot[i].movement = FALL;
                 }else if(!isSamePos(bot[i].pm, player.pm)){
@@ -248,6 +252,8 @@ void permainan(){
                 if(player.lives > 1 && !done(headLvl->info.arr, player.pm.baris, player.pm.kolom))
                 {
                     resetWaktu = false;
+                    //user.score = scoreTemp;
+                    //headLvl->info = temp;
                     player.lives--;
                     break;
                 }
@@ -258,12 +264,12 @@ void permainan(){
                     wkttotal = hitung_Waktu(wktmulai, wktselesai);
                     if(done(headLvl->info.arr, player.pm.baris, player.pm.kolom)){
                         player.lives++;
-                        user.score = hitung_skor_akhir(user.score, wkttotal, player.lives);
+                        user.score = hitung_skor_akhir(user.score, wkttotal, player.lives, headLvl->info.lv);
                         tampilan_exit(wkttotal,user.score);
                         sub_head(&headLvl);
                     }else{
                         player.lives--;
-                        user.score = hitung_skor_akhir(user.score, wkttotal, player.lives);
+                        user.score = hitung_skor_akhir(user.score, wkttotal, player.lives, headLvl->info.lv);
                         tampilan_exit(wkttotal,user.score);
                         while(headLvl != NULL) sub_head(&headLvl);
                     }
@@ -276,6 +282,7 @@ void permainan(){
     /* ------------------- Permainan Selesai ------------------- */
     soundBGM(STOP);
 
+    sub_list(&headLvl);
     /* ------------------- Input Nama dan Catat di Highscore ------------------- */
     inputNama(user.nama ,50, user.score);
     writeFileHighScore(user);

@@ -45,11 +45,10 @@ void tampil_Waktu(double durasi)
     outtextxy(WINDOWS_WIDTH-300,WINDOWS_HEIGHT-200,tamWaktu);
 }
 
-int hitung_skor_akhir(int skor, double durasi, int nyawa)
+int hitung_skor_akhir(int skor, double durasi, int nyawa, int level)
 {
-    int total,htgnyawa;
-
-    if(durasi >= 60)
+    int total=0,htgnyawa=0;
+    if(durasi >= 100)
     {
         if(nyawa <= 0)
         {
@@ -57,9 +56,10 @@ int hitung_skor_akhir(int skor, double durasi, int nyawa)
         }
         else
         {
-            htgnyawa = nyawa*20;
-            total = 100-durasi;
-            total = total/2;
+            if(level == MAX_LEVEL)
+            {
+                htgnyawa = nyawa*20;
+            }
             total = total + htgnyawa;
         }
     }
@@ -71,7 +71,10 @@ int hitung_skor_akhir(int skor, double durasi, int nyawa)
         }
         else
         {
-            htgnyawa = nyawa*20;
+            if(level == MAX_LEVEL)
+            {
+                htgnyawa = nyawa*20;
+            }
             total = 100-durasi;
             total = total/2;
             total = total + htgnyawa;

@@ -12,13 +12,12 @@ void drawRight(int arr[BARIS][KOLOM], int kolom, int baris, int n, blockSprite b
 
 void drawLeft(int arr[BARIS][KOLOM], int kolom, int baris, int n, blockSprite block);
 
-
-
 void soundGetCoin(int op);
 
-
 void soundMenuBGM(int op);
+
 void soundBGM(int op);
+
 void soundFalling(int op);
 
 #endif

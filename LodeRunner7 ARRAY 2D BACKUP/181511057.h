@@ -20,7 +20,7 @@ blockSprite loadBlockSprites();
 
 spriteAnim loadSpriteAnim(char c);
 // Load gambar animasi untuk sprite player dan bot
-// parameter input : c -> 'P' == animasi player, 'B' == animasi bot
+// parameter input : c -> 'P' == animasi player, 'B' == animasi bot, 'C' == animasi bot with coin
 
 /* ---------------------------- Gambar Animasi Sprite ---------------------------- */
 void drawAnimRunningRight(int x,int y, int* urutan, spriteAnim anim);
@@ -135,12 +135,10 @@ bool isValidPos(posisiMatriks pos);
 // cek apabila posisi masih ada dalam range grid atau tidak
 
 bool isTrapped(int arr[BARIS][KOLOM], int x, int y, char spriteType);
-
+//
 bool isLagiBom(char movement);
 
 /* ---------------------------- Operasi untuk Membaca dan Assign Design Level ---------------------------- */
-
-
 infoLevel generateLevel(int level);
 // Membaca file level sesuai dengan parameter yang dimasukkan
 
@@ -162,7 +160,6 @@ void writeFileHighScore(tUser user);
 
 void readFileHighScore();
 // Membaca file highscore.dat dan menampilkannya
-
 
 void sortFileHighScore();
 // Sort file highscore secara descending berdasarkan scorenya
@@ -214,10 +211,6 @@ void generateGrid(tElmtGrid grid[BARIS][KOLOM], int arr[BARIS][KOLOM], int botIn
 
 char A_Star(int grid[BARIS][KOLOM], posisiMatriks start, posisiMatriks end, int botIndex, spriteInfo bot[], int jmlBot);
 // Mencari path terpendek dari posisi start ke end dan return list dari pathnya
-
-
-
-
 
 #endif
 
